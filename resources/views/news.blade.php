@@ -34,7 +34,6 @@
                                         <tr>
                                             <th>Naziv</th>
                                             <th>Napravio</th>
-                                            <th>Pod naslov</th>
                                             <th>Tip</th>
                                             <th>Kreirana</th>
                                             <th>Pogledaj</th>
@@ -43,16 +42,21 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                      <tr>
-                                          <td>Šaronja pobjednik koride</td>
-                                          <td>Mehmed</td>
-                                          <td>Šaronja neprikosnoven u svojoj kategoriji</td>
-                                          <td>Nišićke igre</td>
-                                          <td>21-02-2017</td>
-                                          <td><i class="fa fa-external-link"></i></td>
-                                          <td><i class="fa fa-edit"></i></td>
-                                          <td><i class="fa fa-times"></i></td>
-                                      </tr>
+                                        @if($vijesti)
+                                            @foreach($vijesti as $vijest)
+                                                <tr>
+                                                    <td>{{ $vijest->naslov }}</td>
+                                                    <td>{{ $vijest->user->name }}</td>
+                                                    <td>{{ $vijest->kategorija->naziv }}</td>
+                                                    <td>21-02-2017</td>
+                                                    <td><i class="fa fa-external-link"></i></td>
+                                                    <td><i class="fa fa-edit"></i></td>
+                                                    <td><i class="fa fa-times"></i></td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <p>Trenutno nepostoji niti jedna vijest.</p>
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
