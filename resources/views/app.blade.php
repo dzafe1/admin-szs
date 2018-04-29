@@ -1,9 +1,9 @@
-</html>
 <!DOCTYPE html>
 <html lang="en">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Materialize Bootstrap Admin panel</title>
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="assets/dist/img/ico/fav.png">
@@ -29,6 +29,7 @@
     <link href="{{asset('assets/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css')}}" rel="stylesheet" type="text/css" />
     <!-- custom CSS -->
     <link href="{{asset('assets/dist/css/stylematerial.css')}}" rel="stylesheet">
+    <link href="{{asset('css/custom.css')}}" rel="stylesheet">
 </head>
 
 <style>
@@ -156,6 +157,7 @@
         </div>
     </div>
 </div>
+
 <!-- End Preloader -->
 
 <!-- Start Core Plugins
@@ -200,6 +202,8 @@
      =====================================================================-->
 <!-- main js-->
 <script src="{{asset('assets/dist/js/main.js')}}" type="text/javascript"></script>
+
+<script src="{{asset('js/custom.js')}}" type="text/javascript"></script>
 <!-- End Theme label Script
      =====================================================================-->
 <script>

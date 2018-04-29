@@ -22,6 +22,7 @@
                 <div class="row">
                     <!-- Data tables -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="szs-alert alert"></div>
                         <div class="card">
                             <div class="card-header">
                                 <i class="fa fa-table fa-lg"></i>
@@ -37,26 +38,22 @@
                                             <th>Tip</th>
                                             <th>Kreirana</th>
                                             <th>Pogledaj</th>
-                                            <th>Odobri</th>
-                                            <th>Odbij</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @if($vijesti)
                                             @foreach($vijesti as $vijest)
                                                 <tr>
                                                     <td>{{ $vijest->naslov }}</td>
                                                     <td>{{ $vijest->user->name }}</td>
                                                     <td>{{ $vijest->kategorija->naziv }}</td>
-                                                    <td>21-02-2017</td>
-                                                    <td><i class="fa fa-external-link"></i></td>
-                                                    <td><i class="fa fa-edit"></i></td>
-                                                    <td><i class="fa fa-times"></i></td>
+                                                    <td>{{ Carbon\Carbon::parse($vijest->created_at)->format('d. F, Y.') }}</td>
+                                                    <td>
+                                                        <a data-id="{{ $vijest->id }}" class="display-news" data-toggle="modal" data-target="#displayNews">
+                                                            <i class="fa fa-external-link"></i>
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                             @endforeach
-                                        @else
-                                            <p>Trenutno nepostoji niti jedna vijest.</p>
-                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -70,4 +67,7 @@
             <!-- ./page-content -->
         </div>
 
+    <!-- Modals -->
+    @include('modals.display-news')
+    <!-- Modals End -->
 @endsection

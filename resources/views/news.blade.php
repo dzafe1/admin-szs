@@ -48,8 +48,10 @@
                                                     <td>{{ $vijest->naslov }}</td>
                                                     <td>{{ $vijest->user->name }}</td>
                                                     <td>{{ $vijest->kategorija->naziv }}</td>
-                                                    <td>21-02-2017</td>
-                                                    <td><i class="fa fa-external-link"></i></td>
+                                                    <td>{{ Carbon\Carbon::parse($vijest->created_at)->format('d. F, Y.') }}</td>
+                                                    <td>
+                                                        <a href="{{ Config::get('general.site.domain.path') . Config::get('general.site.domain.subpaths.display_news') . $vijest->id }}" target="_blank"><i class="fa fa-external-link"></i></a>
+                                                    </td>
                                                     <td><i class="fa fa-edit"></i></td>
                                                     <td><i class="fa fa-times"></i></td>
                                                 </tr>
@@ -69,5 +71,7 @@
             </div>
             <!-- ./page-content -->
         </div>
+
+
 
 @endsection

@@ -29,10 +29,6 @@ Route::middleware('auth')->group(function () {
         return view('prijave');
     });
 
-    //Vijesti
-    Route::get('/news', 'VijestiController@index');
-    Route::get('/unauth/news', 'VijestiController@indexWaitingApproval');
-
     Route::get('/sportisti', 'SportistiController@index');
 
 
@@ -47,6 +43,18 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/unauth/priajve', function(){
         return view('uprijave');
+    });
+
+    //Vijesti
+    Route::get('/news', 'VijestiController@index');
+    Route::get('/unauth/news', 'VijestiController@indexWaitingApproval');
+
+    // Ajax API rute
+    Route::prefix('api')->group(function () {
+        // Vijesti API routes
+        Route::get('news/{id}', 'VijestiController@getNewsById');
+        Route::patch('/news/approve', 'VijestiController@approveNews');
+        Route::patch('/news/delete', 'VijestiController@deleteNews');
     });
 
 });
