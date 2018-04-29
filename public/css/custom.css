@@ -24,3 +24,20 @@
 .szs-alert {
     display: none;
 }
+
+.modal-header {
+    border-radius: 10px 10px 0 0;
+}
+
+.modal-footer {
+    border-radius: 10px 10px 0 0;
+}
+
+#displayNews .modal-title {
+    margin-right: 20px;
+}
+
+#displayNews .modal-header .close {
+    position: absolute;
+    right: 17px;
+}

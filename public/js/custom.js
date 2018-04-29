@@ -48,12 +48,22 @@ $(document).ready(function () {
         var id;
         id = $(this).data('id');
 
-        console.log(id);
-
         var confirmation = confirm('Da li ste sigurni da želite izbrisati ovu vijest?');
 
         if(confirmation) {
             // $(location).attr('href', '/news/' + id + '/delete');
+            deleteNews(id)
+        }
+
+    });
+
+    $('body').on('click', '.delete-news', function () {
+        var id;
+        id = $(this).data('id');
+
+        var confirmation = confirm('Da li ste sigurni da želite izbrisati ovu vijest?');
+
+        if(confirmation) {
             deleteNews(id)
         }
 
@@ -76,6 +86,10 @@ function getNewsById(id) {
 function addNewsToModal(vijest) {
     var displayNewsModal = $('#displayNews');
 
+    if(vijest.odobreno) {
+        displayNewsModal.find('.modal-footer').remove();
+    }
+
     displayNewsModal.find('.modal-title').text(vijest.naslov);
     displayNewsModal.find('.news-content').html(vijest.sadrzaj);
     displayNewsModal.find('.news-image img').attr('src', vijest.slika ? (config.site.paths.news_images + vijest.slika) : config.site.defaults.news_default_image);
@@ -86,6 +100,8 @@ function addNewsToModal(vijest) {
     vijest.tagovi.forEach(function (tag) {
         displayNewsModal.find('.news-tags').append('<div class="badge badge-primary tag-badge">' + tag.tag + '</div>')
     });
+
+    displayNewsModal.modal('show');
 }
 
 function approveNews(id) {

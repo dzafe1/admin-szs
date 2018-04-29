@@ -22,6 +22,7 @@
                 <div class="row">
                     <!-- Data tables -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="szs-alert alert"></div>
                         <div class="card">
                             <div class="card-header">
                                 <i class="fa fa-table fa-lg"></i>
@@ -42,23 +43,25 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @if($vijesti)
-                                            @foreach($vijesti as $vijest)
-                                                <tr>
-                                                    <td>{{ $vijest->naslov }}</td>
-                                                    <td>{{ $vijest->user->name }}</td>
-                                                    <td>{{ $vijest->kategorija->naziv }}</td>
-                                                    <td>{{ Carbon\Carbon::parse($vijest->created_at)->format('d. F, Y.') }}</td>
-                                                    <td>
-                                                        <a href="{{ Config::get('general.site.domain.path') . Config::get('general.site.domain.subpaths.display_news') . $vijest->id }}" target="_blank"><i class="fa fa-external-link"></i></a>
-                                                    </td>
-                                                    <td><i class="fa fa-edit"></i></td>
-                                                    <td><i class="fa fa-times"></i></td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <p>Trenutno nepostoji niti jedna vijest.</p>
-                                        @endif
+                                        @foreach($vijesti as $vijest)
+                                            <tr>
+                                                <td>{{ $vijest->naslov }}</td>
+                                                <td>{{ $vijest->user->name }}</td>
+                                                <td>{{ $vijest->kategorija->naziv }}</td>
+                                                <td>{{ Carbon\Carbon::parse($vijest->created_at)->format('d. F, Y.') }}</td>
+                                                <td>
+                                                    <a data-id="{{ $vijest->id }}" class="display-news">
+                                                        <i class="fa fa-external-link"></i>
+                                                    </a>
+                                                </td>
+                                                <td><i class="fa fa-edit"></i></td>
+                                                <td>
+                                                    <a data-id="{{ $vijest->id }}" class="delete-news">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -72,6 +75,8 @@
             <!-- ./page-content -->
         </div>
 
-
+    <!-- Modals -->
+    @include('modals.display-news')
+    <!-- Modals End -->
 
 @endsection
