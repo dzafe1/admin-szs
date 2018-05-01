@@ -54,7 +54,11 @@
                                                         <i class="fa fa-external-link"></i>
                                                     </a>
                                                 </td>
-                                                <td><i class="fa fa-edit"></i></td>
+                                                <td>
+                                                    <a data-id="{{ $vijest->id }}" class="edit-news">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </td>
                                                 <td>
                                                     <a data-id="{{ $vijest->id }}" class="delete-news">
                                                         <i class="fa fa-times"></i>
@@ -77,6 +81,7 @@
 
     <!-- Modals -->
     @include('modals.display-news')
+    @include('modals.edit-news', ['vijest_kategorija' => $vijest_kategorija])
     <!-- Modals End -->
 
 @endsection

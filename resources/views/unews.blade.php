@@ -70,4 +70,5 @@
     <!-- Modals -->
     @include('modals.display-news')
     <!-- Modals End -->
+
 @endsection

@@ -29,6 +29,7 @@
     <link href="{{asset('assets/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css')}}" rel="stylesheet" type="text/css" />
     <!-- custom CSS -->
     <link href="{{asset('assets/dist/css/stylematerial.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/selectize.css') }}" rel="stylesheet">
     <link href="{{asset('css/custom.css')}}" rel="stylesheet">
 </head>
 
@@ -196,13 +197,16 @@
 <script src="{{asset('assets/plugins/flot/jquery.flot.pie.min.js')}}" type="text/javascript"></script>
 <!-- End Page Lavel Plugins-->
 
+<script src="{{asset('js/vendor/validation/jquery.validate.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/vendor/validation/additional-methods.min.js')}}" type="text/javascript"></script>
 <!-- End Page Lavel Plugins
      =====================================================================-->
 <!-- Start Theme label Script
      =====================================================================-->
 <!-- main js-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.12.0/validate.min.js"></script>
 <script src="{{asset('assets/dist/js/main.js')}}" type="text/javascript"></script>
-
+<script src="{{ asset('js/selectize.js') }}"></script>
 <script src="{{asset('js/custom.js')}}" type="text/javascript"></script>
 <!-- End Theme label Script
      =====================================================================-->

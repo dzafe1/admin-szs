@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
         Route::get('news/{id}', 'VijestiController@getNewsById');
         Route::patch('/news/approve', 'VijestiController@approveNews');
         Route::patch('/news/delete', 'VijestiController@deleteNews');
+        Route::put('news/{id}/edit', 'VijestiController@editNews');
     });
 
 });
