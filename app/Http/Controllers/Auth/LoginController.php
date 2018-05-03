@@ -52,7 +52,8 @@ class LoginController extends Controller
     }
 
     public function login(Request $data){
-        $user = DB::table('admin_user')->where('email', $data['email'])->first();
+        // Dodana provjera da li je user admin
+        $user = DB::table('users')->where('email', $data['email'])->where('isAdmin', true)->first();
         if($user != null){
             if(Hash::check($data['password'], $user->password)){
                 Auth::loginUsingId($user->id);

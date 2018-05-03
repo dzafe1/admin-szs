@@ -16,7 +16,7 @@ Route::get('/login', 'Auth\LoginController@showLoginForm');
 Auth::routes();
 
 // Dodaje protekciju na rute samo za logovane korisnike
-Route::middleware('auth')->group(function () {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/klubovi', 'KluboviController@index');
     Route::get('/dashboard','DashboardController@index');
     Route::get('/','DashboardController@index');

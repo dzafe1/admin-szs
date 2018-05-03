@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class SportistiController extends Controller
 {
-	public function __construct()
-    {
-        $this->middleware('auth');
-    }
     public function index(){
         $korisnici = DB::table('fudbaler')->get();
 

@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class KorisniciController extends Controller
 {
-	public function __construct()
-    {
-        $this->middleware('auth');
-    }
     public function index(){
         $korisnici = DB::table('users')->get();
 

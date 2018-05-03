@@ -10,11 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 class KluboviController extends Controller
-{	
-	public function __construct()
-    {
-        $this->middleware('auth');
-    }
+{
     public function index(){
         $korisnici = DB::table('clubs')->get();
 
