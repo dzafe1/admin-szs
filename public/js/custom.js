@@ -73,6 +73,9 @@ $(document).ready(function () {
         var id;
         id = $(this).data('id');
 
+        var validator = $('#editNewsForm').validate();
+        validator.resetForm();
+
         getNewsById(id, 'edit');
 
     });
@@ -128,23 +131,98 @@ $(document).ready(function () {
         id = $(this).data('id');
 
         if(validated) {
-            var vijest = new FormData();
-            vijest.append('id', $('#editNewsForm').find('input[name="naslov"]').val());
-            vijest.append('naslov', $('#editNewsForm').find('textarea[name="sadrzaj"]').val());
-            vijest.append('sadrzaj', $('#editNewsForm').find('textarea[name="sadrzaj"]').val());
-            vijest.append('slika', $('#editNewsForm').find('input[name="slika"]').prop('files'));
-            vijest.append('kategorija', $('#editNewsForm').find('select[name="kategorija"]').val());
-            vijest.append('tagovi', $('#editNewsForm').find('input[name="tagovi"]').val());
+            var vijest = new FormData($('#editNewsForm')[0]);
             vijest.append('_method', 'PUT');
+
             editNews(id, vijest);
         }
     });
 
-    /*
-    $('#editNewsForm').on('change', '.check-change', function () {
-        $('#editNewsForm').valid();
+    $('body').on('click', '.edit-user', function () {
+        var id;
+        id = $(this).data('id');
+
+        var validator = $('#editUserForm').validate();
+        validator.resetForm();
+
+        getUserById(id);
+
     });
-    */
+
+    // Edit user validation
+    $('#editUserForm').validate({
+        ignore: [],
+        rules: {
+            name: {
+                required: true,
+                maxlength: 255
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            spol: {
+                required: true
+            },
+            address: {
+                maxlength: 255
+            },
+            phone: {
+                maxlength: 50,
+                digits: true
+            }
+        },
+        messages: {
+            name: {
+                required: 'Polje ime je obavezno.',
+                maxlength: 'Ime mora sadržati manje od 255 karaktera.'
+            },
+            email: {
+                required: 'Polje email je obavezno.',
+                email: 'Polje email mora biti validna email adresa.'
+            },
+            spol: {
+                required: 'Polje spol je obavezno.'
+            },
+            address: {
+                maxlength: 'Polje adresa mora sadržati manje od 255 karaktera.'
+            },
+            phone: {
+                maxlength: 'Polje broj telefona mora sadržati manje od 50 brojeva.',
+                digits: 'Polje broj telefona mora biti broj.'
+            }
+        }
+    });
+
+    $('#editUser').on('click', '#editUserButton', function () {
+        var validated = $('#editUserForm').valid();
+        var id;
+        id = $(this).data('id');
+
+        if(validated) {
+            var user = new FormData($('#editUserForm')[0]);
+            var isAdmin = $('#editUserForm').find('input[name="isAdmin"]').prop('checked') === true ? 1 : 0;
+            user.append('_method', 'PUT');
+            user.delete('isAdmin');
+
+            user.append('isAdmin', isAdmin);
+
+            editUser(id, user);
+        }
+    });
+
+    $('body').on('click', '.delete-user', function () {
+        var id;
+        id = $(this).data('id');
+
+        var confirmation = confirm('Da li ste sigurni da želite izbrisati ovog korisnika?');
+
+        if(confirmation) {
+            deleteUser(id)
+        }
+
+    });
+
 });
 
 // Funkcije
@@ -321,11 +399,10 @@ function readURL(input) {
 }
 
 function editNews(id, vijest) {
-    var formData = new FormData($('#editNewsForm')[0]);
-    formData.append('_method', 'PUT');
+
     $.ajax({
         method: 'POST',
-        data: formData,
+        data: vijest,
         url: '/api/news/' + id + '/edit',
         cache: false,
         processData: false,
@@ -351,5 +428,88 @@ function editNews(id, vijest) {
             $('#editNews').modal('hide');
             notifyUser(type, response.message);
         }
+    });
+}
+
+function getUserById(id) {
+    $.ajax({
+        method: 'GET',
+        url: '/api/users/' + id
+    }).done(function (response) {
+        if(response.success) {
+            addUserToEditModal(response.user);
+        }
+    });
+}
+
+function addUserToEditModal(user) {
+    var displayUserModal = $('#editUser');
+
+    displayUserModal.find('.modal-title').text(user.name);
+
+    displayUserModal.find('input[name="name"]').val(user.name);
+    displayUserModal.find('input[name="email"]').val(user.email);
+    displayUserModal.find('select[name="spol"]').val(user.spol);
+    displayUserModal.find('input[name="address"]').val(user.address);
+    displayUserModal.find('input[name="phone"]').val(user.phone);
+    displayUserModal.find('input[name="isAdmin"]').prop('checked', user.isAdmin);
+
+    displayUserModal.find('#editUserButton').data('id', user.id);
+
+    $('#editUserServerErrors').hide(0);
+    displayUserModal.modal('show');
+}
+
+
+function editUser(id, user) {
+
+    $.ajax({
+        method: 'POST',
+        data: user,
+        url: '/api/users/' + id + '/edit',
+        cache: false,
+        processData: false,
+        contentType: false,
+        enctype: 'multipart/form-data'
+    }).done(function (response) {
+        var type;
+
+        if (!response.success) {
+            if(response.errors) {
+                $('#editUserServerErrors').find('ul').html('');
+                response.errors.forEach(function (error) {
+                    $('#editUserServerErrors').find('ul').append('<li>' + error + '</li>');
+                });
+                $('#editUserServerErrors').show();
+            } else {
+                type = 'danger';
+                $('#editUser').modal('hide');
+                notifyUser(type, response.message);
+            }
+        } else {
+            type = 'success';
+            $('#editUser').modal('hide');
+            notifyUser(type, response.message);
+        }
+    });
+}
+
+function deleteUser(id) {
+    $.ajax({
+        method: 'PATCH',
+        data: {
+            id: id
+        },
+        url: '/api/users/delete'
+    }).done(function (response) {
+        var type = 'danger';
+
+        if(response.success) {
+            type = 'success';
+
+            $('.delete-user[data-id="' + id + '"]').closest('tr').remove();
+        }
+
+        notifyUser(type, response.message)
     });
 }

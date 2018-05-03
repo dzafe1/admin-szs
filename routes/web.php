@@ -45,17 +45,25 @@ Route::group(['middleware' => 'auth'], function () {
         return view('uprijave');
     });
 
-    //Vijesti
+    // Vijesti
     Route::get('/news', 'VijestiController@index');
     Route::get('/unauth/news', 'VijestiController@indexWaitingApproval');
+    // Korsnici
+    Route::get('/users', 'KorisniciController@index');
 
     // Ajax API rute
     Route::prefix('api')->group(function () {
         // Vijesti API routes
         Route::get('news/{id}', 'VijestiController@getNewsById');
-        Route::patch('/news/approve', 'VijestiController@approveNews');
-        Route::patch('/news/delete', 'VijestiController@deleteNews');
+        Route::patch('news/approve', 'VijestiController@approveNews');
+        Route::patch('news/delete', 'VijestiController@deleteNews');
         Route::put('news/{id}/edit', 'VijestiController@editNews');
+
+        // Korisnici API routes
+        Route::get('users/{id}', 'KorisniciController@getUserById');
+        Route::patch('users/delete', 'KorisniciController@deleteUser');
+        Route::put('users/{id}/edit', 'KorisniciController@editUser');
     });
+
 
 });

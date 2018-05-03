@@ -21,6 +21,7 @@
                 <div class="row">
                     <!-- Data tables -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="szs-alert alert"></div>
                         <div class="card">
                             <div class="card-header">
                                 <i class="fa fa-table fa-lg"></i>
@@ -46,8 +47,16 @@
                                             <td>{{$k->created_at}}</td>
                                             <td>{{$k->email}}</td>
                                             <td>{{$k->dob}}</td>
-                                            <td><i class="fa fa-edit"></i></td>
-                                            <td><i class="fa fa-times"></i></td>
+                                            <td>
+                                                <a data-id="{{ $k->id }}" class="edit-user">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a data-id="{{ $k->id }}" class="delete-user">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </td>
                                         </tr>
                                         @endforeach
                                         </tbody>
@@ -62,5 +71,9 @@
             </div>
             <!-- ./page-content -->
         </div>
+
+    <!-- Modals -->
+    @include('modals.edit-user')
+    <!-- Modals End -->
 
 @endsection('content')
