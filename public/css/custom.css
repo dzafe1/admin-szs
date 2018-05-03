@@ -68,3 +68,7 @@
 .error {
     color: red;
 }
+
+#editNewsServerErrors {
+    display: none;
+}

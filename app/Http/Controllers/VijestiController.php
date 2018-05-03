@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use App\Vijest;
 use App\VijestKategorija;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 
 class VijestiController extends Controller
 {
@@ -91,10 +93,8 @@ class VijestiController extends Controller
 
     public function editNews($id, Request $request)
     {
-        dd(Input::get('id'));
-
         $validatedData = Validator::make($request->all(), [
-            'naslov' => 'required|unique:vijest|max:255',
+            'naslov' => 'required|max:255',
             'kategorija' => 'required',
             'sadrzaj' => 'required',
             'slika' => 'dimensions:min_width=980,min_height=720|max:5120'
@@ -103,7 +103,7 @@ class VijestiController extends Controller
         if ($validatedData->fails()) {
             return response()->json([
                 'success' => false,
-                'errors' => $validatedData->errors()
+                'errors' => $validatedData->errors()->all()
             ]);
         }
 
@@ -119,15 +119,15 @@ class VijestiController extends Controller
 
         $photoName = null;
 
-        if ($request->slika->length !== 0) {
+        if ($request->slika) {
             // Ucitaj sliku i spasi u /public/images/vijesti/galerija
             $photoName = auth()->user()->id . '_' . time() . '.' . $request->slika->getClientOriginalExtension();
-            $request->slika->move(public_path('images/vijesti/galerija'), $photoName);
+            $request->slika->move(Config::get('general.image_paths.vijesti'), $photoName);
 
             // Izrezi i optimizuj sliku za naslovnu
-            $image_resize = Image::make(public_path('images/vijesti/galerija/' . $photoName));
+            $image_resize = Image::make(Config::get('general.image_paths.vijesti') . $photoName);
             $image_resize->crop(960, 600);
-            $image_resize->save(public_path('images/vijesti/galerija/' . 'naslovna' . $photoName));
+            $image_resize->save(Config::get('general.image_paths.vijesti') . 'naslovna' . $photoName);
         }
 
         $vijest->naslov = $request->naslov;
@@ -151,7 +151,7 @@ class VijestiController extends Controller
                     }
                 }
 
-                $vijest->tagovi()->sync($tagoviIds, false);
+                $vijest->tagovi()->sync($tagoviIds);
             }
 
             return response()->json([

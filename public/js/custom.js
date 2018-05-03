@@ -132,9 +132,10 @@ $(document).ready(function () {
             vijest.append('id', $('#editNewsForm').find('input[name="naslov"]').val());
             vijest.append('naslov', $('#editNewsForm').find('textarea[name="sadrzaj"]').val());
             vijest.append('sadrzaj', $('#editNewsForm').find('textarea[name="sadrzaj"]').val());
-            vijest.append('slika', $('#editNewsForm').find('input[name="slika"]')[0].files[0]);
+            vijest.append('slika', $('#editNewsForm').find('input[name="slika"]').prop('files'));
             vijest.append('kategorija', $('#editNewsForm').find('select[name="kategorija"]').val());
             vijest.append('tagovi', $('#editNewsForm').find('input[name="tagovi"]').val());
+            vijest.append('_method', 'PUT');
             editNews(id, vijest);
         }
     });
@@ -261,7 +262,6 @@ function addNewsToEditModal(vijest) {
     displayNewsModal.find('.news-image img').attr('src', vijest.slika ? (config.site.paths.news_images + vijest.slika) : config.site.defaults.news_default_image);
     displayNewsModal.find('#editNewsButton').data('id', vijest.id);
 
-    //displayNewsModal.find('input[name="tagovi"]').val(tagovi);
     var $select = $('#tagovi-vijesti').selectize({
         delimiter: ',',
         persist: false,
@@ -274,13 +274,19 @@ function addNewsToEditModal(vijest) {
     });
 
     var selectize = $select[0].selectize;
+    selectize.clear();
+    selectize.clearOptions();
 
     vijest.tagovi.forEach(function (tag) {
         selectize.addOption({value: tag.tag, text: tag.tag});
         selectize.addItem(tag.tag);
     });
+
+    selectize.refreshItems();
     selectize.refreshOptions();
 
+    $('.info-upload-slike').removeAttr('style');
+    $('#editNewsServerErrors').hide(0);
     displayNewsModal.modal('show');
 }
 
@@ -315,21 +321,34 @@ function readURL(input) {
 }
 
 function editNews(id, vijest) {
+    var formData = new FormData($('#editNewsForm')[0]);
+    formData.append('_method', 'PUT');
     $.ajax({
-        method: 'PUT',
-        data: vijest,
+        method: 'POST',
+        data: formData,
         url: '/api/news/' + id + '/edit',
         cache: false,
         processData: false,
-        contentType: false
+        contentType: false,
+        enctype: 'multipart/form-data'
     }).done(function (response) {
         var type;
 
         if (!response.success) {
-
+            if(response.errors) {
+                $('#editNewsServerErrors').find('ul').html('');
+                response.errors.forEach(function (error) {
+                    $('#editNewsServerErrors').find('ul').append('<li>' + error + '</li>');
+                });
+                $('#editNewsServerErrors').show();
+            } else {
+                type = 'danger';
+                $('#editNews').modal('hide');
+                notifyUser(type, response.message);
+            }
         } else {
             type = 'success';
-            $('#displaynews').modal('hide');
+            $('#editNews').modal('hide');
             notifyUser(type, response.message);
         }
     });

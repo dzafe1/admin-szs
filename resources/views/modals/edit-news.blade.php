@@ -11,6 +11,7 @@
                 <img class="repsponsive-centered-image" src="">
             </div>
             <div class="modal-body">
+                <div id="editNewsServerErrors" class="alert alert-danger"><ul></ul></div>
                 <form id="editNewsForm" role="form" enctype="multipart/form-data">
                     <div class="row identitet-style">
 
