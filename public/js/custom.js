@@ -2,7 +2,9 @@ var app_domain = 'http://localhost:8080';
 var config = {
     site: {
         paths: {
-            news_images: app_domain + '/images/vijesti/galerija/'
+            news_images: app_domain + '/images/vijesti/galerija/',
+            player_images: app_domain + '/images/athlete_avatars/',
+            player_gallery: app_domain + '/images/galerija_sportista/'
         },
         defaults: {
             news_default_image: app_domain + '/images/vijesti/vijesti-dodaj-sliku.png'
@@ -32,12 +34,9 @@ $(document).ready(function () {
         var id;
         id = $(this).data('id');
 
-        console.log(id);
-
         var confirmation = confirm('Da li ste sigurni da želite odobriti ovu vijest?');
 
         if(confirmation) {
-            // $(location).attr('href', '/news/' + id + '/approve');
             approveNews(id);
         }
 
@@ -51,7 +50,6 @@ $(document).ready(function () {
         var confirmation = confirm('Da li ste sigurni da želite izbrisati ovu vijest?');
 
         if(confirmation) {
-            // $(location).attr('href', '/news/' + id + '/delete');
             deleteNews(id)
         }
 
@@ -219,6 +217,51 @@ $(document).ready(function () {
 
         if(confirmation) {
             deleteUser(id)
+        }
+
+    });
+
+    // Players
+    $('body').on('click', '.display-player',function () {
+        var id;
+
+        id = $(this).data('id');
+
+        getPlayerById(id, 'display');
+    });
+
+    $('#displayPlayer').on('click', '#approvePlayer', function () {
+        var id;
+        id = $(this).data('id');
+
+        var confirmation = confirm('Da li ste sigurni da želite odobriti ovog igrača?');
+
+        if(confirmation) {
+            approvePlayer(id);
+        }
+
+    });
+
+    $('#displayPlayer').on('click', '#deletePlayer', function () {
+        var id;
+        id = $(this).data('id');
+
+        var confirmation = confirm('Da li ste sigurni da želite odbiti ovog igrača?');
+
+        if(confirmation) {
+            refusePlayer(id);
+        }
+
+    });
+
+    $('body').on('click', '.delete-player', function () {
+        var id;
+        id = $(this).data('id');
+
+        var confirmation = confirm('Da li ste sigurni da želite izbrisati ovog igrača?');
+
+        if(confirmation) {
+            deletePlayer(id);
         }
 
     });
@@ -509,6 +552,194 @@ function deleteUser(id) {
 
             $('.delete-user[data-id="' + id + '"]').closest('tr').remove();
         }
+
+        notifyUser(type, response.message)
+    });
+}
+
+function getPlayerById(id, type) {
+    $.ajax({
+        method: 'GET',
+        url: '/api/players/' + id
+    }).done(function (response) {
+        if(response.success) {
+            if(response.success) {
+                if(type === 'display') {
+                    addPlayerToModal(response.player);
+                } else if(type === 'edit') {
+                    addPlayerToEditModal(response.player);
+                }
+            }
+        }
+    });
+}
+
+function addPlayerToModal(player) {
+    var displayPlayerModal = $('#displayPlayer');
+    var dob = new Date(player.date_of_birth);
+
+    if(player.status === 'active') {
+        displayPlayerModal.find('.modal-footer').remove();
+    }
+
+    var player_data = '';
+    Object.keys(player.player_data).forEach(function (key) {
+        player_data += '<li><b>' + player.player_data_names[key].label.bs + '</b> ' + (player.player_data[key] || 'Nema') +'</li>';
+    });
+
+    var trophies = '';
+    Object.keys(player.trophies).forEach(function (key) {
+        trophies += '<div class="col-md-4">' +
+            '<div class="custom-box-row">' +
+            '<ul>' +
+            '<li><b>Tip:</b> ' + player.trophies[key].type + '</li>' +
+            '<li><b>Mjesto:</b> ' + player.trophies[key].place + '</li>' +
+            '<li><b>Nivo takmičenja:</b> ' + player.trophies[key].level_of_competition + '</li>' +
+            '<li><b>Naziv takmičenja:</b> ' + player.trophies[key].competition_name + '</li>' +
+            '<li><b>Sezona:</b> ' + player.trophies[key].season + '</li>' +
+            '</ul>' +
+            '</div>' +
+            '</div>';
+    });
+
+    var images = '';
+    Object.keys(player.images).forEach(function (key) {
+        images += '<div class="col-md-12">' +
+            '<div class="custom-box-row">' +
+            '<img class="responsive-img" src="' + config.site.paths.player_gallery + player.images[key].image + '">' +
+            '</div>' +
+            '</div>';
+    });
+
+    var playerInfo = '<div class="row custom-box-row">' +
+        '<div class="col-md-6">' +
+        '<h3>Osnovne informacije</h3>' +
+        '<ul>' +
+        '<li><b>Datum rođenja:</b> ' + dob.getDay() + '/' + dob.getMonth() + '/' + dob.getFullYear() + '</li>' +
+        '<li><b>Klub: </b> ' + (player.club ? player.club.name : '<i>Nije uneseno</i>') + '</li>' +
+        '<li><b>Takmičenje/Liga: </b> ' + (player.club ? player.club.competition : 'Nema') + '</li>' +
+        '</ul>' +
+        '</div>' +
+        '<div class="col-md-6">' +
+        '<h3>Predispozicije</h3>' +
+        '<ul>' +
+        '<li><b>Visina:</b> ' + (player.height ? player.height + ' cm' : 'Nema') + '</li>' +
+        '<li><b>Težina:</b> ' + (player.weight ? player.weight + ' kg' : 'Nema') + '</li>' +
+        player_data +
+        '</ul>' +
+        '</div>' +
+        '</div>' +
+        '<div class="row custom-box-row">' +
+        '<div class="col-md-12">' +
+        '<h3>Regija</h3>' +
+        '</div>' +
+        '<div class="col-md-6">' +
+        '<ul>' +
+        '<li><b>Kontinent:</b> ' + (player.regions.continent || 'Nema') + '</li>' +
+        '<li><b>Država:</b> ' + (player.regions.country || 'Nema') + '</li>' +
+        '<li><b>Entitet/Pokrajina:</b> ' + (player.regions.province || 'Nema') + '</li>' +
+        '</ul>' +
+        '</div>' +
+        '<div class="col-md-6">' +
+        '<ul>' +
+        '<li><b>Kanton/Regija:</b> ' + (player.regions.region || 'Nema') + '</li>' +
+        '<li><b>Općina:</b> ' + (player.regions.municipality || 'Nema') + '</li>' +
+        '<li><b>Grad/Mjesto:</b> ' + (player.regions.city || 'Nema') + '</li>' +
+        '</ul>' +
+        '</div>' +
+        '</div>' +
+        '<div class="row custom-box-row">' +
+        '<div class="col-md-12">' +
+        '<h3>Biografija</h3>' +
+        '</div>' +
+        '<div class="col-md-12">' +
+        (player.biography || 'Biografija nije unesena.') +
+        '</div>' +
+        '</div>' +
+        '<div class="row custom-box-row">' +
+        '<div class="col-md-12">' +
+        '<h3>Trofeji/Nagrade</h3>' +
+        '</div>' +
+        (trophies || '<div class="col-md-12">Nema trofeja.</div>') +
+        '</div>' +
+        '<div class="row custom-box-row">' +
+        '<div class="col-md-12">' +
+        '<h3>Galerija</h3>' +
+        '</div>' +
+        (images || '<div class="col-md-12">Nema slika.</div>') +
+        '</div>';
+
+    displayPlayerModal.find('.modal-title').html('<b>' + player.firstname + ' ' + player.lastname + ' (<i>' + player.player_type.name + '</i>)</b>');
+    displayPlayerModal.find('.player-content').html(playerInfo);
+    displayPlayerModal.find('.player-image img').attr('src', config.site.paths.player_images + player.avatar);
+    displayPlayerModal.find('#deletePlayer').data('id', player.id);
+    displayPlayerModal.find('#approvePlayer').data('id', player.id);
+
+
+    displayPlayerModal.modal('show');
+}
+
+function approvePlayer(id) {
+    $.ajax({
+        method: 'PATCH',
+        data: {
+            id: id
+        },
+        url: '/api/players/approve'
+    }).done(function (response) {
+        var type = 'danger';
+
+        if(response.success) {
+            type = 'success';
+
+            $('.display-player[data-id="' + id + '"]').closest('tr').remove();
+        }
+
+        $('#displayPlayer').modal('hide');
+
+        notifyUser(type, response.message)
+    });
+}
+
+function refusePlayer(id) {
+    $.ajax({
+        method: 'PATCH',
+        data: {
+            id: id
+        },
+        url: '/api/players/refuse'
+    }).done(function (response) {
+        var type = 'danger';
+
+        if(response.success) {
+            type = 'success';
+
+            $('.display-player[data-id="' + id + '"]').closest('tr').remove();
+        }
+
+        $('#displayPlayer').modal('hide');
+
+        notifyUser(type, response.message)
+    });
+}
+
+function deletePlayer(id) {
+    $.ajax({
+        method: 'PATCH',
+        data: {
+            id: id
+        },
+        url: '/api/players/delete'
+    }).done(function (response) {
+        var type = 'danger';
+
+        if(response.success) {
+            type = 'success';
+
+            $('.display-player[data-id="' + id + '"]').closest('tr').remove();
+        }
+
+        $('#displayPlayer').modal('hide');
 
         notifyUser(type, response.message)
     });

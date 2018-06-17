@@ -111,6 +111,20 @@
                         </ul>
                     </li>
                     <li>
+                        <a><i class="fa fa-university"></i>Škole sporta<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="{{url('/skole')}}">Pregled svih škola</a></li>
+                            <li><a href="{{url('/unauth/skole')}}">Pregled neodobrenih škola</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-user-secret"></i>Stručni kadrovi<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="{{url('/kadrovi')}}">Pregled svih kadrova</a></li>
+                            <li><a href="{{url('/unauth/kadrovi')}}">Pregled neodobrenih kadrova</a></li>
+                        </ul>
+                    </li>
+                    <li>
                         <a><i class="fa fa-newspaper-o"></i>Vijesti<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li><a href="{{url('/news')}}">Pregled svih vijesti</a></li>

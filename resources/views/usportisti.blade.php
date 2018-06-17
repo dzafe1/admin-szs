@@ -22,6 +22,7 @@
                 <div class="row">
                     <!-- Data tables -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="szs-alert alert"></div>
                         <div class="card">
                             <div class="card-header">
                                 <i class="fa fa-table fa-lg"></i>
@@ -39,37 +40,42 @@
                                             <th>Sport</th>
                                             <th>Kreiran</th>
                                             <th>Pogledaj</th>
-                                            <th>Dokazi</th>
-                                            <th>Odobri</th>
-                                            <th>Odbij</th>
+                                            <th>Edituj</th>
+                                            <th>Obriši</th>
+                                            <th>Status</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>Meho Mehic</td>
-                                            <td>Mehin Babo</td>
-                                            <td>Mehici FC</td>
-                                            <td>Profesionalac</td>
-                                            <td>Nogomet</td>
-                                            <td>12-12-2018</td>
-                                            <td><i class="fa fa-external-link-square"></i></td>
-                                            <td><i class="fa fa-picture-o"></i></td>
-                                            <td><i class="fa fa-check"></i></td>
-                                            <td><i class="fa fa-times"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Meho Mehic</td>
-                                            <td>Mehin Babo</td>
-                                            <td>Mehici FC</td>
-                                            <td>Profesionalac</td>
-                                            <td>Nogomet</td>
-                                            <td>12-12-2018</td>
-                                            <td><i class="fa fa-external-link-square"></i></td>
-                                            <td><i class="fa fa-picture-o"></i></td>
-                                            <td><i class="fa fa-check"></i></td>
-                                            <td><i class="fa fa-times"></i></td>
-                                        </tr>
-
+                                        @foreach($players as $k)
+                                            <tr>
+                                                <td>{{$k->firstname}} {{$k->lastname}}</td>
+                                                <td>{{$k->user->name}}</td>
+                                                <td>{{$k->club_id ? $k->club->name : 'Nije dodjeljen klubu'}}</td>
+                                                <td>{{$k->nature->name}}</td>
+                                                <td>{{$k->player_type->name}}</td>
+                                                <td>{{\Carbon\Carbon::parse($k->created_at)->format('d.m.Y.')}}</td>
+                                                <td>
+                                                    <a data-id="{{ $k->id }}" class="display-player">
+                                                        <i class="fa fa-external-link"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a data-id="{{ $k->id }}" class="edit-player">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a data-id="{{ $k->id }}" class="delete-player">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                </td>
+                                                @if($k->status == 'waiting')
+                                                    <td>NA ČEKANJU</td>
+                                                @elseif($k->status == 'refused')
+                                                    <td>ODBIJEN</td>
+                                                @endif
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -82,5 +88,9 @@
             </div>
             <!-- ./page-content -->
         </div>
+
+    <!-- Modals -->
+    @include('modals.display-player')
+    <!-- Modals End -->
 
 @endsection

@@ -17,30 +17,14 @@ Auth::routes();
 
 // Dodaje protekciju na rute samo za logovane korisnike
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/klubovi', 'KluboviController@index');
     Route::get('/dashboard','DashboardController@index');
     Route::get('/','DashboardController@index');
     Route::get('/home','DashboardController@index');
-    Route::get('/users', 'KorisniciController@index');
-    Route::get('/objekti', function(){
-        return view('objekti');
-    });
+
     Route::get('/prijave', function(){
         return view('prijave');
     });
 
-    Route::get('/sportisti', 'SportistiController@index');
-
-
-    Route::get('/unauth/klubovi', function(){
-        return view('uklubovi');
-    });
-    Route::get('/unauth/sportisti', function(){
-        return view('usportisti');
-    });
-    Route::get('/unauth/objekti', function(){
-        return view('uobjekti');
-    });
     Route::get('/unauth/priajve', function(){
         return view('uprijave');
     });
@@ -48,8 +32,29 @@ Route::group(['middleware' => 'auth'], function () {
     // Vijesti
     Route::get('/news', 'VijestiController@index');
     Route::get('/unauth/news', 'VijestiController@indexWaitingApproval');
+
     // Korsnici
     Route::get('/users', 'KorisniciController@index');
+
+    // Players
+    Route::get('/sportisti', 'PlayerController@approvedPlayersList');
+    Route::get('/unauth/sportisti', 'PlayerController@notApprovedPlayersList');
+
+    // Objects
+    Route::get('/objekti', 'ObjectController@approvedObjectsList');
+    Route::get('/unauth/objekti', 'ObjectController@notApprovedObjectsList');
+
+    // Clubs
+    Route::get('/klubovi', 'ClubController@approvedClubsList');
+    Route::get('/unauth/klubovi', 'ClubController@notApprovedClubsList');
+
+    // Schools
+    Route::get('/skole', 'SchoolController@approvedSchoolsList');
+    Route::get('/unauth/skole', 'SchoolController@notApprovedSchoolsList');
+
+    // Staff
+    Route::get('/kadrovi', 'StaffController@approvedStaffList');
+    Route::get('/unauth/kadrovi', 'StaffController@notApprovedStaffList');
 
     // Ajax API rute
     Route::prefix('api')->group(function () {
@@ -63,6 +68,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('users/{id}', 'KorisniciController@getUserById');
         Route::patch('users/delete', 'KorisniciController@deleteUser');
         Route::put('users/{id}/edit', 'KorisniciController@editUser');
+
+        // Players API routes
+        Route::get('players/{id}', 'PlayerController@getPlayerById');
+        Route::patch('players/approve', 'PlayerController@approvePlayer');
+        Route::patch('players/delete', 'PlayerController@deletePlayer');
+        Route::patch('players/refuse', 'PlayerController@refusePlayer');
     });
 
 
