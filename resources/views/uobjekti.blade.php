@@ -38,32 +38,41 @@
                                             <th>Adresa</th>
                                             <th>Kreiran</th>
                                             <th>Pogledaj</th>
-                                            <th>Odobri</th>
-                                            <th>Odbij</th>
+                                            <th>Edituj</th>
+                                            <th>Obriši</th>
+                                            <th>Status</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>Pro Gym</td>
-                                            <td>Mehin Babo</td>
-                                            <td>Teretana</td>
-                                            <td>Kosevska 21</td>
-                                            <td>12-12-2018</td>
-                                            <td><i class="fa fa-external-link-square"></i></td>
-                                            <td><i class="fa fa-check"></i></td>
-                                            <td><i class="fa fa-times"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Pro Gym</td>
-                                            <td>Mehin Babo</td>
-                                            <td>Teretana</td>
-                                            <td>Kosevska 21</td>
-                                            <td>12-12-2018</td>
-                                            <td><i class="fa fa-external-link-square"></i></td>
-                                            <td><i class="fa fa-check"></i></td>
-                                            <td><i class="fa fa-times"></i></td>
-                                        </tr>
-
+                                        @foreach($objects as $k)
+                                            <tr>
+                                                <td>{{$k->name}}</td>
+                                                <td>{{$k->user->name}}</td>
+                                                <td>{{$k->type->type}}</td>
+                                                <td>{{$k->address or '-'}}</td>
+                                                <td>{{\Carbon\Carbon::parse($k->created_at)->format('d.m.Y.')}}</td>
+                                                <td>
+                                                    <a data-id="{{ $k->id }}" class="display-object">
+                                                        <i class="fa fa-external-link"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a data-id="{{ $k->id }}" class="edit-object">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a data-id="{{ $k->id }}" class="delete-object">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                </td>
+                                                @if($k->status == 'waiting')
+                                                    <td>NA ČEKANJU</td>
+                                                @elseif($k->status == 'refused')
+                                                    <td>ODBIJEN</td>
+                                                @endif
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>

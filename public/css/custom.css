@@ -34,11 +34,11 @@
     border-radius: 10px 10px 0 0;
 }
 
-#displayNews .modal-title {
+.modal-title {
     margin-right: 20px;
 }
 
-#displayNews .modal-header .close {
+.modal-header .close {
     position: absolute;
     right: 17px;
 }
@@ -71,4 +71,17 @@
 
 #editNewsServerErrors {
     display: none;
+}
+
+#displayPlayer .player-image,
+#editPlayer .player-image{
+    width: 200px;
+    height: 200px;
+    margin: 15px;
+}
+
+.custom-box-row {
+    padding: 20px 10px;
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
 }

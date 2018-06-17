@@ -36,36 +36,47 @@
                                             <th>Napravio</th>
                                             <th>Adresa</th>
                                             <th>Tip</th>
+                                            <th>Sport</th>
+                                            <th>Kategorija</th>
                                             <th>Kreiran</th>
                                             <th>Pogledaj</th>
-                                            <th>Dokazi</th>
-                                            <th>Odobri</th>
-                                            <th>Odbij</th>
+                                            <th>Edituj</th>
+                                            <th>Obriši</th>
+                                            <th>Status</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>FK Zeljo</td>
-                                            <td>Mehin Babo</td>
-                                            <td>Grabavica 2</td>
-                                            <td>Nogometni klub</td>
-                                            <td>12-12-2018</td>
-                                            <td><i class="fa fa-external-link-square"></i></td>
-                                            <td><i class="fa fa-picture-o"></i></td>
-                                            <td><i class="fa fa-check"></i></td>
-                                            <td><i class="fa fa-times"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <td>FK Zeljo</td>
-                                            <td>Mehin Babo</td>
-                                            <td>Grabavica 2</td>
-                                            <td>Nogometni klub</td>
-                                            <td>12-12-2018</td>
-                                            <td><i class="fa fa-external-link-square"></i></td>
-                                            <td><i class="fa fa-picture-o"></i></td>
-                                            <td><i class="fa fa-check"></i></td>
-                                            <td><i class="fa fa-times"></i></td>
-                                        </tr>
+                                        @foreach($clubs as $k)
+                                            <tr>
+                                                <td>{{$k->name}}</td>
+                                                <td>{{$k->creator->name}}</td>
+                                                <td>{{$k->address or '-'}}</td>
+                                                <td>{{$k->sport->with_disabilities ? 'Invalidski sportski klub' : 'Sportski klub'}}</td>
+                                                <td>{{$k->sport->name}}</td>
+                                                <td>{{$k->category->name}}</td>
+                                                <td>{{\Carbon\Carbon::parse($k->created_at)->format('d.m.Y.')}}</td>
+                                                <td>
+                                                    <a data-id="{{ $k->id }}" class="display-club">
+                                                        <i class="fa fa-external-link"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a data-id="{{ $k->id }}" class="edit-club">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a data-id="{{ $k->id }}" class="delete-club">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                </td>
+                                                @if($k->status == 'waiting')
+                                                    <td>NA ČEKANJU</td>
+                                                @elseif($k->status == 'refused')
+                                                    <td>ODBIJEN</td>
+                                                @endif
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>

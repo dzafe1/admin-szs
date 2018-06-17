@@ -36,6 +36,8 @@
                                             <th>Napravio</th>
                                             <th>Adresa</th>
                                             <th>Tip</th>
+                                            <th>Sport</th>
+                                            <th>Kategorija</th>
                                             <th>Kreiran</th>
                                             <th>Pogledaj</th>
                                             <th>Edituj</th>
@@ -43,16 +45,30 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($klubovi as $klub)
+                                        @foreach($clubs as $k)
                                         <tr>
-                                            <td>{{$klub->name}}</td>
-                                            <td>{{$klub->user_id}}</td>
-                                            <td>{{$klub->adresa}}</td>
-                                            <td>{{$klub->tip}}</td>
-                                            <td>Nema u bazi</td>
-                                            <td><i class="fa fa-external-link-square"></i></td>
-                                            <td><i class="fa fa-edit"></i></td>
-                                            <td><i class="fa fa-times"></i></td>
+                                            <td>{{$k->name}}</td>
+                                            <td>{{$k->creator->name}}</td>
+                                            <td>{{$k->address or '-'}}</td>
+                                            <td>{{$k->sport->with_disabilities ? 'Invalidski sportski klub' : 'Sportski klub'}}</td>
+                                            <td>{{$k->sport->name}}</td>
+                                            <td>{{$k->category->name}}</td>
+                                            <td>{{\Carbon\Carbon::parse($k->created_at)->format('d.m.Y.')}}</td>
+                                            <td>
+                                                <a data-id="{{ $k->id }}" class="display-club">
+                                                    <i class="fa fa-external-link"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a data-id="{{ $k->id }}" class="edit-club">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a data-id="{{ $k->id }}" class="delete-club">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </td>
                                         </tr>
                                         @endforeach
                                         </tbody>

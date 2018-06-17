@@ -9,11 +9,11 @@
                     <i class="fa fa-table"></i>
                 </div>
                 <div class="header-title">
-                    <h1> Pregled korisnika</h1>
-                    <small>Korisnici</small>
+                    <h1> Pregled stručnih kadrova</h1>
+                    <small>Kadrovi</small>
                     <ul class="link hidden-xs">
                         <li><a href="kontrolna-ploča.html"><i class="fa fa-home"></i>Početna</a></li>
-                        <li><a href="datatable.html">Pregled korisnika</a></li>
+                        <li><a href="datatable.html">Pregled kadrova</a></li>
                     </ul>
                 </div>
             </section>
@@ -26,7 +26,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <i class="fa fa-table fa-lg"></i>
-                                <h2>Lista svih korisnika</h2>
+                                <h2>Lista svih kadrova</h2>
                             </div>
                             <div class="card-content">
                                 <div class="table-responsive">
@@ -36,8 +36,7 @@
                                             <th>Ime i prezime</th>
                                             <th>Napravio</th>
                                             <th>Klub</th>
-                                            <th>Tip</th>
-                                            <th>Sport</th>
+                                            <th>Profesija</th>
                                             <th>Kreiran</th>
                                             <th>Pogledaj</th>
                                             <th>Edituj</th>
@@ -45,26 +44,25 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($players as $k)
+                                        @foreach($staff as $k)
                                         <tr>
                                             <td>{{$k->firstname}} {{$k->lastname}}</td>
                                             <td>{{$k->user->name}}</td>
-                                            <td>{{$k->club_id ? $k->club->name : 'Nije dodjeljen klubu'}}</td>
-                                            <td>{{$k->nature->name}}</td>
-                                            <td>{{$k->player_type->name}}</td>
+                                            <td>{{$k->club_id ? $k->club->name : ($k->club_name ? $k->club_name : 'Nije dodjeljen klubu')}}</td>
+                                            <td>{{$k->profession->name}}</td>
                                             <td>{{\Carbon\Carbon::parse($k->created_at)->format('d.m.Y.')}}</td>
                                             <td>
-                                                <a data-id="{{ $k->id }}" class="display-player">
+                                                <a data-id="{{ $k->id }}" class="display-staff">
                                                     <i class="fa fa-external-link"></i>
                                                 </a>
                                             </td>
                                             <td>
-                                                <a data-id="{{ $k->id }}" class="edit-player">
+                                                <a data-id="{{ $k->id }}" class="edit-staff">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                             </td>
                                             <td>
-                                                <a data-id="{{ $k->id }}" class="delete-player">
+                                                <a data-id="{{ $k->id }}" class="delete-staff">
                                                     <i class="fa fa-times"></i>
                                                 </a>
                                             </td>
