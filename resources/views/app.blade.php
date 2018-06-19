@@ -218,9 +218,11 @@
 <!-- Start Theme label Script
      =====================================================================-->
 <!-- main js-->
-<script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.12.0/validate.min.js"></script>
+<script type="text/javascript" src={{asset('js/validate.js')}}></script>
+<script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.validation/1.13.1/additional-methods.js"></script>
 <script src="{{asset('assets/dist/js/main.js')}}" type="text/javascript"></script>
 <script src="{{ asset('js/selectize.js') }}"></script>
+<script src="{{ asset('js/xregexp-all.js') }}"></script>
 <script src="{{asset('js/custom.js')}}" type="text/javascript"></script>
 <!-- End Theme label Script
      =====================================================================-->
