@@ -85,6 +85,7 @@
 
     <!-- Modals -->
     @include('modals.display-player')
+    @include('modals.edit-player')
     <!-- Modals End -->
 
 @endsection

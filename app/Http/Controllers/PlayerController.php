@@ -349,13 +349,10 @@ class PlayerController extends Controller
             ->getById($id);
 
         if(!$player) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio igraca
-        $isOwner = $player->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Sportista ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -377,18 +374,26 @@ class PlayerController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/athletes/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updatePlayerGeneral = $this->playerRepository
                 ->updateGeneral($request, $player);
 
             if($updatePlayerGeneral) {
-                flash()->overlay('Uspješno ste izmjenili "Općenito" sekciju sportiste.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili sekciju "Općenito" sportiste.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena sekcije "Općenito" sportiste neuspješna.'
+            ]);
         }
 
     }
@@ -398,13 +403,10 @@ class PlayerController extends Controller
             ->getByIdWithAllData($id);
 
         if(!$player) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio igraca
-        $isOwner = $player->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Sportista ne postoji.'
+            ]);
         }
 
         $allValidators = [
@@ -425,18 +427,26 @@ class PlayerController extends Controller
         $validator = Validator::make($request->all(), $allValidators);
 
         if($validator->fails()){
-            return redirect('/athletes/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updatePlayerStatus = $this->playerRepository
                 ->updateStatus($request, $player);
 
             if($updatePlayerStatus) {
-                flash()->overlay('Uspješno ste izmjenili predispozicije sportiste.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili predispozicije sportiste.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena predispozicija sportiste neuspješna.'
+            ]);
         }
     }
 
@@ -445,13 +455,10 @@ class PlayerController extends Controller
             ->getById($id);
 
         if(!$player) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio igraca
-        $isOwner = $player->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Sportista ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -459,18 +466,26 @@ class PlayerController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/athletes/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updatePlayerBiography = $this->playerRepository
                 ->updateBiography($request, $player);
 
             if($updatePlayerBiography) {
-                flash()->overlay('Uspješno ste izmjenili biografiju sportiste.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili biografiju sportiste.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena biografije sportiste neuspješna.'
+            ]);
         }
     }
 
@@ -479,13 +494,10 @@ class PlayerController extends Controller
             ->getById($id);
 
         if(!$player) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio igraca
-        $isOwner = $player->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Sportista ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -500,18 +512,26 @@ class PlayerController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/athletes/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updatePlayerTrophies = $this->playerRepository
                 ->updateTrophies($request, $player);
 
             if($updatePlayerTrophies) {
-                flash()->overlay('Uspješno ste izmjenili trofeje/nagrade sportiste.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili trofeje/nagrade sportiste.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena trofeja/nagrada sportiste neuspješna.'
+            ]);
         }
     }
 
@@ -520,13 +540,10 @@ class PlayerController extends Controller
             ->getById($id);
 
         if(!$player) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio igraca
-        $isOwner = $player->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Sportista ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -535,18 +552,26 @@ class PlayerController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/athletes/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updatePlayerGallery = $this->playerRepository
                 ->updateGallery($request, $player);
 
             if($updatePlayerGallery) {
-                flash()->overlay('Uspješno ste izmjenili galeriju sportiste.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili galeriju sportiste.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena galerije sportiste neuspješna.'
+            ]);
         }
     }
 
@@ -731,5 +756,90 @@ class PlayerController extends Controller
             'success' => true,
             'message' => 'Igrač odbijen uspješno.'
         ]);
+    }
+
+    public function getPlayerEditForm($id) {
+
+        $player = $this->playerRepository
+            ->getByIdWithAllData($id);
+
+        if(!$player) {
+            return null;
+        }
+
+        // Provjera da li je user napravio igraca
+        $isOwner = $player->user->id == Auth::user()->id;
+        if(!$isOwner) {
+            return null;
+        }
+
+        $columns = Schema::getColumnListing($player->player_type->players_table);
+        $to_delete = ['id', 'player_type_id', 'created_at', 'updated_at'];
+        $columns = array_diff($columns, $to_delete);
+
+        $inputs = [];
+        foreach ($this->allAttributesInputs as $key => $attribute) {
+            foreach ($columns as $column) {
+                if($key == $column) {
+                    $inputs[$key] = $attribute;
+                }
+            }
+        }
+
+        foreach ($inputs as $key => $input) {
+            $inputs[$key] = explode('|', $input);
+            foreach ($inputs[$key] as $key_in => $input_attribute) {
+                $newArray = explode(':', $input_attribute);
+
+                $inputs[$key][$newArray[0]] = $newArray[1];
+                unset($inputs[$key][$key_in]);
+            }
+        }
+
+        if($player->player_type->name == 'Atletika') {
+            unset($inputs['discipline']['skijanje_options']);
+        }
+
+        if($player->player_type->name == 'Skijanje') {
+            $inputs['discipline']['options'] = $inputs['discipline']['skijanje_options'];
+            unset($inputs['discipline']['skijanje_options']);
+        }
+
+        if($player->player_type->name == 'Biciklizam') {
+            unset($inputs['category']['karate_options']);
+        }
+
+        if($player->player_type->name == 'Karate') {
+            $inputs['category']['options'] = $inputs['category']['karate_options'];
+            unset($inputs['category']['karate_options']);
+        }
+
+        foreach ($inputs as $key => $input) {
+            if(array_key_exists('options', $input)){
+                $inputs[$key]['options'] = explode(',', $input['options']);
+            }
+        }
+
+        $inputs = json_decode(json_encode($inputs));
+
+        $playerNatures = $this->playerRepository
+            ->getAllPlayerNatures();
+
+        $regions = $this->regionRepository
+            ->getAll();
+
+        $clubs = $this->clubRepository
+            ->getAllForSport($player->player_type->id);
+
+        $clubRegions = collect();
+        $currentRegion = $player->region;
+        while ($currentRegion) {
+            $clubRegions->put(strtolower($currentRegion->region_type->type), $currentRegion->id);
+
+            $currentRegion = $currentRegion->parent_region;
+        }
+
+        $player->setAttribute('regions', $clubRegions);
+        return view('partials.edit-player-form', compact('player', 'inputs', 'playerNatures', 'regions', 'clubs'));
     }
 }

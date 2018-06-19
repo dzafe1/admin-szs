@@ -313,7 +313,7 @@ class PlayerRepository {
         if($request->file('avatar')){
             $logo = $request->file('avatar');
             $newLogoName = time() . '-' . Auth::user()->id . '.' . $logo->getClientOriginalExtension();
-            $destinationPath = public_path('/images/athlete_avatars');
+            $destinationPath = config('general.image_paths.player_images');
             $logo->move($destinationPath, $newLogoName);
         }
 
@@ -499,7 +499,7 @@ class PlayerRepository {
             $galerije = $request->file('galerija');
             foreach($galerije as $key => $slika){
                 $newgalName = $key . '-' .time() . '-' .  $player->id . '.' . $slika->getClientOriginalExtension();
-                $destPath = public_path('/images/galerija_sportista');
+                $destPath = config('general.image_paths.player_gallery');
                 $slika->move($destPath, $newgalName);
 
                 Gallery::create([

@@ -71,9 +71,15 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Players API routes
         Route::get('players/{id}', 'PlayerController@getPlayerById');
+        Route::get('players/editForm/{id}', 'PlayerController@getPlayerEditForm');
         Route::patch('players/approve', 'PlayerController@approvePlayer');
         Route::patch('players/delete', 'PlayerController@deletePlayer');
         Route::patch('players/refuse', 'PlayerController@refusePlayer');
+        Route::patch('players/{id}/edit/general', 'PlayerController@editPlayerGeneral');
+        Route::patch('players/{id}/edit/status', 'PlayerController@editPlayerStatus');
+        Route::patch('players/{id}/edit/biography', 'PlayerController@editPlayerBiography');
+        Route::patch('players/{id}/edit/trophies', 'PlayerController@editPlayerTrophies');
+        Route::patch('players/{id}/edit/gallery', 'PlayerController@editPlayerGallery');
     });
 
 
