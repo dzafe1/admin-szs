@@ -86,4 +86,7 @@
             <!-- ./page-content -->
         </div>
 
+    <!-- Modals -->
+    @include('modals.display-object')
+    <!-- Modals End -->
 @endsection

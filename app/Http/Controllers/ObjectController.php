@@ -333,24 +333,30 @@ class ObjectController extends Controller
         }
     }
 
-    public function showObject($id) {
+    public function getObjectById($id) {
         $object = $this->objectRepository
             ->getByIdWithAllData($id);
 
-        if($object) {
-            $regions = collect();
-            $currentRegion = $object->region;
-            while ($currentRegion) {
-                $regions->put(strtolower($currentRegion->region_type->type), $currentRegion->name);
-
-                $currentRegion = $currentRegion->parent_region;
-            }
-
-            $object->setAttribute('regions', $regions);
-            return view('objects.profile', compact('object'));
+        if(!$object) {
+            return response()->json([
+                'success' => false,
+            ]);
         }
 
-        abort(404);
+        $regions = collect();
+        $currentRegion = $object->region;
+        while ($currentRegion) {
+            $regions->put(strtolower($currentRegion->region_type->type), $currentRegion->name);
+
+            $currentRegion = $currentRegion->parent_region;
+        }
+
+        $object->setAttribute('regions', $regions);
+
+        return response()->json([
+            'success' => true,
+            'object' => $object
+        ]);
     }
 
     public function displayEditObject($id) {

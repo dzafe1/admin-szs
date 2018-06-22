@@ -75,6 +75,10 @@
 }
 
 #displayPlayer .player-image,
+#displayObject .object-image{
+    height: 200px;
+}
+
 #editPlayer .player-image{
     width: 200px;
     height: 200px;

@@ -4,7 +4,9 @@ var config = {
         paths: {
             news_images: app_domain + '/images/vijesti/galerija/',
             player_images: app_domain + '/images/athlete_avatars/',
-            player_gallery: app_domain + '/images/galerija_sportista/'
+            player_gallery: app_domain + '/images/galerija_sportista/',
+            object_images: app_domain + '/images/object_avatars/',
+            object_gallery: app_domain + '/images/galerija_objekti/'
         },
         defaults: {
             news_default_image: app_domain + '/images/vijesti/vijesti-dodaj-sliku.png'
@@ -2682,6 +2684,34 @@ $(document).ready(function () {
         editPlayer(id, player, 'gallery');
     });
 
+    // Objects
+    $('body').on('click', '.display-object',function () {
+        var id;
+
+        id = $(this).data('id');
+
+        getObjectById(id, 'display');
+    });
+
+    $('body').on('click', '.edit-object',function () {
+        var id;
+
+        id = $(this).data('id');
+
+        getObjectEditFormById(id);
+    });
+
+    $('body').on('click', '.delete-object', function () {
+        var id;
+        id = $(this).data('id');
+
+        var confirmation = confirm('Da li ste sigurni da želite izbrisati ovaj sportski objekat?');
+
+        if(confirmation) {
+            deleteObject(id);
+        }
+
+    });
 });
 
 jQuery.extend(jQuery.validator.messages, {
@@ -3693,4 +3723,220 @@ function editPlayer(id, player, type) {
 
         $('#editPlayerServerErrors').show().delay(3000).fadeOut();
     });
+}
+
+function getObjectById(id, type) {
+    $.ajax({
+        method: 'GET',
+        url: '/api/objects/' + id
+    }).done(function (response) {
+        if(response.success) {
+            if(response.success) {
+                if(type === 'display') {
+                    addObjectToModal(response.object);
+                } else if(type === 'edit') {
+                    addObjectToEditModal(response.object);
+                }
+            }
+        }
+    });
+}
+
+function addObjectToModal(object) {
+    var displayObjectModal = $('#displayObject');
+    var established_in = new Date(object.established_in);
+
+    if(object.status === 'active') {
+        displayObjectModal.find('.modal-footer').remove();
+    }
+
+    var object_data_general = '';
+    Object.keys(object.object_data_general.data).forEach(function (key) {
+        object_data_general += '<li><b>' + object.object_data_general.names[key].label.bs + ':</b> ' + (object.object_data_general.data[key] || 'Nema') +'</li>';
+    });
+
+    var object_data_additional = '';
+    Object.keys(object.object_data_additional.data).forEach(function (key) {
+        object_data_additional += '<li><b>' + object.object_data_additional.names[key].label.bs + ':</b> ' + (object.object_data_additional.data[key] || 'Nema') +'</li>';
+    });
+
+    var object_data_szs = '';
+    Object.keys(object.object_data_szs.data).forEach(function (key) {
+        object_data_szs += '<li><b>' + object.object_data_szs.names[key].label.bs + ':</b> ' + (object.object_data_szs.data[key] ? 'Ima' : 'Nema') +'</li>';
+    });
+
+    var specific_tabs = '';
+    if(object.type.type === 'Balon') {
+        var fields = '';
+        Object.keys(object.fields).forEach(function (key) {
+            fields += '<div class="col-md-4">' +
+                '<div class="custom-box-row">' +
+                '<ul>' +
+                '<li><b>Naziv:</b> ' + object.fields[key].name + '</li>' +
+                '<li><b>Sportovi:</b> ' + object.fields[key].sports + '</li>' +
+                '<li><b>Tip:</b> ' + object.fields[key].type_of_field + '</li>' +
+                '<li><b>Kapacitet:</b> ' + (object.fields[key].capacity || '-') + '</li>' +
+                '<li><b>Dužina:</b> ' + (object.fields[key].length || '-') + '</li>' +
+                '<li><b>Širina:</b> ' + (object.fields[key].width || '-') + '</li>' +
+                '</ul>' +
+                '</div>' +
+                '</div>';
+        });
+
+        var balon_prices = '';
+        Object.keys(object.prices).forEach(function (key) {
+            balon_prices += '<div class="col-md-4">' +
+                '<div class="custom-box-row">' +
+                '<ul>' +
+                '<li><b>Teren:</b> ' + object.prices[key].name + '</li>' +
+                '<li><b>Sport:</b> ' + object.prices[key].sport + '</li>' +
+                '<li><b>Cijena (po satu):</b> ' + object.prices[key].price_per_hour + '</li>' +
+                '</ul>' +
+                '</div>' +
+                '</div>';
+        });
+
+        specific_tabs = '<div class="row custom-box-row">' +
+            '<div class="col-md-12">' +
+            '<h3>Sale/Tereni</h3>' +
+            '</div>' +
+            (fields || '<div class="col-md-12">Nema terena.</div>') +
+            '</div>' +
+            '<div class="row custom-box-row">' +
+            '<div class="col-md-12">' +
+            '<h3>Cjenovnik</h3>' +
+            '</div>' +
+            (balon_prices || '<div class="col-md-12">Nema cjenovnika.</div>') +
+            '</div>';
+
+    } else if(object.type.type === 'Skijalište') {
+        var tracks = '';
+        Object.keys(object.tracks).forEach(function (key) {
+            tracks += '<div class="col-md-4">' +
+                '<div class="custom-box-row">' +
+                '<ul>' +
+                '<li><b>Naziv:</b> ' + object.tracks[key].name + '</li>' +
+                '<li><b>Težina:</b> ' + object.tracks[key].level + '</li>' +
+                '<li><b>Dužina:</b> ' + object.tracks[key].length + ' m' + '</li>' +
+                '<li><b>Vrijeme trajanja:</b> ' + object.tracks[key].time + ' min' + '</li>' +
+                '<li><b>Početna tačka:</b> ' + object.tracks[key].start_point + ' m' + '</li>' +
+                '<li><b>Završna tačka:</b> ' + object.tracks[key].end_point + ' m' + '</li>' +
+                '</ul>' +
+                '</div>' +
+                '</div>';
+        });
+
+        var skiing_prices = '';
+        Object.keys(object.prices).forEach(function (key) {
+            skiing_prices += '<div class="col-md-4">' +
+                '<div class="custom-box-row">' +
+                '<ul>' +
+                '<li><b>Opis:</b> ' + object.prices[key].description + '</li>' +
+                '<li><b>Cijena odrasli:</b> ' + object.prices[key].price + '</li>' +
+                '<li><b>Cijena djeca:</b> ' + object.prices[key].price_kids + '</li>' +
+                '</ul>' +
+                '</div>' +
+                '</div>';
+        });
+
+        specific_tabs = '<div class="row custom-box-row">' +
+            '<div class="col-md-12">' +
+            '<h3>Staze</h3>' +
+            '</div>' +
+            (tracks || '<div class="col-md-12">Nema staza.</div>') +
+            '</div>' +
+            '<div class="row custom-box-row">' +
+            '<div class="col-md-12">' +
+            '<h3>Cjenovnik</h3>' +
+            '</div>' +
+            (skiing_prices || '<div class="col-md-12">Nema cjenovnika.</div>') +
+            '</div>';
+    }
+
+    var images = '';
+    Object.keys(object.images).forEach(function (key) {
+        images += '<div class="col-md-12">' +
+            '<div class="custom-box-row">' +
+            '<img class="responsive-img" src="' + config.site.paths.object_gallery + object.images[key].image + '">' +
+            '</div>' +
+            '</div>';
+    });
+
+    var objectInfo = '<div class="row custom-box-row">' +
+        '<div class="col-md-6">' +
+        '<h3>Osnovne informacije</h3>' +
+        '<ul>' +
+        '<li><b>Naziv: </b> ' + object.name + '</li>' +
+        '<li><b>Datum osnivanja:</b> ' + established_in.getDay() + '/' + established_in.getMonth() + '/' + established_in.getFullYear() + '</li>' +
+        '<li><b>Facebook: </b> ' + (object.facebook || '-') + '</li>' +
+        '<li><b>Twitter: </b> ' + (object.twitter || '-') + '</li>' +
+        '<li><b>Instagram: </b> ' + (object.instagram || '-') + '</li>' +
+        '<li><b>Youtube: </b> ' + (object.youtube || '-') + '</li>' +
+        '<li><b>Video: </b> ' + (object.video || '-') + '</li>' +
+        '</ul>' +
+        '</div>' +
+        '<div class="col-md-6">' +
+        '<h3>Generalne karakteristike</h3>' +
+        '<ul>' +
+        object_data_general +
+        '</ul>' +
+        '</div>' +
+        '</div>' +
+        '<div class="row custom-box-row">' +
+        '<div class="col-md-6">' +
+        '<h3>Dodatne karakteristike</h3>' +
+        '<ul>' +
+        object_data_additional +
+        '</ul>' +
+        '</div>' +
+        '<div class="col-md-6">' +
+        '<h3>Sve za sport karakteristike</h3>' +
+        '<ul>' +
+        object_data_szs +
+        '</ul>' +
+        '</div>' +
+        '</div>' +
+        '<div class="row custom-box-row">' +
+        '<div class="col-md-12">' +
+        '<h3>Regija</h3>' +
+        '</div>' +
+        '<div class="col-md-6">' +
+        '<ul>' +
+        '<li><b>Kontinent:</b> ' + (object.regions.continent || 'Nema') + '</li>' +
+        '<li><b>Država:</b> ' + (object.regions.country || 'Nema') + '</li>' +
+        '<li><b>Entitet/Pokrajina:</b> ' + (object.regions.province || 'Nema') + '</li>' +
+        '</ul>' +
+        '</div>' +
+        '<div class="col-md-6">' +
+        '<ul>' +
+        '<li><b>Kanton/Regija:</b> ' + (object.regions.region || 'Nema') + '</li>' +
+        '<li><b>Općina:</b> ' + (object.regions.municipality || 'Nema') + '</li>' +
+        '<li><b>Grad/Mjesto:</b> ' + (object.regions.city || 'Nema') + '</li>' +
+        '</ul>' +
+        '</div>' +
+        '</div>' +
+        '<div class="row custom-box-row">' +
+        '<div class="col-md-12">' +
+        '<h3>Historija</h3>' +
+        '</div>' +
+        '<div class="col-md-12">' +
+        (object.history || 'Historija nije unesena.') +
+        '</div>' +
+        '</div>' +
+        specific_tabs +
+        '<div class="row custom-box-row">' +
+        '<div class="col-md-12">' +
+        '<h3>Galerija</h3>' +
+        '</div>' +
+        (images || '<div class="col-md-12">Nema slika.</div>') +
+        '</div>';
+
+    displayObjectModal.find('.modal-title').html('<b>' + object.name + '(<i>' + object.type.type + '</i>)</b>');
+    displayObjectModal.find('.object-content').html(objectInfo);
+    displayObjectModal.find('.object-image img').attr('src', config.site.paths.object_images + object.image);
+    displayObjectModal.find('#deleteObject').data('id', object.id);
+    displayObjectModal.find('#approveObject').data('id', object.id);
+
+
+    displayObjectModal.modal('show');
 }

@@ -80,6 +80,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::patch('players/{id}/edit/biography', 'PlayerController@editPlayerBiography');
         Route::patch('players/{id}/edit/trophies', 'PlayerController@editPlayerTrophies');
         Route::patch('players/{id}/edit/gallery', 'PlayerController@editPlayerGallery');
+
+        // Players API routes
+        Route::get('objects/{id}', 'ObjectController@getObjectById');
     });
 
 
