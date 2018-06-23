@@ -651,7 +651,7 @@ class ObjectRepository {
         if($request->file('image')){
             $logo = $request->file('image');
             $newLogoName = time() . '-' . Auth::user()->id . '.' . $logo->getClientOriginalExtension();
-            $destinationPath = public_path('/images/object_avatars');
+            $destinationPath = config('general.image_paths.object_images');
             $logo->move($destinationPath, $newLogoName);
         }
 
@@ -710,10 +710,7 @@ class ObjectRepository {
                 ->where('id', $object->id)
                 ->update($uniqueColumns);
 
-            if($updateObjectUniqueStatus) {
-
-                return $updateObjectUniqueStatus;
-            }
+            return true;
         }
 
         return null;
@@ -738,7 +735,7 @@ class ObjectRepository {
             $galerije = $request->file('galerija');
             foreach($galerije as $key => $slika){
                 $newgalName = $key . '-' .time() . '-' .  $object->id . '.' . $slika->getClientOriginalExtension();
-                $destPath = public_path('/images/galerija_objekti');
+                $destPath = config('general.image_paths.object_gallery');
                 $slika->move($destPath, $newgalName);
 
                 Gallery::create([

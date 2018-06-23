@@ -1380,422 +1380,6 @@ $(document).ready(function () {
         }
     });
 
-    $('#editObjectGeneral').validate({
-        ignore: ':hidden,:disabled',
-        rules: {
-            image: {
-                extension: 'png|jpg|jpeg'
-            },
-            name: {
-                required: true,
-                string: true,
-                maxlength: 255
-            },
-            continent: {
-                required: true,
-                digits: true
-            },
-            country: {
-                required: true,
-                digits: true
-            },
-            province: {
-                required: true,
-                digits: true
-            },
-            region: {
-                required: true,
-                digits: true
-            },
-            municipality: {
-                required: true,
-                digits: true
-            },
-            city: {
-                required: true,
-                string: true,
-                maxlength: 255
-            },
-            facebook: {
-                string: true,
-                maxlength: 255
-            },
-            instagram: {
-                string: true,
-                maxlength: 255
-            },
-            twitter: {
-                string: true,
-                maxlength: 255
-            },
-            youtube: {
-                string: true,
-                maxlength: 255
-            }
-        }
-    });
-
-    $('#editObjectStatus').validate({
-        ignore: ':hidden,:disabled',
-        rules: {
-            number_of_fields: {
-                digits: true,
-                range: [1, 50]
-            },
-            number_of_pools: {
-                digits: true,
-                range: [1, 50]
-            },
-            number_of_tracks: {
-                digits: true,
-                range: [1, 100]
-            },
-            number_of_balls: {
-                digits: true,
-                range: [1, 500]
-            },
-            number_of_shooting_places: {
-                digits: true,
-                range: [1, 500]
-            },
-            type_of_grass: {
-                string: true,
-                maxlength: 255,
-                lettersonly: true
-            },
-            elevation: {
-                digits: true,
-                range: [1, 8000]
-            },
-            stadium_length: {
-                digits: true,
-                range: [1, 300]
-            },
-            stadium_width: {
-                digits: true,
-                range: [1, 300]
-            },
-            number_of_ski_tracks: {
-                digits: true,
-                range: [1, 200]
-            },
-            number_of_ski_lifts: {
-                digits: true,
-                range: [1, 200]
-            },
-            water_effects: {
-                digits: true,
-                range: [0, 1]
-            },
-            area: {
-                digits: true
-            },
-            water_area: {
-                digits: true
-            },
-            capacity: {
-                digits: true
-            },
-            pool_capacity: {
-                digits: true
-            },
-            stadium_capacity: {
-                digits: true
-            },
-            type_of_field: {
-                string: true,
-                maxlength: 255,
-                lettersonly: true
-            },
-            wifi: {
-                string: true,
-                maxlength: 255,
-                lettersonly: true
-            },
-            parking: {
-                string: true,
-                maxlength: 255,
-                lettersonly: true
-            },
-            restaurant: {
-                string: true,
-                maxlength: 255,
-                lettersonly: true
-            },
-            hotels: {
-                string: true,
-                maxlength: 255
-            },
-            cafe: {
-                string: true,
-                maxlength: 255,
-                lettersonly: true
-            },
-            access_to_disabled: {
-                string: true,
-                maxlength: 255,
-                lettersonly: true
-            },
-            number_of_locker_rooms: {
-                digits: true,
-                range: [0, 50]
-            },
-            rent_equipment: {
-                digits: true,
-                range: [0, 1]
-            },
-            hot_water_showers: {
-                digits: true,
-                range: [0, 1]
-            },
-            result_board: {
-                digits: true,
-                range: [0, 1]
-            },
-            kids_playground: {
-                digits: true,
-                range: [0, 1]
-            },
-            wardrobe_with_key: {
-                digits: true,
-                range: [0, 1]
-            },
-            props: {
-                digits: true,
-                range: [0, 1]
-            },
-            air_conditioning: {
-                digits: true,
-                range: [0, 1]
-            },
-            protective_net: {
-                digits: true,
-                range: [0, 1]
-            },
-            optimum_temperature: {
-                digits: true,
-                range: [0, 1]
-            },
-            video_surveillance: {
-                digits: true,
-                range: [0, 1]
-            },
-            equipment_rent: {
-                digits: true,
-                range: [0, 1]
-            },
-            kid_pools: {
-                digits: true,
-                range: [0, 1]
-            },
-            entering_a_props: {
-                digits: true,
-                range: [0, 1]
-            },
-            urine_detector: {
-                digits: true,
-                range: [0, 1]
-            },
-            reservations: {
-                digits: true,
-                range: [0, 1]
-            },
-            child_equipment: {
-                digits: true,
-                range: [0, 1]
-            },
-            special_shoes: {
-                digits: true,
-                range: [0, 1]
-            },
-            hygiene_equipment: {
-                digits: true,
-                range: [0, 1]
-            },
-            member_card: {
-                digits: true,
-                range: [0, 1]
-            },
-            maintenance_service: {
-                digits: true,
-                range: [0, 1]
-            },
-            emergency_intervention: {
-                digits: true,
-                range: [0, 1]
-            },
-            skiing_school: {
-                digits: true,
-                range: [0, 1]
-            },
-            snowboarding_school: {
-                digits: true,
-                range: [0, 1]
-            },
-            skiing_equipment_shops: {
-                digits: true,
-                range: [0, 1]
-            },
-            mobile_rescue_team: {
-                digits: true,
-                range: [0, 1]
-            },
-            night_skiing: {
-                digits: true,
-                range: [0, 1]
-            },
-            commenting_cabins: {
-                digits: true,
-                range: [0, 1]
-            },
-            speaker_system: {
-                digits: true,
-                range: [0, 1]
-            },
-            fan_shop: {
-                digits: true,
-                range: [0, 1]
-            },
-            use_own_equipment: {
-                digits: true,
-                range: [0, 1]
-            },
-            equipment_service: {
-                digits: true,
-                range: [0, 1]
-            },
-            shooting_school: {
-                digits: true,
-                range: [0, 1]
-            },
-            protective_equipment: {
-                digits: true,
-                range: [0, 1]
-            }
-        }
-    });
-
-    $('#editObjectHistory').validate({
-        ignore: ':hidden,:disabled',
-        rules: {
-            history: {
-                string: true
-            }
-        }
-    });
-
-    $('#editObjectGallery').validate({
-        ignore: ':hidden',
-        rules: {
-            'galerija[]': {
-                extension: "jpg|jpeg|png"
-            }
-        }
-    });
-
-    $('#editObjectBalonFields').validate({
-        ignore: ':hidden,:disabled'
-    });
-
-    $('#editObjectBalonPrices').validate({
-        ignore: ':hidden,:disabled'
-    });
-
-    $('#editObjectSkiTracks').validate({
-        ignore: ':hidden,:disabled'
-    });
-
-    $('#editObjectSkiPrices').validate({
-        ignore: ':hidden,:disabled'
-    });
-
-
-    addLicnostValidation();
-    addTrophyValidation();
-    addHistoryValidation();
-    addTerenValidation();
-    addCjenovnikBalonValidation();
-    addStazeValidation();
-    addCjenovnikSkiValidation();
-
-    // Nadji najveci array key od old inputa za licnost ako postoji
-    if($('.licnostHover').length) {
-        var num = $('.licnostHover').map(function() {
-            return $(this).data('key');
-        }).get();
-
-        var highest = Math.max.apply(Math, num);
-
-        licnostiCount = highest + 1;
-    }
-
-    // Nadji najveci array key od old inputa za nagradu/trofej ako postoji
-    if($('.nagradaHover').length) {
-        var num1 = $('.nagradaHover').map(function() {
-            return $(this).data('key');
-        }).get();
-
-        var highest1 = Math.max.apply(Math, num1);
-
-        nagradeCount = highest1 + 1;
-    }
-
-    // Nadji najveci array key od old inputa za klub/historija ako postoji
-    if($('.historyHover').length) {
-        var num2 = $('.historyHover').map(function() {
-            return $(this).data('key');
-        }).get();
-
-        var highest2 = Math.max.apply(Math, num2);
-
-        historyCount = highest2 + 1;
-    }
-
-    // Nadji najveci array key od old inputa za teren/sala ako postoji
-    if($('.terenHover').length) {
-        var num3 = $('.terenHover').map(function() {
-            return $(this).data('key');
-        }).get();
-
-        var highest3 = Math.max.apply(Math, num3);
-
-        terenCount = highest3 + 1;
-    }
-
-    // Nadji najveci array key od old inputa za balon cjenovnik ako postoji
-    if($('.balonCjenovnikHover').length) {
-        var num4 = $('.balonCjenovnikHover').map(function() {
-            return $(this).data('key');
-        }).get();
-
-        var highest4 = Math.max.apply(Math, num4);
-
-        cjenovnikBalonCount = highest4 + 1;
-    }
-
-    // Nadji najveci array key od old inputa za staze ako postoji
-    if($('.stazeHover').length) {
-        var num5 = $('.stazeHover').map(function() {
-            return $(this).data('key');
-        }).get();
-
-        var highest5 = Math.max.apply(Math, num5);
-
-        stazeCount = highest5 + 1;
-    }
-
-    // Nadji najveci array key od old inputa za ski cjenovnik ako postoji
-    if($('.skiCjenovnikHover').length) {
-        var num6 = $('.skiCjenovnikHover').map(function() {
-            return $(this).data('key');
-        }).get();
-
-        var highest6 = Math.max.apply(Math, num6);
-
-        cjenovnikSkiCount = highest6 + 1;
-    }
-
-
     // Custom metode za validaciju
     // Provjera stringa
     jQuery.validator.addMethod("string", function(value, element){
@@ -1867,8 +1451,8 @@ $(document).ready(function () {
     $('body').on('click', '#dodajNagradu', function () {
         var nagrada_form_input = '<div class="row nagradaHover"><div class="izbrisiNagradu"><i class="fa fa-times-circle-o"></i></div><div class="col-md-6">' +
             '<div class="form-group col-md-6">' +
-            '<label for="vrsta-nagrade"><img class="flow-icons-013" src="/images/icons/medalja.svg"> Vrsta nagrade</label>' +
-            '<select name="nagrada[' + nagradeCount + '][vrsta]" class="form-control">' +
+            '<label for="vrsta-nagrade' + nagradeCount + '"><img class="flow-icons-013" src="/images/icons/medalja.svg"> Vrsta nagrade</label>' +
+            '<select name="nagrada[' + nagradeCount + '][vrsta]" id="vrsta-nagrade' + nagradeCount + '" class="form-control">' +
             '<option value="" selected>Izaberite vrstu osvojene nagrade</option>' +
             '<option value="Medalja">Medalja</option>' +
             '<option value="Trofej/Pehar">Trofej/Pehar</option>' +
@@ -1877,8 +1461,8 @@ $(document).ready(function () {
             '</select>' +
             '</div>' +
             '<div class="form-group col-md-6">' +
-            '<label for="tip-nagrade"><img class="flow-icons-013" src="/images/icons/medalja.svg"> Tip nagrade</label>' +
-            '<select name="nagrada[' + nagradeCount + '][tip]" class="form-control">' +
+            '<label for="nivo-nagrade' + nagradeCount + '"><img class="flow-icons-013" src="/images/icons/medalja.svg"> Tip nagrade</label>' +
+            '<select name="nagrada[' + nagradeCount + '][tip]" id="nivo-nagrade' + nagradeCount + '" class="form-control">' +
             '<option value="" selected>Izaberite tip nagrade</option>' +
             '<option value="Zlato">Zlato (1. mjesto)</option>' +
             '<option value="Srebro">Srebro (2. mjesto)</option>' +
@@ -1887,8 +1471,8 @@ $(document).ready(function () {
             '</select>' +
             '</div>' +
             '<div class="form-group col-md-12">' +
-            '<label for="tip-nagrade"><img class="flow-icons-013" src="/images/icons/medalja.svg"> Nivo takmičenja</label>' +
-            '<select name="nagrada[' + nagradeCount + '][nivo]" class="form-control">' +
+            '<label for="tip-nagrade' + nagradeCount + '"><img class="flow-icons-013" src="/images/icons/medalja.svg"> Nivo takmičenja</label>' +
+            '<select name="nagrada[' + nagradeCount + '][nivo]" id="tip-nagrade' + nagradeCount + '" class="form-control">' +
             '<option value="" selected>Izaberite nivo takmičenja</option>' +
             '<option value="Internacionalni nivo">Internacionalni nivo</option>' +
             '<option value="Regionalni nivo">Regionalni nivo</option>' +
@@ -1900,16 +1484,16 @@ $(document).ready(function () {
             '</div>' +
             '<div class="col-md-6">' +
             '<div class="form-group">' +
-            '<label for="takmicenje"><img class="flow-icons-013" src="/images/icons/trophy.svg"> Naziv takmičenja</label>' +
-            '<input type="text" name="nagrada[' + nagradeCount + '][takmicenje]" class="form-control" placeholder="Unesite naziv takmicenja za koje je osvojena nagrada">' +
+            '<label for="takmicenje' + nagradeCount + '"><img class="flow-icons-013" src="/images/icons/trophy.svg"> Naziv takmičenja</label>' +
+            '<input type="text" name="nagrada[' + nagradeCount + '][takmicenje]" id="takmicenje' + nagradeCount + '" class="form-control" placeholder="Unesite naziv takmicenja za koje je osvojena nagrada">' +
             '</div>' +
             '<div class="form-group col-md-6 col-xs-12">' +
-            '<label for="sezona"><img class="flow-icons-013" src="/images/icons/small-calendar.svg"> Sezona/Godina</label>' +
-            '<input type="text" name="nagrada[' + nagradeCount + '][sezona]" class="form-control" placeholder="Unesite Sezonu/Godinu osvajanja trofeja">' +
+            '<label for="sezona' + nagradeCount + '"><img class="flow-icons-013" src="/images/icons/small-calendar.svg"> Sezona/Godina</label>' +
+            '<input type="text" name="nagrada[' + nagradeCount + '][sezona]" id="sezona' + nagradeCount + '" class="form-control" placeholder="Unesite Sezonu/Godinu osvajanja trofeja">' +
             '</div>' +
             '<div class="form-group col-md-6 col-xs-12">' +
-            '<label for="osvajanja"><img class="flow-icons-013" src="/images/icons/the-sum-of.svg"> Broj osvajanja</label>' +
-            '<input type="number" name="nagrada[' + nagradeCount + '][osvajanja]" class="form-control" placeholder="Unesite broj osvajanja trofeja">' +
+            '<label for="osvajanja' + nagradeCount + '"><img class="flow-icons-013" src="/images/icons/the-sum-of.svg"> Broj osvajanja</label>' +
+            '<input type="number" name="nagrada[' + nagradeCount + '][osvajanja]" id="osvajanja' + nagradeCount + '" class="form-control" placeholder="Unesite broj osvajanja trofeja">' +
             '</div>' +
             '</div>' +
             '</div>';
@@ -2712,6 +2296,170 @@ $(document).ready(function () {
         }
 
     });
+
+
+    $('body').on('click', '#buttonSaveObjectGeneral', function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+
+        if(!form.valid()) {
+            $(".modal").animate({ scrollTop: 0 }, "fast");
+            return false;
+        }
+
+        var id;
+        id = $(this).data('id');
+        var object = new FormData(form[0]);
+        object.append('_method', 'PATCH');
+
+        editObject(id, object, 'general');
+    });
+
+    $('body').on('click', '#buttonSaveObjectStatus', function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+
+        if(!form.valid()) {
+            $(".modal").animate({ scrollTop: 0 }, "fast");
+            return false;
+        }
+
+        var id;
+        id = $(this).data('id');
+        var object = new FormData(form[0]);
+        object.append('_method', 'PATCH');
+
+        editObject(id, object, 'status');
+    });
+
+    $('body').on('click', '#buttonSaveObjectHistory', function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+
+        if(!form.valid()) {
+            $(".modal").animate({ scrollTop: 0 }, "fast");
+            return false;
+        }
+
+        var id;
+        id = $(this).data('id');
+        var object = new FormData(form[0]);
+        object.append('_method', 'PATCH');
+
+        editObject(id, object, 'history');
+    });
+
+    $('body').on('click', '#buttonSaveObjectBalonFields', function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+
+        if(!form.valid()) {
+            $(".modal").animate({ scrollTop: 0 }, "fast");
+            return false;
+        }
+
+        var id;
+        id = $(this).data('id');
+        var object = new FormData(form[0]);
+        object.append('_method', 'PATCH');
+
+        editObject(id, object, 'balon-fields');
+    });
+
+    $('body').on('click', '#buttonSaveObjectBalonPrices', function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+
+        if(!form.valid()) {
+            $(".modal").animate({ scrollTop: 0 }, "fast");
+            return false;
+        }
+
+        var id;
+        id = $(this).data('id');
+        var object = new FormData(form[0]);
+        object.append('_method', 'PATCH');
+
+        editObject(id, object, 'balon-prices');
+    });
+
+    $('body').on('click', '#buttonSaveObjectSkiTracks', function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+
+        if(!form.valid()) {
+            $(".modal").animate({ scrollTop: 0 }, "fast");
+            return false;
+        }
+
+        var id;
+        id = $(this).data('id');
+        var object = new FormData(form[0]);
+        object.append('_method', 'PATCH');
+
+        editObject(id, object, 'ski-tracks');
+    });
+
+    $('body').on('click', '#buttonSaveObjectSkiPrices', function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+
+        if(!form.valid()) {
+            $(".modal").animate({ scrollTop: 0 }, "fast");
+            return false;
+        }
+
+        var id;
+        id = $(this).data('id');
+        var object = new FormData(form[0]);
+        object.append('_method', 'PATCH');
+
+        editObject(id, object, 'ski-prices');
+    });
+
+
+    $('body').on('click', '#buttonSaveObjectGallery', function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+
+        if(!form.valid()) {
+            $(".modal").animate({ scrollTop: 0 }, "fast");
+            return false;
+        }
+
+        var id;
+        id = $(this).data('id');
+        var object = new FormData(form[0]);
+        object.append('_method', 'PATCH');
+
+        editObject(id, object, 'gallery');
+    });
+
+    $('#displayObject').on('click', '#approveObject', function () {
+        var id;
+        id = $(this).data('id');
+
+        var confirmation = confirm('Da li ste sigurni da želite odobriti ovaj objekat?');
+
+        if(confirmation) {
+            approveObject(id);
+        }
+
+    });
+
+    $('#displayObject').on('click', '#refuseObject', function () {
+        var id;
+        id = $(this).data('id');
+
+        var confirmation = confirm('Da li ste sigurni da želite odbiti ovaj objekat?');
+
+        if(confirmation) {
+            refuseObject(id);
+        }
+
+    });
+
+
 });
 
 jQuery.extend(jQuery.validator.messages, {
@@ -3501,6 +3249,7 @@ function addPlayerToEditModal(htmlForm) {
     editPlayerModal.find('.player-content').html(htmlForm);
     addPlayerAllValidations();
     addRegionSelects();
+    findHighestValue();
     editPlayerModal.modal('show');
 }
 
@@ -3672,6 +3421,8 @@ function addPlayerAllValidations() {
             }
         }
     });
+
+    addTrophyValidation();
 }
 
 function addRegionSelects() {
@@ -3934,9 +3685,547 @@ function addObjectToModal(object) {
     displayObjectModal.find('.modal-title').html('<b>' + object.name + '(<i>' + object.type.type + '</i>)</b>');
     displayObjectModal.find('.object-content').html(objectInfo);
     displayObjectModal.find('.object-image img').attr('src', config.site.paths.object_images + object.image);
-    displayObjectModal.find('#deleteObject').data('id', object.id);
+    displayObjectModal.find('#refuseObject').data('id', object.id);
     displayObjectModal.find('#approveObject').data('id', object.id);
 
 
     displayObjectModal.modal('show');
+}
+
+function getObjectEditFormById(id) {
+    $.ajax({
+        method: 'GET',
+        url: '/api/objects/editForm/' + id
+    }).done(function (response) {
+        if(response) {
+            addObjectToEditModal(response);
+        }
+    });
+}
+
+function addObjectToEditModal(htmlForm) {
+    var editObjectModal = $('#editObject');
+
+    editObjectModal.find('.object-content').html(htmlForm);
+    addObjectAllValidations();
+    addRegionSelects();
+    findHighestValue();
+    editObjectModal.modal('show');
+}
+
+function addObjectAllValidations() {
+    $('#editObjectGeneral').validate({
+        ignore: ':hidden,:disabled',
+        rules: {
+            image: {
+                extension: 'png|jpg|jpeg'
+            },
+            name: {
+                required: true,
+                string: true,
+                maxlength: 255
+            },
+            continent: {
+                required: true,
+                digits: true
+            },
+            country: {
+                required: true,
+                digits: true
+            },
+            province: {
+                required: true,
+                digits: true
+            },
+            region: {
+                required: true,
+                digits: true
+            },
+            municipality: {
+                required: true,
+                digits: true
+            },
+            city: {
+                required: true,
+                string: true,
+                maxlength: 255
+            },
+            facebook: {
+                string: true,
+                maxlength: 255
+            },
+            instagram: {
+                string: true,
+                maxlength: 255
+            },
+            twitter: {
+                string: true,
+                maxlength: 255
+            },
+            youtube: {
+                string: true,
+                maxlength: 255
+            }
+        }
+    });
+
+    $('#editObjectStatus').validate({
+        ignore: ':hidden,:disabled',
+        rules: {
+            number_of_fields: {
+                digits: true,
+                range: [1, 50]
+            },
+            number_of_pools: {
+                digits: true,
+                range: [1, 50]
+            },
+            number_of_tracks: {
+                digits: true,
+                range: [1, 100]
+            },
+            number_of_balls: {
+                digits: true,
+                range: [1, 500]
+            },
+            number_of_shooting_places: {
+                digits: true,
+                range: [1, 500]
+            },
+            type_of_grass: {
+                string: true,
+                maxlength: 255,
+                lettersonly: true
+            },
+            elevation: {
+                digits: true,
+                range: [1, 8000]
+            },
+            stadium_length: {
+                digits: true,
+                range: [1, 300]
+            },
+            stadium_width: {
+                digits: true,
+                range: [1, 300]
+            },
+            number_of_ski_tracks: {
+                digits: true,
+                range: [1, 200]
+            },
+            number_of_ski_lifts: {
+                digits: true,
+                range: [1, 200]
+            },
+            water_effects: {
+                digits: true,
+                range: [0, 1]
+            },
+            area: {
+                digits: true
+            },
+            water_area: {
+                digits: true
+            },
+            capacity: {
+                digits: true
+            },
+            pool_capacity: {
+                digits: true
+            },
+            stadium_capacity: {
+                digits: true
+            },
+            type_of_field: {
+                string: true,
+                maxlength: 255,
+                lettersonly: true
+            },
+            wifi: {
+                string: true,
+                maxlength: 255,
+                lettersonly: true
+            },
+            parking: {
+                string: true,
+                maxlength: 255,
+                lettersonly: true
+            },
+            restaurant: {
+                string: true,
+                maxlength: 255,
+                lettersonly: true
+            },
+            hotels: {
+                string: true,
+                maxlength: 255
+            },
+            cafe: {
+                string: true,
+                maxlength: 255,
+                lettersonly: true
+            },
+            access_to_disabled: {
+                string: true,
+                maxlength: 255,
+                lettersonly: true
+            },
+            number_of_locker_rooms: {
+                digits: true,
+                range: [0, 50]
+            },
+            rent_equipment: {
+                digits: true,
+                range: [0, 1]
+            },
+            hot_water_showers: {
+                digits: true,
+                range: [0, 1]
+            },
+            result_board: {
+                digits: true,
+                range: [0, 1]
+            },
+            kids_playground: {
+                digits: true,
+                range: [0, 1]
+            },
+            wardrobe_with_key: {
+                digits: true,
+                range: [0, 1]
+            },
+            props: {
+                digits: true,
+                range: [0, 1]
+            },
+            air_conditioning: {
+                digits: true,
+                range: [0, 1]
+            },
+            protective_net: {
+                digits: true,
+                range: [0, 1]
+            },
+            optimum_temperature: {
+                digits: true,
+                range: [0, 1]
+            },
+            video_surveillance: {
+                digits: true,
+                range: [0, 1]
+            },
+            equipment_rent: {
+                digits: true,
+                range: [0, 1]
+            },
+            kid_pools: {
+                digits: true,
+                range: [0, 1]
+            },
+            entering_a_props: {
+                digits: true,
+                range: [0, 1]
+            },
+            urine_detector: {
+                digits: true,
+                range: [0, 1]
+            },
+            reservations: {
+                digits: true,
+                range: [0, 1]
+            },
+            child_equipment: {
+                digits: true,
+                range: [0, 1]
+            },
+            special_shoes: {
+                digits: true,
+                range: [0, 1]
+            },
+            hygiene_equipment: {
+                digits: true,
+                range: [0, 1]
+            },
+            member_card: {
+                digits: true,
+                range: [0, 1]
+            },
+            maintenance_service: {
+                digits: true,
+                range: [0, 1]
+            },
+            emergency_intervention: {
+                digits: true,
+                range: [0, 1]
+            },
+            skiing_school: {
+                digits: true,
+                range: [0, 1]
+            },
+            snowboarding_school: {
+                digits: true,
+                range: [0, 1]
+            },
+            skiing_equipment_shops: {
+                digits: true,
+                range: [0, 1]
+            },
+            mobile_rescue_team: {
+                digits: true,
+                range: [0, 1]
+            },
+            night_skiing: {
+                digits: true,
+                range: [0, 1]
+            },
+            commenting_cabins: {
+                digits: true,
+                range: [0, 1]
+            },
+            speaker_system: {
+                digits: true,
+                range: [0, 1]
+            },
+            fan_shop: {
+                digits: true,
+                range: [0, 1]
+            },
+            use_own_equipment: {
+                digits: true,
+                range: [0, 1]
+            },
+            equipment_service: {
+                digits: true,
+                range: [0, 1]
+            },
+            shooting_school: {
+                digits: true,
+                range: [0, 1]
+            },
+            protective_equipment: {
+                digits: true,
+                range: [0, 1]
+            }
+        }
+    });
+
+    $('#editObjectHistory').validate({
+        ignore: ':hidden,:disabled',
+        rules: {
+            history: {
+                string: true
+            }
+        }
+    });
+
+    $('#editObjectGallery').validate({
+        ignore: ':hidden',
+        rules: {
+            'galerija[]': {
+                extension: "jpg|jpeg|png"
+            }
+        }
+    });
+
+    $('#editObjectBalonFields').validate({
+        ignore: ':hidden,:disabled'
+    });
+
+    $('#editObjectBalonPrices').validate({
+        ignore: ':hidden,:disabled'
+    });
+
+    $('#editObjectSkiTracks').validate({
+        ignore: ':hidden,:disabled'
+    });
+
+    $('#editObjectSkiPrices').validate({
+        ignore: ':hidden,:disabled'
+    });
+
+    addTerenValidation();
+    addCjenovnikBalonValidation();
+    addStazeValidation();
+    addCjenovnikSkiValidation();
+}
+
+function findHighestValue() {
+    // Nadji najveci array key od old inputa za licnost ako postoji
+    if($('.licnostHover').length) {
+        var num = $('.licnostHover').map(function() {
+            return $(this).data('key');
+        }).get();
+
+        var highest = Math.max.apply(Math, num);
+
+        licnostiCount = highest + 1;
+    }
+
+    // Nadji najveci array key od old inputa za nagradu/trofej ako postoji
+    if($('.nagradaHover').length) {
+        var num1 = $('.nagradaHover').map(function() {
+            return $(this).data('key');
+        }).get();
+
+        var highest1 = Math.max.apply(Math, num1);
+
+        nagradeCount = highest1 + 1;
+    }
+
+    // Nadji najveci array key od old inputa za klub/historija ako postoji
+    if($('.historyHover').length) {
+        var num2 = $('.historyHover').map(function() {
+            return $(this).data('key');
+        }).get();
+
+        var highest2 = Math.max.apply(Math, num2);
+
+        historyCount = highest2 + 1;
+    }
+
+    // Nadji najveci array key od old inputa za teren/sala ako postoji
+    if($('.terenHover').length) {
+        var num3 = $('.terenHover').map(function() {
+            return $(this).data('key');
+        }).get();
+
+        var highest3 = Math.max.apply(Math, num3);
+
+        terenCount = highest3 + 1;
+    }
+
+    // Nadji najveci array key od old inputa za balon cjenovnik ako postoji
+    if($('.balonCjenovnikHover').length) {
+        var num4 = $('.balonCjenovnikHover').map(function() {
+            return $(this).data('key');
+        }).get();
+
+        var highest4 = Math.max.apply(Math, num4);
+
+        cjenovnikBalonCount = highest4 + 1;
+    }
+
+    // Nadji najveci array key od old inputa za staze ako postoji
+    if($('.stazeHover').length) {
+        var num5 = $('.stazeHover').map(function() {
+            return $(this).data('key');
+        }).get();
+
+        var highest5 = Math.max.apply(Math, num5);
+
+        stazeCount = highest5 + 1;
+    }
+
+    // Nadji najveci array key od old inputa za ski cjenovnik ako postoji
+    if($('.skiCjenovnikHover').length) {
+        var num6 = $('.skiCjenovnikHover').map(function() {
+            return $(this).data('key');
+        }).get();
+
+        var highest6 = Math.max.apply(Math, num6);
+
+        cjenovnikSkiCount = highest6 + 1;
+    }
+}
+
+function editObject(id, object, type) {
+
+    $.ajax({
+        method: 'POST',
+        data: object,
+        url: '/api/objects/' + id + '/edit/' + type,
+        cache: false,
+        processData: false,
+        contentType: false,
+        enctype: 'multipart/form-data'
+    }).done(function (response) {
+        var errors = null;
+
+        $(".modal").animate({ scrollTop: 0 }, "fast");
+        $('#editObjectServerErrors').html('');
+
+        if (!response.success) {
+            if(response.errors) {
+                errors += '<div class="alert alert-danger"><ul>';
+                response.errors.forEach(function (error) {
+                    errors += '<li>' + error + '</li>';
+                });
+                errors += '</ul></div>';
+
+                $('#editObjectServerErrors').html(errors);
+            } else {
+                $('#editObjectServerErrors').html('<div class="alert alert-danger">' + response.message + '</div>');
+            }
+        } else {
+            $('#editObjectServerErrors').html('<div class="alert alert-success">' + response.message + '</div>');
+        }
+
+        $('#editObjectServerErrors').show().delay(3000).fadeOut();
+    });
+}
+
+function approveObject(id) {
+    $.ajax({
+        method: 'PATCH',
+        data: {
+            id: id
+        },
+        url: '/api/objects/approve'
+    }).done(function (response) {
+        var type = 'danger';
+
+        if(response.success) {
+            type = 'success';
+
+            $('.display-object[data-id="' + id + '"]').closest('tr').remove();
+        }
+
+        $('#displayObject').modal('hide');
+
+        notifyUser(type, response.message)
+    });
+}
+
+function refuseObject(id) {
+    $.ajax({
+        method: 'PATCH',
+        data: {
+            id: id
+        },
+        url: '/api/objects/refuse'
+    }).done(function (response) {
+        var type = 'danger';
+
+        if(response.success) {
+            type = 'success';
+
+            $('.display-object[data-id="' + id + '"]').closest('tr').remove();
+        }
+
+        $('#displayObject').modal('hide');
+
+        notifyUser(type, response.message)
+    });
+}
+
+function deleteObject(id) {
+    $.ajax({
+        method: 'PATCH',
+        data: {
+            id: id
+        },
+        url: '/api/objects/delete'
+    }).done(function (response) {
+        var type = 'danger';
+
+        if(response.success) {
+            type = 'success';
+
+            $('.display-object[data-id="' + id + '"]').closest('tr').remove();
+        }
+
+        $('#displayObject').modal('hide');
+
+        notifyUser(type, response.message)
+    });
 }

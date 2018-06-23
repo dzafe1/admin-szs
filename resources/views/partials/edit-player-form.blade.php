@@ -387,8 +387,8 @@
                                             <div class="izbrisiNagradu"><i class="fa fa-times-circle-o"></i></div>
                                             <div class="col-md-6">
                                                 <div class="form-group col-md-6">
-                                                    <label for="vrsta-nagrade"><img class="flow-icons-013" src="{{ asset('images/icons/medalja.svg') }}"> Vrsta nagrade</label>
-                                                    <select name="nagrada[{{ $key }}][vrsta]" class="form-control">
+                                                    <label for="vrsta-nagrade{{ $key }}"><img class="flow-icons-013" src="{{ asset('images/icons/medalja.svg') }}"> Vrsta nagrade</label>
+                                                    <select name="nagrada[{{ $key }}][vrsta]" id="vrsta-nagrade{{ $key }}" class="form-control">
                                                         <option value="" {{ $nagrada->type == '' ? 'selected' : '' }}>Izaberite vrstu osvojene nagrade</option>
                                                         <option value="Medalja" {{ $nagrada->type == 'Medalja' ? 'selected' : '' }}>Medalja</option>
                                                         <option value="Trofej/Pehar" {{ $nagrada->type == 'Trofej/Pehar' ? 'selected' : '' }}>Trofej/Pehar</option>
@@ -397,8 +397,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="tip-nagrade"><img class="flow-icons-013" src="{{ asset('images/icons/medalja.svg') }}"> Tip nagrade</label>
-                                                    <select name="nagrada[{{ $key }}][tip]" class="form-control">
+                                                    <label for="nivo-nagrade{{ $key }}"><img class="flow-icons-013" src="{{ asset('images/icons/medalja.svg') }}"> Tip nagrade</label>
+                                                    <select name="nagrada[{{ $key }}][tip]" id=nivo-nagrade{{ $key }}" class="form-control">
                                                         <option value="" {{ $nagrada->place == '' ? 'selected' : '' }}>Izaberite tip nagrade</option>
                                                         <option value="Zlato" {{ $nagrada->place == 'Zlato' ? 'selected' : '' }}>Zlato (1. mjesto)</option>
                                                         <option value="Srebro" {{ $nagrada->place == 'Srebro' ? 'selected' : '' }}>Srebro (2. mjesto)</option>
@@ -407,8 +407,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-md-12">
-                                                    <label for="tip-nagrade"><img class="flow-icons-013" src="{{ asset('images/icons/medalja.svg') }}"> Nivo takmičenja</label>
-                                                    <select name="nagrada[{{ $key }}][nivo]" class="form-control">
+                                                    <label for="tip-nagrade{{ $key }}"><img class="flow-icons-013" src="{{ asset('images/icons/medalja.svg') }}"> Nivo takmičenja</label>
+                                                    <select name="nagrada[{{ $key }}][nivo]" id="tip-nagrade{{ $key }}" class="form-control">
                                                         <option value="" {{ $nagrada->level_of_competition == '' ? 'selected' : '' }}>Izaberite nivo takmičenja</option>
                                                         <option value="Internacionalni nivo" {{ $nagrada->level_of_competition == 'Internacionalni nivo' ? 'selected' : '' }}>Internacionalni nivo</option>
                                                         <option value="Regionalni nivo" {{ $nagrada->level_of_competition == 'Regionalni nivo' ? 'selected' : '' }}>Regionalni nivo</option>
@@ -420,16 +420,16 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="takmicenje"><img class="flow-icons-013" src="{{ asset('images/icons/trophy.svg') }}"> Naziv takmičenja</label>
-                                                    <input type="text" name="nagrada[{{ $key }}][takmicenje]" class="form-control" placeholder="Unesite naziv takmicenja za koje je osvojena nagrada" value="{{ $nagrada->competition_name }}">
+                                                    <label for="takmicenje{{ $key }}"><img class="flow-icons-013" src="{{ asset('images/icons/trophy.svg') }}"> Naziv takmičenja</label>
+                                                    <input type="text" name="nagrada[{{ $key }}][takmicenje]" id="takmicenje{{ $key }}" class="form-control" placeholder="Unesite naziv takmicenja za koje je osvojena nagrada" value="{{ $nagrada->competition_name }}">
                                                 </div>
                                                 <div class="form-group col-md-6 col-xs-12">
-                                                    <label for="sezona"><img class="flow-icons-013" src="{{ asset('images/icons/small-calendar.svg') }}"> Sezona/Godina</label>
-                                                    <input type="text" name="nagrada[{{ $key }}][sezona]" class="form-control" placeholder="Unesite Sezonu/Godinu osvajanja trofeja" value="{{ $nagrada->season }}">
+                                                    <label for="sezona{{ $key }}"><img class="flow-icons-013" src="{{ asset('images/icons/small-calendar.svg') }}"> Sezona/Godina</label>
+                                                    <input type="text" name="nagrada[{{ $key }}][sezona]" id="sezona{{ $key }}" class="form-control" placeholder="Unesite Sezonu/Godinu osvajanja trofeja" value="{{ $nagrada->season }}">
                                                 </div>
                                                 <div class="form-group col-md-6 col-xs-12">
-                                                    <label for="osvajanja"><img class="flow-icons-013" src="{{ asset('images/icons/the-sum-of.svg') }}"> Broj osvajanja</label>
-                                                    <input type="number" name="nagrada[{{ $key }}][osvajanja]" class="form-control" placeholder="Unesite broj osvajanja trofeja">
+                                                    <label for="osvajanja{{ $key }}"><img class="flow-icons-013" src="{{ asset('images/icons/the-sum-of.svg') }}"> Broj osvajanja</label>
+                                                    <input type="number" name="nagrada[{{ $key }}][osvajanja]" id="osvajanja{{ $key }}" class="form-control" placeholder="Unesite broj osvajanja trofeja">
                                                 </div>
                                             </div>
                                         </div>

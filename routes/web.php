@@ -83,6 +83,18 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Players API routes
         Route::get('objects/{id}', 'ObjectController@getObjectById');
+        Route::get('objects/editForm/{id}', 'ObjectController@getObjectEditForm');
+        Route::patch('objects/{id}/edit/general', 'ObjectController@editObjectGeneral');
+        Route::patch('objects/{id}/edit/status', 'ObjectController@editObjectStatus');
+        Route::patch('objects/{id}/edit/history', 'ObjectController@editObjectHistory');
+        Route::patch('objects/{id}/edit/balon-fields', 'ObjectController@editObjectBalonFields');
+        Route::patch('objects/{id}/edit/balon-prices', 'ObjectController@editObjectBalonPrices');
+        Route::patch('objects/{id}/edit/ski-tracks', 'ObjectController@editObjectSkiTracks');
+        Route::patch('objects/{id}/edit/ski-prices', 'ObjectController@editObjectSkiPrices');
+        Route::patch('objects/{id}/edit/gallery', 'ObjectController@editObjectGallery');
+        Route::patch('objects/approve', 'ObjectController@approveObject');
+        Route::patch('objects/delete', 'ObjectController@deleteObject');
+        Route::patch('objects/refuse', 'ObjectController@refuseObject');
     });
 
 

@@ -16,7 +16,7 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-md-6">
-                        <button id="deleteObject" type="button" class="btn btn-danger btn-block" data-id="">Odbij</button>
+                        <button id="refuseObject" type="button" class="btn btn-danger btn-block" data-id="">Odbij</button>
                     </div>
                     <div class="col-md-6">
                         <button id="approveObject" type="button" class="btn btn-success btn-block" data-id="">Prihvati</button>

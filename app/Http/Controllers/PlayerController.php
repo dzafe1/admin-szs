@@ -767,12 +767,6 @@ class PlayerController extends Controller
             return null;
         }
 
-        // Provjera da li je user napravio igraca
-        $isOwner = $player->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            return null;
-        }
-
         $columns = Schema::getColumnListing($player->player_type->players_table);
         $to_delete = ['id', 'player_type_id', 'created_at', 'updated_at'];
         $columns = array_diff($columns, $to_delete);

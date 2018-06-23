@@ -66,7 +66,7 @@
 }
 
 .error {
-    color: red;
+    color: red!important;
 }
 
 #editNewsServerErrors,
@@ -79,7 +79,8 @@
     height: 200px;
 }
 
-#editPlayer .player-image{
+#editPlayer .player-image,
+#editObject .object-image{
     width: 200px;
     height: 200px;
     margin: 15px;
@@ -96,7 +97,7 @@
     margin: 0;
 }
 
-.player-content .sidebar ul li.active {
+.sidebar ul li.active {
     background: none;
 }
 
@@ -239,4 +240,20 @@ input:not([type]), input[type=text], input[type=password], input[type=email], in
     color: #fff;
     text-align: center;
     line-height: 50px;
+}
+
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+    position: relative;
+    margin-left: -20px;
+    opacity: 1;
+    left: auto;
+    margin-top: 0;
+}
+
+.nav-tabs.nav-justified>li>a small {
+    display: block;
+}
+
+[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after {
+    display: none;
 }
