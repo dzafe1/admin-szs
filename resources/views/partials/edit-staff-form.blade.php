@@ -7,44 +7,14 @@
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs nav-justified nav-product-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#tab-opcenito" role="tab" data-toggle="tab">
-                        <i class="fa fa-info-circle"></i>
-                        <small>O sportisti</small>
-                        Općenito
-                    </a>
-                </li>
-                <li role="presentation" class="preslic">
-                    <a href="#tab-predispozicije" role="tab" data-toggle="tab">
-                        <i class="fa fa-bolt"></i>
-                        <small>Predispozicije</small>
-                        Sportiste
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#tab-biografija" role="tab" data-toggle="tab">
-                        <i class="fa fa-history"></i>
-                        <small>Biografija</small>
-                        Sportiste
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#tab-vitrina" role="tab" data-toggle="tab">
-                        <i class="fa fa-trophy"></i>
-                        <small>Trofejna</small>
-                        Vitrina
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#tab-galerija" role="tab" data-toggle="tab">
-                        <i class="fa fa-picture-o"></i>
-                        <small>Foto</small>
-                        Galerija
-                    </a>
-                </li>
+                <li role="presentation" class="active"><a href="#tab-opcenito" role="tab" data-toggle="tab"><i class="fa fa-info-circle"></i><small>O kadru</small>Općenito</a></li>
+                <li role="presentation"><a href="#tab-predispozicije" role="tab" data-toggle="tab"><i class="fa fa-bolt"></i><small>Predispozicije</small>Kadra</a></li>
+                <li role="presentation"><a href="#tab-biografija" role="tab" data-toggle="tab"><i class="fa fa-history"></i><small>Biografija</small>Kadra</a></li>
+                <li role="presentation"><a href="#tab-vitrina" role="tab" data-toggle="tab"><i class="fa fa-trophy"></i><small>Trofejna</small>Vitrina</a></li>
+                <li role="presentation"><a href="#tab-galerija" role="tab" data-toggle="tab"><i class="fa fa-picture-o"></i><small>Foto</small>Galerija</a></li>
             </ul>
             <div class="row form-segment">
-                <div class="col-md-12" id="editPlayerServerErrors">
+                <div class="col-md-12" id="editStaffServerErrors">
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -58,28 +28,27 @@
             </div>
             <!-- Tab panes -->
             <div class="tab-content card__content">
-
-
                 <!-- Tab: Općenito -->
                 <div role="tabpanel" class="tab-pane fade in active" id="tab-opcenito">
-                    <form id="editPlayerGeneral" role="form" action="{{ url('/athletes/' . $player->id . '/edit/general') }}" method="POST" enctype="multipart/form-data">
+                    <form id="editStaffGeneral" role="form" action="{{ url('/staff/' . $staff->id . '/edit/general') }}" method="POST" enctype="multipart/form-data">
                         {!! csrf_field() !!}
                         <input name="_method" type="hidden" value="PATCH">
                         <div class="row">
+                            <div class="row identitet-style">
 
                                 <div class="col-md-6 objavi-klub-logo-setup">
 
                                     <div class="col-md-7">
 
                                         <div class="alc-staff__photo">
-                                            <img class="slika-upload-klub" id="slika_upload_klub" src="{{asset(config('general.site_paths.player_images') . $player->avatar)}}">
+                                            <img class="slika-upload-klub" id="slika_upload_klub" src="{{asset(config('general.site_paths.staff_images') . $staff->avatar)}}">
                                         </div>
 
                                     </div>
 
                                     <div class="col-md-5 sadrzaj-slike">
 
-                                        <p class="dodaj-sliku-naslov klub-a1">Slika sportiste</p>
+                                        <p class="dodaj-sliku-naslov klub-a1">Slika kadra</p>
                                         <p class="dodaj-sliku-call">Vaš identitet</p>
                                         <label class="btn btn-default btn-file dodaj-sliku-button">
                                             Odaberi sliku... <input type="file" id="slikaprof" name="avatar" class="not-visible" accept="image/*" onchange="previewFile('#slikaprof', '#slika_upload_klub', 2048, 2048, 512, 512)">
@@ -97,19 +66,19 @@
                                 <div class="col-md-6">
 
                                     <div class="form-group col-md-6">
-                                        <label for="firstname"><img class="flow-icons-013" src="{{asset('images/icons/edit.svg')}}"> Ime sportiste*</label>
-                                        <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Unesite ime sportiste" value="{{ $player->firstname }}">
+                                        <label for="firstname"><img class="flow-icons-013" src="{{asset('images/icons/edit.svg')}}"> Ime sportskog kadra*</label>
+                                        <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Unesite ime sportskog kadra" value="{{ $staff->firstname }}">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="lastname"><img class="flow-icons-013" src="{{asset('images/icons/edit.svg')}}"> Prezime sportiste*</label>
-                                        <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Unesite prezime sportiste" value="{{ $player->lastname }}">
+                                        <label for="lastname"><img class="flow-icons-013" src="{{asset('images/icons/edit.svg')}}"> Prezime sportskog kadra*</label>
+                                        <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Unesite prezime sportskog kadra" value="{{ $staff->lastname }}">
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label for="player_nature"><img class="flow-icons-013" src="{{asset('images/icons/edit.svg')}}"> Karakter sportiste*</label>
-                                        <select class="form-control" id="player_nature" name="player_nature">
-                                            <option selected disabled>Izberite karakter sportiste</option>
-                                            @foreach($playerNatures as $nature)
-                                                <option value="{{ $nature->id }}" {{ $player->player_nature == $nature->id ? 'selected' : '' }}>{{ $nature->name }}</option>
+                                        <label for="profession"><img class="flow-icons-013" src="{{asset('images/icons/edit.svg')}}"> Zanimanje*</label>
+                                        <select class="form-control" id="profession" name="profession">
+                                            <option selected disabled>Izberite zanimanje sportskog kadra</option>
+                                            @foreach($professions as $profession)
+                                                <option value="{{ $profession->id }}" {{ $staff->profession->id == $profession->id ? 'selected' : '' }}>{{ $profession->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -117,19 +86,20 @@
                                 </div>
 
                             </div>
-                        <div class="row">
+
+                            <div class="row form-segment">
                                 <header class="card__header">
                                     <h4><i class="fa fa-location-arrow"></i> Navigacija</h4>
                                 </header>
                             </div>
-                        <div class="row">
+                            <div class="row">
                                 <div class="form-group col-md-4">
                                     <label for="continent"><img class="flow-icons-013" src="{{asset('images/icons/international-delivery.svg')}}"> Kontinent*</label>
                                     <select name="continent" class="form-control" id="continent">
-                                        <option selected disabled>Izaberite kontinent kluba</option>
+                                        <option selected disabled>Izaberite kontinent</option>
                                         @foreach($regions as $region)
                                             @if($region->region_type->type == 'Continent')
-                                                <option data-parent="{{ $region->region_parent }}" value="{{ $region->id }}" {{ $player->regions->get('continent') == $region->id ? 'selected' : '' }}>{{ $region->name }}</option>
+                                                <option data-parent="{{ $region->region_parent }}" value="{{ $region->id }}" {{ $staff->regions->get('continent') == $region->id ? 'selected' : '' }}>{{ $region->name }}</option>
                                             @endif
                                         @endforeach
                                     </select>
@@ -137,11 +107,11 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="country"><img class="flow-icons-013" src="{{asset('images/icons/earth.svg')}}"> Država*</label>
-                                    <select name="country" class="form-control" id="country" {{ (old('country') || $player->regions->has('country')) ? '' : 'disabled' }}>
-                                        <option selected disabled>Izaberite državu kluba</option>
+                                    <select name="country" class="form-control" id="country" {{ (old('country') || $staff->regions->has('country')) ? '' : 'disabled' }}>
+                                        <option selected disabled>Izaberite državu</option>
                                         @foreach($regions as $region)
                                             @if($region->region_type->type == 'Country')
-                                                <option data-parent="{{ $region->region_parent }}" value="{{ $region->id }}" {{ $player->regions->get('country') == $region->id ? 'selected' : '' }}>{{ $region->name }}</option>
+                                                <option data-parent="{{ $region->region_parent }}" value="{{ $region->id }}" {{ $staff->regions->get('country') == $region->id ? 'selected' : '' }}>{{ $region->name }}</option>
                                             @endif
                                         @endforeach
                                     </select>
@@ -149,24 +119,24 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="province"><img class="flow-icons-013" src="{{asset('images/icons/map.svg')}}"> Pokrajina*</label>
-                                    <select name="province" class="form-control" id="province" {{ (old('province') || $player->regions->has('province')) ? '' : 'disabled' }}>
-                                        <option selected disabled>Izaberite pokrajinu kluba</option>
+                                    <select name="province" class="form-control" id="province" {{ (old('province') || $staff->regions->has('province')) ? '' : 'disabled' }}>
+                                        <option selected disabled>Izaberite pokrajinu</option>
                                         @foreach($regions as $region)
                                             @if($region->region_type->type == 'Province')
-                                                <option data-parent="{{ $region->region_parent }}" value="{{ $region->id }}" {{ $player->regions->get('province') == $region->id ? 'selected' : '' }}>{{ $region->name }}</option>
+                                                <option data-parent="{{ $region->region_parent }}" value="{{ $region->id }}" {{ $staff->regions->get('province') == $region->id ? 'selected' : '' }}>{{ $region->name }}</option>
                                             @endif
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                        <div class="row">
+                            <div class="row">
                                 <div class="form-group col-md-4">
                                     <label for="region"><img class="flow-icons-013" src="{{asset('images/icons/placeholder.svg')}}"> Regija*</label>
-                                    <select name="region" class="form-control" id="region" {{ (old('region') || $player->regions->has('region')) ? '' : 'disabled' }}>
-                                        <option selected disabled>Izaberite regiju kluba</option>
+                                    <select name="region" class="form-control" id="region" {{ (old('region') || $staff->regions->has('region')) ? '' : 'disabled' }}>
+                                        <option selected disabled>Izaberite regiju</option>
                                         @foreach($regions as $region)
                                             @if($region->region_type->type == 'Region')
-                                                <option data-parent="{{ $region->region_parent }}" value="{{ $region->id }}" {{ $player->regions->get('region') == $region->id ? 'selected' : '' }}>{{ $region->name }}</option>
+                                                <option data-parent="{{ $region->region_parent }}" value="{{ $region->id }}" {{ $staff->regions->get('region') == $region->id ? 'selected' : '' }}>{{ $region->name }}</option>
                                             @endif
                                         @endforeach
                                     </select>
@@ -174,22 +144,24 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="municipality"><img class="flow-icons-013" src="{{asset('images/icons/opcina.svg')}}"> Općina*</label>
-                                    <select name="municipality" class="form-control" id="municipality" {{ (old('municipality') || $player->regions->has('municipality')) ? '' : 'disabled' }}>
-                                        <option selected disabled>Izaberite općinu kluba</option>
+                                    <select name="municipality" class="form-control" id="municipality" {{ (old('municipality') || $staff->regions->has('municipality')) ? '' : 'disabled' }}>
+                                        <option selected disabled>Izaberite općinu</option>
                                         @foreach($regions as $region)
                                             @if($region->region_type->type == 'Municipality')
-                                                <option data-parent="{{ $region->region_parent }}" value="{{ $region->id }}" {{ $player->regions->get('municipality') == $region->id ? 'selected' : '' }}>{{ $region->name }}</option>
+                                                <option data-parent="{{ $region->region_parent }}" value="{{ $region->id }}" {{ $staff->regions->get('municipality') == $region->id ? 'selected' : '' }}>{{ $region->name }}</option>
                                             @endif
                                         @endforeach
                                     </select>
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label for="mjesto"><img class="flow-icons-013" src="{{asset('images/icons/small-calendar.svg')}}"> Mjesto/Grad sportiste*</label>
-                                    <input name="city" id="mjesto" class="form-control" placeholder="Unesite mjesto sportiste" value="{{ $player->city }}">
+                                    <label for="mjesto"><img class="flow-icons-013" src="{{asset('images/icons/small-calendar.svg')}}"> Mjesto/Grad*</label>
+                                    <input name="city" id="mjesto" class="form-control" placeholder="Unesite mjesto sportskog kadra" value="{{ $staff->city }}">
                                 </div>
                             </div>
-                        <div class="row">
+                        </div>
+
+                        <div class="row form-objavi-klub-01">
                             <header class="card__header">
                                 <h4><i class="fa fa-share-alt"></i> Socijalne mreže</h4>
                             </header>
@@ -198,39 +170,42 @@
 
                             <div class="form-group col-md-6">
                                 <label for="facebook"><img class="flow-icons-013" src="{{asset('images/icons/facebook.svg')}}"> Facebook stranica</label>
-                                <input type="text" name="facebook" id="facebook" class="form-control" placeholder="Unesite link službene facebook stranice" value="{{ $player->facebook }}">
+                                <input type="text" name="facebook" id="facebook" class="form-control" placeholder="Unesite link službene facebook stranice" value="{{ $staff->facebook }}">
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="twitter"><img class="flow-icons-013" src="{{asset('images/icons/twitter.svg')}}"> Twitter profil</label>
-                                <input type="text" name="twitter" id="twitter" class="form-control" placeholder="Unesite link službenog twitter profila" value="{{ $player->twitter }}">
+                                <input type="text" name="twitter" id="twitter" class="form-control" placeholder="Unesite link službenog twitter profila" value="{{ $staff->twitter }}">
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="instagram"><img class="flow-icons-013" src="{{asset('images/icons/instagram.svg')}}"> Instagram profil</label>
-                                <input type="text" name="instagram" id="instagram" class="form-control" placeholder="Unesite link službenog instagram profila" value="{{ $player->instagram }}">
+                                <input type="text" name="instagram" id="instagram" class="form-control" placeholder="Unesite link službenog instagram profila" value="{{ $staff->instagram }}">
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="youtube"><img class="flow-icons-013" src="{{asset('images/icons/youtube.svg')}}"> YouTUBE pofil</label>
-                                <input type="text" name="youtube" id="youtube" class="form-control" placeholder="Unesite link službenog YouTUBE kanala" value="{{ $player->youtube }}">
+                                <input type="text" name="youtube" id="youtube" class="form-control" placeholder="Unesite link službenog YouTUBE kanala" value="{{ $staff->youtube }}">
                             </div>
 
                         </div>
-                        <div class="row">
+
+                        <div class="row form-objavi-klub-01">
                             <header class="card__header">
                                 <h4><i class="fa fa-youtube-play"></i> Video prezentacija</h4>
                             </header>
                         </div>
                         <div class="row">
+
                             <div class="form-group col-md-12">
                                 <label for="video"><img class="flow-icons-013" src="{{asset('images/icons/play-button.svg')}}"> Video prezentacija</label>
-                                <input type="text" name="video" id="video" class="form-control" placeholder="Unesite link videa (YouTUBE)" value="{{ $player->video }}">
+                                <input type="text" name="video" id="video" class="form-control" placeholder="Unesite link videa (YouTUBE)" value="{{ $staff->video }}">
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="form-group form-group--submit col-md-12">
-                                <button type="submit" class="btn btn-default btn-sm btn-block btn-spasi" id="buttonSavePlayerGeneral" data-id="{{ $player->id }}">Spremi općenito</button>
+                                <button type="submit" class="btn btn-default btn-sm btn-block btn-spasi" id="buttonSaveStaffGeneral" data-id="{{ $staff->id }}">Spremi općenito</button>
                             </div>
-
                         </div>
                     </form>
                 </div>
@@ -239,10 +214,10 @@
                 <!-- Tab: Predispozicije -->
 
                 <div role="tabpanel" class="tab-pane fade neaktivno" id="tab-predispozicije">
-                    <form id="editPlayerStatus" role="form" action="{{ url('/athletes/' . $player->id . '/edit/status') }}" method="POST" enctype="multipart/form-data">
+                    <form id="editStaffStatus" role="form" action="{{ url('/staff/' . $staff->id . '/edit/status') }}" method="POST" enctype="multipart/form-data">
                         {!! csrf_field() !!}
                         <input name="_method" type="hidden" value="PATCH">
-                        <div class="row">
+                        <div class="row form-objavi-klub-01">
                             <header class="card__header">
                                 <h4><i class="fa fa-info-circle"></i> Osnovne informacije</h4>
                             </header>
@@ -250,72 +225,82 @@
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label class="control-label" for="date_of_birth"><i class="fa fa-calendar-o"></i> Datum rođenja</label>
-                                <input class="form-control" id="date" name="date_of_birth" placeholder="Izaberite datum rođenja" value="{{ \Carbon\Carbon::parse($player->date_of_birth)->format('m/d/Y')  }}">
+                                <input class="form-control" id="date" name="date_of_birth" placeholder="Izaberite datum rođenja" value="{{ \Carbon\Carbon::parse($staff->date_of_birth)->format('m/d/Y')  }}">
                             </div>
 
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-8">
                                 <label for="requested_club"><img class="flow-icons-013" src="{{asset('images/icons/klubovi-icon.svg')}}"> Klub</label>
-                                <select class="form-control" id="requested_club" name="requested_club">
-                                    <option selected disabled>Izberite trenutni klub sportiste</option>
-                                    @foreach($clubs as $club)
-                                        <option value="{{ $club->id }}" {{ $player->requested_club == $club->id ? 'selected' : '' }}>{{ $club->name }}</option>
-                                    @endforeach
-                                </select>
+                                <div class="input-group">
+                                    <select class="form-control" id="requested_club" name="requested_club">
+                                        <option selected disabled>Izberite trenutni klub sportskog kadra</option>
+                                        @foreach($clubs as $club)
+                                            <option value="{{ $club->id }}" {{ $staff->requested_club == $club->id ? 'selected' : '' }}>{{ $club->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="input-group-addon">ili</span>
+                                    <input type="text" name="club_name" id="club_name" class="form-control" placeholder="Unesite naziv kluba" value="{{ $staff->club_name }}">
+                                </div>
                             </div>
-
+                            <div class="form-group col-md-4">
+                                <label for="education"><img class="flow-icons-013" src="{{ asset('images/icons/graduation-cap.svg') }}"> Edukacija</label>
+                                <input type="text" name="education" id="education" class="form-control" placeholder="Unesite edukaciju" value="{{ $staff->education }}">
+                            </div>
                         </div>
-                        <div class="row">
+                        <div class="row form-objavi-klub-01">
                             <header class="card__header">
-                                <h4><i class="fa fa-info-circle"></i> Predispozicije sportiste</h4>
+                                <h4><i class="fa fa-info-circle"></i> Dodatne informacije</h4>
                             </header>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label for="height"><img class="flow-icons-013" src="{{asset('images/icons/height.svg')}}"> Visina</label>
-                                <input type="number" name="height" id="height" class="form-control" placeholder="Unesite visinu u cm" value="{{ $player->height }}" min="0" max="300">
+                                <label for="additional_education"><img class="flow-icons-013" src="{{ asset('images/icons/graduation-cap.svg') }}"> Dodatno obrazovanje</label>
+                                <input type="text" name="additional_education" id="additional_education" class="form-control" placeholder="Unesite dodatno obrazovanje" value="{{ $staff->additional_education }}">
                             </div>
-
                             <div class="form-group col-md-4">
-                                <label for="weight"><img class="flow-icons-013" src="{{asset('images/icons/weight.svg')}}"> Težina</label>
-                                <input type="number" name="weight" id="weight" class="form-control" placeholder="Unesite težinu u kg" value="{{ $player->weight }}" min="0" max="300">
+                                <label for="number_of_certificates"><img class="flow-icons-013" src="{{ asset('images/icons/certifikat.svg') }}"> Certifikati</label>
+                                <input type="number" name="number_of_certificates" id="number_of_certificates" class="form-control" placeholder="Unesite broj certifikata" value="{{ $staff->number_of_certificates }}">
                             </div>
-
-                            @foreach($inputs as $input)
-                                <div class="form-group col-md-4">
-                                    <label for="{{ $input->name }}">{{ $input->label }}</label>
-                                    @if($input->type == 'input')
-                                        <input type="text" name="{{ $input->name }}" id="{{ $input->name }}" class="form-control" placeholder="{{ $input->placeholder }}" value="{{ $player->player_data[$input->name] }}">
-                                    @elseif($input->type == 'select')
-                                        <select name="{{ $input->name }}" id="{{ $input->name }}" class="form-control">
-                                            <option selected disabled>{{ $input->default }}</option>
-                                            @foreach($input->options as $option)
-                                                <option value="{{ $option }}" {{ $player->player_data[$input->name] == $option ? 'selected' : '' }}>{{ $option }}</option>
-                                            @endforeach
-                                        </select>
-                                    @endif
+                            <div class="form-group col-md-4">
+                                <label for="number_of_projects"><img class="flow-icons-013" src="{{ asset('images/icons/idea.svg') }}"> Sportski projekti</label>
+                                <input type="number" name="number_of_projects" id="number_of_projects" class="form-control" placeholder="Ukupno realizovanih sportskih projekata" value="{{ $staff->number_of_projects }}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="work_experience"><img class="flow-icons-013" src="{{ asset('images/icons/zanimanje.svg') }}"> Rad u struci</label>
+                                <input type="number" step="0.5" name="work_experience" id="work_experience" class="form-control" placeholder="Dužina rada u struci u godinama" value="{{ $staff->work_experience }}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="languages"><img class="flow-icons-013" src="{{ asset('images/icons/savez.svg') }}"> Strani jezici</label>
+                                <div class="form-group">
+                                    @foreach($languages as $language)
+                                        <label class="checkbox checkbox-inline">
+                                            <input type="checkbox" name="languages[]" value="{{ $language->id }}" {{ $staff->languages->contains('id', $language->id) ? ' checked' : '' }}> {{ $language->name }}
+                                            <span class="checkbox-indicator"></span>
+                                        </label>
+                                    @endforeach
                                 </div>
-                            @endforeach
+                            </div>
                         </div>
-                        <div class="row">
+
+                        <div class="row form-objavi-klub-01">
                             <header class="card__header">
-                                <h4><i class="fa fa-info-circle"></i> Klupska historija</h4>
+                                <h4><i class="fa fa-info-circle"></i> Poslovna historija</h4>
                             </header>
                         </div>
                         <div id="dodajHistorijuButtons" class="row">
                             <div id="historijaLista">
-                                @if($player->club_history)
-                                    @foreach($player->club_history as $key => $club)
+                                @if($staff->work_history)
+                                    @foreach($staff->work_history as $key => $licnost)
                                         <div class="row historyHover" data-key="{{ $key }}">
-                                            <input type="hidden" name="history[{{ $key }}][id]" value="{{ $club->id }}">
+                                            <input type="hidden" name="history[{{ $key }}][id]" value="{{ $licnost->id }}">
                                             <div class="izbrisiHistory"><i class="fa fa-times-circle-o"></i></div>
                                             <div class="row form-objavi-klub-01">
                                                 <div class="form-group col-md-6">
                                                     <label><img class="flow-icons-013" src="{{asset('images/icons/klubovi-icon.svg')}}"> Sezona</label>
-                                                    <input type="text" name="history[{{ $key }}][season]" class="form-control" placeholder="npr. 2015-2016" value="{{ $club->season }}">
+                                                    <input type="text" name="history[{{ $key }}][season]" class="form-control" placeholder="npr. 2015-2016" value="{{ $licnost->season }}">
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label><img class="flow-icons-013" src="{{asset('images/icons/klubovi-icon.svg')}}"> Klub</label>
-                                                    <input type="text" name="history[{{ $key }}][club]" class="form-control" placeholder="Unesite ime kluba" value="{{ $club->club }}">
+                                                    <input type="text" name="history[{{ $key }}][club]" class="form-control" placeholder="Unesite ime kluba" value="{{ $licnost->club }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -328,9 +313,7 @@
                         </div>
                         <div class="row">
                             <div class="form-group form-group--submit col-md-12">
-                                <button type="submit" class="btn btn-default btn-sm btn-block btn-spasi" id="buttonSavePlayerStatus" data-id="{{ $player->id }}">
-                                    Spremi predispozicije
-                                </button>
+                                <button type="submit" class="btn btn-default btn-sm btn-block btn-spasi" id="buttonSaveStaffStatus" data-id="{{ $staff->id }}">Spremi predispozicije</button>
                             </div>
                         </div>
                     </form>
@@ -341,25 +324,28 @@
                 <!-- Tab: Vremeplov -->
 
                 <div role="tabpanel" class="tab-pane fade neaktivno" id="tab-biografija">
-                    <form id="editPlayerBiography" role="form" action="{{ url('/athletes/' . $player->id . '/edit/biography') }}" method="POST" enctype="multipart/form-data">
+                    <form id="editStaffBiography" role="form" action="{{ url('/staff/' . $staff->id . '/edit/biography') }}" method="POST" enctype="multipart/form-data">
                         {!! csrf_field() !!}
                         <input name="_method" type="hidden" value="PATCH">
                         <div class="row">
                             <div class="row identitet-style">
+
                                 <div class="col-md-12">
+
                                     <div class="form-group col-md-12">
-                                        <label for="biography"><img class="flow-icons-013" src="{{asset('images/icons/edit.svg')}}"> Biografija</label>
-                                        <textarea class="form-control" rows="20" id="biography" name="biography" placeholder="Upišite kratku biografiju sportiste...">{{ $player->biography }}</textarea>
+                                        <label for="biography"><img class="flow-icons-013" src="{{ asset('images/icons/edit.svg') }}"> Biografija</label>
+                                        <textarea class="form-control" rows="20" id="biography" name="biography" maxlength="1050" placeholder="Upišite kratku biografiju sportskog kadra...">{{ $staff->biography }}</textarea>
                                     </div>
+
                                 </div>
+
                             </div>
+
                         </div>
 
                         <div class="row">
                             <div class="form-group form-group--submit col-md-12">
-                                <button type="submit" class="btn btn-default btn-sm btn-block btn-spasi" id="buttonSavePlayerBiography" data-id="{{ $player->id }}">
-                                    Spasi biografiju
-                                </button>
+                                <button type="submit" class="btn btn-default btn-sm btn-block btn-spasi" id="buttonSaveStaffBiography" data-id="{{ $staff->id }}">Spremi biografiju</button>
                             </div>
                         </div>
                     </form>
@@ -368,9 +354,8 @@
                 <!-- Tab: Vremeplov / End -->
 
                 <!-- Tab: Vitrina -->
-
                 <div role="tabpanel" class="tab-pane fade" id="tab-vitrina">
-                    <form id="editPlayerTrophies" role="form" action="{{ url('/athletes/' . $player->id . '/edit/trophies') }}" method="POST" enctype="multipart/form-data">
+                    <form id="editStaffTrophies" role="form" action="{{ url('/staff/' . $staff->id . '/edit/trophies') }}" method="POST" enctype="multipart/form-data">
                         {!! csrf_field() !!}
                         <input name="_method" type="hidden" value="PATCH">
                         <div class="row">
@@ -380,15 +365,15 @@
                                 </header>
                             </div>
                             <div id="nagradeLista">
-                                @if($player->trophies)
-                                    @foreach($player->trophies as $key => $nagrada)
+                                @if($staff->trophies)
+                                    @foreach($staff->trophies as $key => $nagrada)
                                         <div class="row nagradaHover" data-key="{{ $key }}">
                                             <input type="hidden" name="nagrada[{{ $key }}][id]" value="{{ $nagrada->id }}">
                                             <div class="izbrisiNagradu"><i class="fa fa-times-circle-o"></i></div>
                                             <div class="col-md-6">
                                                 <div class="form-group col-md-6">
-                                                    <label for="vrsta-nagrade{{ $key }}"><img class="flow-icons-013" src="{{ asset('images/icons/medalja.svg') }}"> Vrsta nagrade</label>
-                                                    <select name="nagrada[{{ $key }}][vrsta]" id="vrsta-nagrade{{ $key }}" class="form-control">
+                                                    <label for="vrsta-nagrade"><img class="flow-icons-013" src="{{ asset('images/icons/medalja.svg') }}"> Vrsta nagrade</label>
+                                                    <select name="nagrada[{{ $key }}][vrsta]" class="form-control">
                                                         <option value="" {{ $nagrada->type == '' ? 'selected' : '' }}>Izaberite vrstu osvojene nagrade</option>
                                                         <option value="Medalja" {{ $nagrada->type == 'Medalja' ? 'selected' : '' }}>Medalja</option>
                                                         <option value="Trofej/Pehar" {{ $nagrada->type == 'Trofej/Pehar' ? 'selected' : '' }}>Trofej/Pehar</option>
@@ -397,8 +382,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="nivo-nagrade{{ $key }}"><img class="flow-icons-013" src="{{ asset('images/icons/medalja.svg') }}"> Tip nagrade</label>
-                                                    <select name="nagrada[{{ $key }}][tip]" id=nivo-nagrade{{ $key }}" class="form-control">
+                                                    <label for="tip-nagrade"><img class="flow-icons-013" src="{{ asset('images/icons/medalja.svg') }}"> Tip nagrade</label>
+                                                    <select name="nagrada[{{ $key }}][tip]" class="form-control">
                                                         <option value="" {{ $nagrada->place == '' ? 'selected' : '' }}>Izaberite tip nagrade</option>
                                                         <option value="Zlato" {{ $nagrada->place == 'Zlato' ? 'selected' : '' }}>Zlato (1. mjesto)</option>
                                                         <option value="Srebro" {{ $nagrada->place == 'Srebro' ? 'selected' : '' }}>Srebro (2. mjesto)</option>
@@ -407,8 +392,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-md-12">
-                                                    <label for="tip-nagrade{{ $key }}"><img class="flow-icons-013" src="{{ asset('images/icons/medalja.svg') }}"> Nivo takmičenja</label>
-                                                    <select name="nagrada[{{ $key }}][nivo]" id="tip-nagrade{{ $key }}" class="form-control">
+                                                    <label for="tip-nagrade"><img class="flow-icons-013" src="{{ asset('images/icons/medalja.svg') }}"> Nivo takmičenja</label>
+                                                    <select name="nagrada[{{ $key }}][nivo]" class="form-control">
                                                         <option value="" {{ $nagrada->level_of_competition == '' ? 'selected' : '' }}>Izaberite nivo takmičenja</option>
                                                         <option value="Internacionalni nivo" {{ $nagrada->level_of_competition == 'Internacionalni nivo' ? 'selected' : '' }}>Internacionalni nivo</option>
                                                         <option value="Regionalni nivo" {{ $nagrada->level_of_competition == 'Regionalni nivo' ? 'selected' : '' }}>Regionalni nivo</option>
@@ -420,16 +405,16 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="takmicenje{{ $key }}"><img class="flow-icons-013" src="{{ asset('images/icons/trophy.svg') }}"> Naziv takmičenja</label>
-                                                    <input type="text" name="nagrada[{{ $key }}][takmicenje]" id="takmicenje{{ $key }}" class="form-control" placeholder="Unesite naziv takmicenja za koje je osvojena nagrada" value="{{ $nagrada->competition_name }}">
+                                                    <label for="takmicenje"><img class="flow-icons-013" src="{{ asset('images/icons/trophy.svg') }}"> Naziv takmičenja</label>
+                                                    <input type="text" name="nagrada[{{ $key }}][takmicenje]" class="form-control" placeholder="Unesite naziv takmicenja za koje je osvojena nagrada" value="{{ $nagrada->competition_name }}">
                                                 </div>
                                                 <div class="form-group col-md-6 col-xs-12">
-                                                    <label for="sezona{{ $key }}"><img class="flow-icons-013" src="{{ asset('images/icons/small-calendar.svg') }}"> Sezona/Godina</label>
-                                                    <input type="text" name="nagrada[{{ $key }}][sezona]" id="sezona{{ $key }}" class="form-control" placeholder="Unesite Sezonu/Godinu osvajanja trofeja" value="{{ $nagrada->season }}">
+                                                    <label for="sezona"><img class="flow-icons-013" src="{{ asset('images/icons/small-calendar.svg') }}"> Sezona/Godina</label>
+                                                    <input type="text" name="nagrada[{{ $key }}][sezona]" class="form-control" placeholder="Unesite Sezonu/Godinu osvajanja trofeja" value="{{ $nagrada->season }}">
                                                 </div>
                                                 <div class="form-group col-md-6 col-xs-12">
-                                                    <label for="osvajanja{{ $key }}"><img class="flow-icons-013" src="{{ asset('images/icons/the-sum-of.svg') }}"> Broj osvajanja</label>
-                                                    <input type="number" name="nagrada[{{ $key }}][osvajanja]" id="osvajanja{{ $key }}" class="form-control" placeholder="Unesite broj osvajanja trofeja">
+                                                    <label for="osvajanja"><img class="flow-icons-013" src="{{ asset('images/icons/the-sum-of.svg') }}"> Broj osvajanja</label>
+                                                    <input type="number" name="nagrada[{{ $key }}][osvajanja]" class="form-control" placeholder="Unesite broj osvajanja trofeja">
                                                 </div>
                                             </div>
                                         </div>
@@ -442,18 +427,16 @@
                         </div>
                         <div class="row">
                             <div class="form-group form-group--submit col-md-12">
-                                <button type="submit" class="btn btn-default btn-sm btn-block btn-spasi" id="buttonSavePlayerTrophies" data-id="{{ $player->id }}">Spremi trofeje</button>
+                                <button type="submit" class="btn btn-default btn-sm btn-block btn-spasi" id="buttonSaveStaffTrophies" data-id="{{ $staff->id }}">Spremi trofeje</button>
                             </div>
                         </div>
                     </form>
                 </div>
-
                 <!-- Tab: Vitrina / End -->
 
                 <!-- Tab: Foto galerija -->
-
                 <div role="tabpanel" class="tab-pane fade neaktivno" id="tab-galerija">
-                    <form id="editPlayerGallery" role="form" action="{{ url('/athletes/' . $player->id . '/edit/gallery') }}" method="POST" enctype="multipart/form-data">
+                    <form id="editStaffGallery" role="form" action="{{ url('/staff/' . $staff->id . '/edit/gallery') }}" method="POST" enctype="multipart/form-data">
                         {!! csrf_field() !!}
                         <input name="_method" type="hidden" value="PATCH">
                         <div class="row dodavanje-slika">
@@ -473,12 +456,12 @@
 
 
                         <div class="row form-objavi-klub-01" id="galerija_prikaz">
-                            @foreach($player->images as $slika)
+                            @foreach($staff->images as $slika)
                                 <div class="album__item col-xs-6 col-sm-3" id="galerija_klub">
                                     <div class="album__item-holder">
-                                        <a href="{{asset(config('general.site_paths.player_gallery') . $slika->image)}}" class="album__item-link mp_gallery">
+                                        <a href="{{asset(config('general.site_paths.staff_gallery') . $slika->image)}}" class="album__item-link mp_gallery">
                                             <figure class="album__thumb">
-                                                <img src="{{asset(config('general.site_paths.player_gallery') . $slika->image)}}" alt="">
+                                                <img src="{{asset(config('general.site_paths.staff_gallery') . $slika->image)}}" alt="">
                                             </figure>
                                         </a>
                                     </div>
@@ -488,15 +471,15 @@
 
                         <div class="row">
                             <div class="form-group form-group--submit col-md-12">
-                                <button type="submit" class="btn btn-default btn-sm btn-block btn-spasi" id="buttonSavePlayerGallery" data-id="{{ $player->id }}">
-                                    Spremi galeriju
-                                </button>
+                                <button type="submit" class="btn btn-default btn-sm btn-block btn-spasi" id="buttonSaveStaffGallery" data-id="{{ $staff->id }}">Spremi galeriju</button>
                             </div>
                         </div>
                     </form>
                 </div>
+                <!-- Tab: Foto galerija / End -->
 
             </div>
+            <!-- Single Product Tabbed Content / End -->
         </div>
     </div>
 </div>

@@ -66,7 +66,7 @@
 }
 
 .error {
-    color: red;
+    color: red!important;
 }
 
 #editNewsServerErrors,
@@ -75,7 +75,19 @@
 }
 
 #displayPlayer .player-image,
-#editPlayer .player-image{
+#displayObject .object-image,
+#displayClub .club-image,
+#displaySchool .school-image,
+#displayStaff .staff-image{
+    height: 200px;
+    position: relative;
+}
+
+#editPlayer .player-image,
+#editObject .object-image,
+#editClub .club-image,
+#editSchool .school-image,
+#editStaff .staff-image{
     width: 200px;
     height: 200px;
     margin: 15px;
@@ -92,7 +104,7 @@
     margin: 0;
 }
 
-.player-content .sidebar ul li.active {
+.sidebar ul li.active {
     background: none;
 }
 
@@ -235,4 +247,31 @@ input:not([type]), input[type=text], input[type=password], input[type=email], in
     color: #fff;
     text-align: center;
     line-height: 50px;
+}
+
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+    position: relative;
+    margin-left: -20px;
+    opacity: 1;
+    left: auto;
+    margin-top: 0;
+}
+
+.nav-tabs.nav-justified>li>a small {
+    display: block;
+}
+
+[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after,
+[type="radio"]:not(:checked)+label, [type="radio"]:checked+label{
+    display: none!important;
+}
+
+.table-responsive {
+    overflow-x: hidden!important;
+}
+
+.action-buttons {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
 }

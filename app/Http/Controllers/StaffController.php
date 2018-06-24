@@ -214,7 +214,7 @@ class StaffController extends Controller
         abort(404);
     }
 
-    public function displayEditStaff($id) {
+    public function getStaffEditForm($id) {
         $languages = Language::all();
         $professions = Profession::all();
 
@@ -238,10 +238,10 @@ class StaffController extends Controller
 
             $staff->setAttribute('regions', $clubRegions);
 
-            return view('staff.edit', compact('languages', 'regions', 'clubs', 'professions', 'staff'));
+            return view('partials.edit-staff-form', compact('languages', 'regions', 'clubs', 'professions', 'staff'));
         }
 
-        abort(404);
+        return null;
     }
 
     public function editStaffGeneral($id, Request $request) {
@@ -249,13 +249,10 @@ class StaffController extends Controller
             ->getById($id);
 
         if(!$staff) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio kadar
-        $isOwner = $staff->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Sportski kadar ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -277,18 +274,26 @@ class StaffController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/staff/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateStaffGeneral = $this->staffRepository
                 ->updateGeneral($request, $staff);
 
             if($updateStaffGeneral) {
-                flash()->overlay('Uspješno ste izmjenili "Općenito" sekciju sportskog kadra.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili sekciju "Općenito" sportskog kadra.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena sekcije "Općenito" sportskog kadra neuspješna.'
+            ]);
         }
 
     }
@@ -298,13 +303,10 @@ class StaffController extends Controller
             ->getById($id);
 
         if(!$staff) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio kadar
-        $isOwner = $staff->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Sportski kadar ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -327,18 +329,26 @@ class StaffController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/staff/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updatePlayerStatus = $this->staffRepository
                 ->updateStatus($request, $staff);
 
             if($updatePlayerStatus) {
-                flash()->overlay('Uspješno ste izmjenili predispozicije sportskog kadra.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili predispozicije sportskog kadra.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena predispozicija sportskog kadra neuspješna.'
+            ]);
         }
     }
 
@@ -347,13 +357,10 @@ class StaffController extends Controller
             ->getById($id);
 
         if(!$staff) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio kadar
-        $isOwner = $staff->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Sportski kadar ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -361,18 +368,26 @@ class StaffController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/staff/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateStaffBiography = $this->staffRepository
                 ->updateBiography($request, $staff);
 
             if($updateStaffBiography) {
-                flash()->overlay('Uspješno ste izmjenili biografiju sportskog kadra.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili biografiju sportskog kadra.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena biografije sportskog kadra neuspješna.'
+            ]);
         }
     }
 
@@ -381,13 +396,10 @@ class StaffController extends Controller
             ->getById($id);
 
         if(!$staff) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio kadar
-        $isOwner = $staff->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Sportski kadar ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -402,18 +414,26 @@ class StaffController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/staff/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateStaffTrophies = $this->staffRepository
                 ->updateTrophies($request, $staff);
 
             if($updateStaffTrophies) {
-                flash()->overlay('Uspješno ste izmjenili trofeje/nagrade sportskog kadra.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili trofeje/nagrade sportskog kadra.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena trofeja/nagrada sportskog kadra neuspješna.'
+            ]);
         }
     }
 
@@ -422,13 +442,10 @@ class StaffController extends Controller
             ->getById($id);
 
         if(!$staff) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio kadar
-        $isOwner = $staff->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Sportski kadar ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -437,18 +454,130 @@ class StaffController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/staff/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateStaffGallery = $this->staffRepository
                 ->updateGallery($request, $staff);
 
             if($updateStaffGallery) {
-                flash()->overlay('Uspješno ste izmjenili galeriju sportskog kadra.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili galeriju sportskog kadra.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena galerije sportskog kadra neuspješna.'
+            ]);
         }
+    }
+
+    public function getStaffById($id){
+        $staff = $this->staffRepository
+            ->getById($id);
+
+        if($staff) {
+            $regions = collect();
+            $currentRegion = $staff->region;
+            while ($currentRegion) {
+                $regions->put(strtolower($currentRegion->region_type->type), $currentRegion->name);
+
+                $currentRegion = $currentRegion->parent_region;
+            }
+
+            $staff->setAttribute('regions', $regions);
+
+            return response()->json([
+                'success' => true,
+                'staff' => $staff
+            ]);
+        }
+
+        return response()->json([
+            'success' => false
+        ]);
+    }
+
+    public function approveStaff(Request $request) {
+        $staff = $this->staffRepository
+            ->getById($request->id);
+
+        if(!$staff) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sportski kadar ne postoji.'
+            ]);
+        }
+
+        $staff->status = 'active';
+
+        if(!$staff->save()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Problem tokom odobravanja sportskog kadra.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sportski kadar odobren uspješno.'
+        ]);
+    }
+
+    public function deleteStaff(Request $request) {
+        $staff = $this->staffRepository
+            ->getById($request->id);
+
+        if(!$staff) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sportski kadar ne postoji.'
+            ]);
+        }
+
+        $staff->status = 'deleted';
+
+        if(!$staff->save()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Problem tokom brisanja sportskog kadra.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sportski kadar izbrisan uspješno.'
+        ]);
+    }
+
+    public function refuseStaff(Request $request) {
+        $staff = $this->staffRepository
+            ->getById($request->id);
+
+        if(!$staff) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sportski kadar ne postoji.'
+            ]);
+        }
+
+        $staff->status = 'refused';
+
+        if(!$staff->save()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Problem tokom odbijanja sportskog kadra.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sportski kadar odbijen uspješno.'
+        ]);
     }
 }

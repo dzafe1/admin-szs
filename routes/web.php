@@ -80,6 +80,57 @@ Route::group(['middleware' => 'auth'], function () {
         Route::patch('players/{id}/edit/biography', 'PlayerController@editPlayerBiography');
         Route::patch('players/{id}/edit/trophies', 'PlayerController@editPlayerTrophies');
         Route::patch('players/{id}/edit/gallery', 'PlayerController@editPlayerGallery');
+
+        // Objects API routes
+        Route::get('objects/{id}', 'ObjectController@getObjectById');
+        Route::get('objects/editForm/{id}', 'ObjectController@getObjectEditForm');
+        Route::patch('objects/{id}/edit/general', 'ObjectController@editObjectGeneral');
+        Route::patch('objects/{id}/edit/status', 'ObjectController@editObjectStatus');
+        Route::patch('objects/{id}/edit/history', 'ObjectController@editObjectHistory');
+        Route::patch('objects/{id}/edit/balon-fields', 'ObjectController@editObjectBalonFields');
+        Route::patch('objects/{id}/edit/balon-prices', 'ObjectController@editObjectBalonPrices');
+        Route::patch('objects/{id}/edit/ski-tracks', 'ObjectController@editObjectSkiTracks');
+        Route::patch('objects/{id}/edit/ski-prices', 'ObjectController@editObjectSkiPrices');
+        Route::patch('objects/{id}/edit/gallery', 'ObjectController@editObjectGallery');
+        Route::patch('objects/approve', 'ObjectController@approveObject');
+        Route::patch('objects/delete', 'ObjectController@deleteObject');
+        Route::patch('objects/refuse', 'ObjectController@refuseObject');
+
+        // Clubs API routes
+        Route::get('clubs/{id}', 'ClubController@getClubById');
+        Route::get('clubs/editForm/{id}', 'ClubController@getClubEditForm');
+        Route::patch('clubs/{id}/edit/general', 'ClubController@editClubGeneral');
+        Route::patch('clubs/{id}/edit/trophies', 'ClubController@editClubTrophies');
+        Route::patch('clubs/{id}/edit/history', 'ClubController@editClubHistory');
+        Route::patch('clubs/{id}/edit/staff', 'ClubController@editClubStaff');
+        Route::patch('clubs/{id}/edit/gallery', 'ClubController@editClubGallery');
+        Route::patch('clubs/approve', 'ClubController@approveClub');
+        Route::patch('clubs/delete', 'ClubController@deleteClub');
+        Route::patch('clubs/refuse', 'ClubController@refuseClub');
+
+        // Schools API routes
+        Route::get('schools/{id}', 'SchoolController@getSchoolById');
+        Route::get('schools/editForm/{id}', 'SchoolController@getSchoolEditForm');
+        Route::patch('schools/{id}/edit/general', 'SchoolController@editSchoolGeneral');
+        Route::patch('schools/{id}/edit/trophies', 'SchoolController@editSchoolTrophies');
+        Route::patch('schools/{id}/edit/history', 'SchoolController@editSchoolHistory');
+        Route::patch('schools/{id}/edit/members', 'SchoolController@editSchoolMembers');
+        Route::patch('schools/{id}/edit/gallery', 'SchoolController@editSchoolGallery');
+        Route::patch('schools/approve', 'SchoolController@approveSchool');
+        Route::patch('schools/delete', 'SchoolController@deleteSchool');
+        Route::patch('schools/refuse', 'SchoolController@refuseSchool');
+
+        // Staff API routes
+        Route::get('staff/{id}', 'StaffController@getStaffById');
+        Route::get('staff/editForm/{id}', 'StaffController@getStaffEditForm');
+        Route::patch('staff/{id}/edit/general', 'StaffController@editStaffGeneral');
+        Route::patch('staff/{id}/edit/status', 'StaffController@editStaffStatus');
+        Route::patch('staff/{id}/edit/biography', 'StaffController@editStaffBiography');
+        Route::patch('staff/{id}/edit/trophies', 'StaffController@editStaffTrophies');
+        Route::patch('staff/{id}/edit/gallery', 'StaffController@editStaffGallery');
+        Route::patch('staff/approve', 'StaffController@approveStaff');
+        Route::patch('staff/delete', 'StaffController@deleteStaff');
+        Route::patch('staff/refuse', 'StaffController@refuseStaff');
     });
 
 

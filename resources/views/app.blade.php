@@ -223,6 +223,7 @@
 <script src="{{asset('assets/dist/js/main.js')}}" type="text/javascript"></script>
 <script src="{{ asset('js/selectize.js') }}"></script>
 <script src="{{ asset('js/xregexp-all.js') }}"></script>
+<script src="https://cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>
 <script src="{{asset('js/custom.js')}}" type="text/javascript"></script>
 <!-- End Theme label Script
      =====================================================================-->

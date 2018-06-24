@@ -1,4 +1,4 @@
-<div id="displayPlayer" class="modal fade" tabindex="-1" role="dialog">
+<div id="displayStaff" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,15 +7,15 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="player-image">
+            <div class="staff-image">
                 <div class="action-buttons">
-                    <button id="deletePlayer" type="button" class="btn btn-danger" data-id=""><i class="fa fa-thumbs-down"></i> Odbij</button>
-                    <button id="approvePlayer" type="button" class="btn btn-success" data-id=""><i class="fa fa-thumbs-up"></i> Prihvati</button>
+                    <button id="refuseStaff" type="button" class="btn btn-danger" data-id=""><i class="fa fa-thumbs-down"></i> Odbij</button>
+                    <button id="approveStaff" type="button" class="btn btn-success" data-id=""><i class="fa fa-thumbs-up"></i> Prihvati</button>
                 </div>
                 <img class="repsponsive-centered-image" src="">
             </div>
             <div class="modal-body">
-                <div class="player-content"></div>
+                <div class="staff-content"></div>
             </div>
         </div>
     </div>

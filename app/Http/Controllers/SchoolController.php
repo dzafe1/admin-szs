@@ -231,7 +231,7 @@ class SchoolController extends Controller
         abort(404);
     }
 
-    public function displayEditSchool($id) {
+    public function getSchoolEditForm($id) {
         $regions = $this->regionRepository->getAll();
         $sports = $this->sportRepository->getAll();
         $clubCategories = $this->clubRepository->getSportCategories();
@@ -249,10 +249,10 @@ class SchoolController extends Controller
             }
 
             $school->setAttribute('regions', $clubRegions);
-            return view('schools.edit', compact('school', 'regions', 'sports', 'clubCategories'));
+            return view('partials.edit-school-form', compact('school', 'regions', 'sports', 'clubCategories'));
         }
 
-        abort(404);
+        return null;
     }
 
     public function editSchoolGeneral($id, Request $request) {
@@ -260,13 +260,10 @@ class SchoolController extends Controller
             ->getById($id);
 
         if(!$school) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio skolu
-        $isOwner = $school->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Škola ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -302,34 +299,39 @@ class SchoolController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/schools/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateSchoolGeneral = $this->schoolRepository
                 ->updateGeneral($request, $school);
 
             if($updateSchoolGeneral) {
-                flash()->overlay('Uspješno ste izmjenili "Općenito" sekciju škole sporta.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili sekciju "Općenito" škole sporta.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena sekcije "Općenito" škole sporta neuspješna.'
+            ]);
         }
 
     }
 
-    public function editSchoolStaff($id, Request $request) {
+    public function editSchoolMembers($id, Request $request) {
         $school = $this->schoolRepository
             ->getById($id);
 
         if(!$school) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio skolu
-        $isOwner = $school->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Škola ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -342,18 +344,26 @@ class SchoolController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/schools/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateSchoolStaff = $this->schoolRepository
                 ->updateStaff($request, $school);
 
             if($updateSchoolStaff) {
-                flash()->overlay('Uspješno ste izmjenili članove škole sporta.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili članove škole sporta.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena članova škole sporta neuspješna.'
+            ]);
         }
     }
 
@@ -362,13 +372,10 @@ class SchoolController extends Controller
             ->getById($id);
 
         if(!$school) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio skolu
-        $isOwner = $school->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Škola ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -376,18 +383,26 @@ class SchoolController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/schools/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateSchoolHistory = $this->schoolRepository
                 ->updateHistory($request, $school);
 
             if($updateSchoolHistory) {
-                flash()->overlay('Uspješno ste izmjenili historiju škole sporta.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili historiju škole sporta.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena historije škole sporta neuspješna.'
+            ]);
         }
     }
 
@@ -396,13 +411,10 @@ class SchoolController extends Controller
             ->getById($id);
 
         if(!$school) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio skolu
-        $isOwner = $school->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Škola ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -417,18 +429,26 @@ class SchoolController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/schools/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateSchoolTrophies = $this->schoolRepository
                 ->updateTrophies($request, $school);
 
             if($updateSchoolTrophies) {
-                flash()->overlay('Uspješno ste izmjenili trofeje/nagrade škole sporta.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili trofeje/nagrade škole sporta.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena trofeja/nagrada škole sporta neuspješna.'
+            ]);
         }
     }
 
@@ -437,13 +457,10 @@ class SchoolController extends Controller
             ->getById($id);
 
         if(!$school) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio skolu
-        $isOwner = $school->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Škola ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -452,18 +469,130 @@ class SchoolController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/schools/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateSchoolGallery = $this->schoolRepository
                 ->updateGallery($request, $school);
 
             if($updateSchoolGallery) {
-                flash()->overlay('Uspješno ste izmjenili galeriju škole sporta.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili galeriju škole sporta.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena galerije škole sporta neuspješna.'
+            ]);
         }
+    }
+
+    public function getSchoolById($id){
+        $school = $this->schoolRepository
+            ->getById($id);
+
+        if($school) {
+            $regions = collect();
+            $currentRegion = $school->region;
+            while ($currentRegion) {
+                $regions->put(strtolower($currentRegion->region_type->type), $currentRegion->name);
+
+                $currentRegion = $currentRegion->parent_region;
+            }
+
+            $school->setAttribute('regions', $regions);
+
+            return response()->json([
+                'success' => true,
+                'school' => $school
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+        ]);
+    }
+
+    public function approveSchool(Request $request) {
+        $school = $this->schoolRepository
+            ->getById($request->id);
+
+        if(!$school) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Škola sporta ne postoji.'
+            ]);
+        }
+
+        $school->status = 'active';
+
+        if(!$school->save()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Problem tokom odobravanja škole sporta.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Škola sporta odobrena uspješno.'
+        ]);
+    }
+
+    public function deleteSchool(Request $request) {
+        $school = $this->schoolRepository
+            ->getById($request->id);
+
+        if(!$school) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Škola sporta ne postoji.'
+            ]);
+        }
+
+        $school->status = 'deleted';
+
+        if(!$school->save()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Problem tokom brisanja škole sporta.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Škola sporta izbrisana uspješno.'
+        ]);
+    }
+
+    public function refuseSchool(Request $request) {
+        $school = $this->schoolRepository
+            ->getById($request->id);
+
+        if(!$school) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Škola sporta ne postoji.'
+            ]);
+        }
+
+        $school->status = 'refused';
+
+        if(!$school->save()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Problem tokom odbijanja škole sporta.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Škola sporta odbijena uspješno.'
+        ]);
     }
 }

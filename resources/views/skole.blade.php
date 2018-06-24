@@ -22,6 +22,7 @@
                 <div class="row">
                     <!-- Data tables -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="szs-alert alert"></div>
                         <div class="card">
                             <div class="card-header">
                                 <i class="fa fa-table fa-lg"></i>
@@ -85,4 +86,8 @@
         </div>
         <!-- ./page-content-wrapper -->
 
+        <!-- Modals -->
+        @include('modals.display-school')
+        @include('modals.edit-school')
+        <!-- Modals End -->
 @endsection

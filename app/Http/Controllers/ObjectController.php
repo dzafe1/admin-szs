@@ -333,24 +333,30 @@ class ObjectController extends Controller
         }
     }
 
-    public function showObject($id) {
+    public function getObjectById($id) {
         $object = $this->objectRepository
             ->getByIdWithAllData($id);
 
-        if($object) {
-            $regions = collect();
-            $currentRegion = $object->region;
-            while ($currentRegion) {
-                $regions->put(strtolower($currentRegion->region_type->type), $currentRegion->name);
-
-                $currentRegion = $currentRegion->parent_region;
-            }
-
-            $object->setAttribute('regions', $regions);
-            return view('objects.profile', compact('object'));
+        if(!$object) {
+            return response()->json([
+                'success' => false,
+            ]);
         }
 
-        abort(404);
+        $regions = collect();
+        $currentRegion = $object->region;
+        while ($currentRegion) {
+            $regions->put(strtolower($currentRegion->region_type->type), $currentRegion->name);
+
+            $currentRegion = $currentRegion->parent_region;
+        }
+
+        $object->setAttribute('regions', $regions);
+
+        return response()->json([
+            'success' => true,
+            'object' => $object
+        ]);
     }
 
     public function displayEditObject($id) {
@@ -433,14 +439,12 @@ class ObjectController extends Controller
             ->getById($id);
 
         if(!$object) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat ne postoji.'
+            ]);
         }
 
-        // Provjera da li je user napravio objekat
-        $isOwner = $object->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
-        }
 
         $validator = Validator::make($request->all(), [
             'image' => 'image|dimensions:min_width=800,min_height=600,max_width=2048,max_height=2048',
@@ -460,18 +464,26 @@ class ObjectController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/objects/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateObjectGeneral = $this->objectRepository
                 ->updateGeneral($request, $object);
 
             if($updateObjectGeneral) {
-                flash()->overlay('Uspješno ste izmjenili "Općenito" sekciju objekta.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili sekciju "Općenito" objekta.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena sekcije "Općenito" objekta neuspješna.'
+            ]);
         }
 
     }
@@ -481,13 +493,10 @@ class ObjectController extends Controller
             ->getByIdWithAllData($id);
 
         if(!$object) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio objekat
-        $isOwner = $object->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat ne postoji.'
+            ]);
         }
 
         $allValidators = [
@@ -514,18 +523,26 @@ class ObjectController extends Controller
         $validator = Validator::make($request->all(), $allValidators);
 
         if($validator->fails()){
-            return redirect('/objects/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateObjectStatus = $this->objectRepository
                 ->updateStatus($request, $object, $allUniqueAttributes);
 
             if($updateObjectStatus) {
-                flash()->overlay('Uspješno ste izmjenili karakteristike objekta.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili karakteristike objekta.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena karakteristika objekta neuspješna.'
+            ]);
         }
     }
 
@@ -534,13 +551,10 @@ class ObjectController extends Controller
             ->getById($id);
 
         if(!$object) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio objekat
-        $isOwner = $object->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -548,18 +562,26 @@ class ObjectController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/objects/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateObjectHistory = $this->objectRepository
                 ->updateHistory($request, $object);
 
             if($updateObjectHistory) {
-                flash()->overlay('Uspješno ste izmjenili historiju objekta.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili historiju objekta.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena historije objekta neuspješna.'
+            ]);
         }
     }
 
@@ -568,13 +590,10 @@ class ObjectController extends Controller
             ->getById($id);
 
         if(!$object) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio objekat
-        $isOwner = $object->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat ne postoji.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -583,18 +602,26 @@ class ObjectController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/objects/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateObjectGallery = $this->objectRepository
                 ->updateGallery($request, $object);
 
             if($updateObjectGallery) {
-                flash()->overlay('Uspješno ste izmjenili galeriju objekta.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili galeriju objekta.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena galerije objekta neuspješna.'
+            ]);
         }
     }
 
@@ -603,17 +630,17 @@ class ObjectController extends Controller
             ->getById($id);
 
         if(!$object) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio objekat
-        $isOwner = $object->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat ne postoji.'
+            ]);
         }
 
         if($object->type->type != 'Balon'){
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat nije tipa balon.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -630,18 +657,26 @@ class ObjectController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/objects/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateObjectBalonFields = $this->objectRepository
                 ->updateBalonFields($request, $object);
 
             if($updateObjectBalonFields) {
-                flash()->overlay('Uspješno ste izmjenili terene/sale objekta.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili terene/sale balona.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena terena/sala balona neuspješna.'
+            ]);
         }
     }
 
@@ -650,17 +685,17 @@ class ObjectController extends Controller
             ->getById($id);
 
         if(!$object) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio objekat
-        $isOwner = $object->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat ne postoji.'
+            ]);
         }
 
         if($object->type->type != 'Balon'){
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat nije tipa balon.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -672,18 +707,26 @@ class ObjectController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/objects/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateObjectBalonPrices = $this->objectRepository
                 ->updateBalonPrices($request, $object);
 
             if($updateObjectBalonPrices) {
-                flash()->overlay('Uspješno ste izmjenili cjenovnik objekta.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili cjenovnik balona.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena cjenovnika balona neuspješna.'
+            ]);
         }
     }
 
@@ -692,17 +735,17 @@ class ObjectController extends Controller
             ->getById($id);
 
         if(!$object) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio objekat
-        $isOwner = $object->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat ne postoji.'
+            ]);
         }
 
         if($object->type->type != 'Skijalište'){
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat nije tipa skijalište.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -717,18 +760,26 @@ class ObjectController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/objects/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateObjectSkiTracks = $this->objectRepository
                 ->updateSkiTracks($request, $object);
 
             if($updateObjectSkiTracks) {
-                flash()->overlay('Uspješno ste izmjenili staze objekta.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili staze skijališta.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena staza skijališta neuspješna.'
+            ]);
         }
     }
 
@@ -737,17 +788,17 @@ class ObjectController extends Controller
             ->getById($id);
 
         if(!$object) {
-            abort(404);
-        }
-
-        // Provjera da li je user napravio objekat
-        $isOwner = $object->user->id == Auth::user()->id;
-        if(!$isOwner) {
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat ne postoji.'
+            ]);
         }
 
         if($object->type->type != 'Skijalište'){
-            abort(404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat nije tipa skijalište.'
+            ]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -759,18 +810,26 @@ class ObjectController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('/objects/' . $id . '/edit')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ]);
         } else {
 
             $updateObjectSkiPrices = $this->objectRepository
                 ->updateSkiPrices($request, $object);
 
             if($updateObjectSkiPrices) {
-                flash()->overlay('Uspješno ste izmjenili cjenovnik objekta.', 'Čestitamo');
-                return back();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Uspješno ste izmjenili cjenovnik skijališta.'
+                ]);
             }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Izmjena cjenovnika skijališta neuspješna.'
+            ]);
         }
     }
 
@@ -844,5 +903,153 @@ class ObjectController extends Controller
             ->paginate(16);
 
         return view('objects.index', compact('objectTypes', 'regions', 'results'));
+    }
+
+    public function getObjectEditForm($id) {
+        $object = $this->objectRepository
+            ->getByIdWithAllData($id);
+
+        if(!$object) {
+            return null;
+        }
+
+
+        $columns = Schema::getColumnListing($object->type->object_table);
+        $to_delete = ['id', 'object_type_id', 'created_at', 'updated_at'];
+        $columns = array_diff($columns, $to_delete);
+
+        $inputs = [];
+
+        foreach ($this->allAttributeInputs as $key => $attribute) {
+            foreach ($columns as $column) {
+                if($key == $column) {
+                    $inputs[$key] = $attribute;
+                }
+            }
+        }
+
+        foreach ($inputs as $key => $input) {
+            $inputs[$key] = explode('|', $input);
+            foreach ($inputs[$key] as $key_in => $input_attribute) {
+                $newArray = explode(':', $input_attribute);
+
+                $inputs[$key][$newArray[0]] = $newArray[1];
+                unset($inputs[$key][$key_in]);
+            }
+        }
+
+        foreach ($inputs as $key => $input) {
+            if(array_key_exists('options', $input)){
+                $inputs[$key]['options'] = explode(',', $input['options']);
+            }
+        }
+
+        $inputs = json_decode(json_encode($inputs));
+        $regions = $this->regionRepository
+            ->getAll();
+
+        $objectRegions = collect();
+        $currentRegion = $object->region;
+        while ($currentRegion) {
+            $objectRegions->put(strtolower($currentRegion->region_type->type), $currentRegion->id);
+
+            $currentRegion = $currentRegion->parent_region;
+        }
+
+        $object->setAttribute('regions', $objectRegions);
+
+        if($object->type->type == 'Balon') {
+            $fields = DB::table('balon_fields')->where('balon_objects_id', $object->id)->get();
+            $object->setAttribute('fields', $fields);
+
+            $prices = DB::table('balon_prices')->where('balon_objects_id', $object->id)->get();
+            $object->setAttribute('prices', $prices);
+        } else if($object->type->type == 'Skijalište') {
+            $tracks = DB::table('skiing_tracks')->where('skiing_objects_id', $object->id)->get();
+            $object->setAttribute('tracks', $tracks);
+
+            $prices = DB::table('skiing_prices')->where('skiing_objects_id', $object->id)->get();
+            $object->setAttribute('prices', $prices);
+        }
+
+        return view('partials.edit-object-form', compact('object', 'inputs', 'regions'));
+    }
+
+    public function approveObject(Request $request) {
+        $object = $this->objectRepository
+            ->getById($request->id);
+
+        if(!$object) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat ne postoji.'
+            ]);
+        }
+
+        $object->status = 'active';
+
+        if(!$object->save()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Problem tokom odobravanja objekta.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Objekat odobren uspješno.'
+        ]);
+    }
+
+    public function deleteObject(Request $request) {
+        $object = $this->objectRepository
+            ->getById($request->id);
+
+        if(!$object) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat ne postoji.'
+            ]);
+        }
+
+        $object->status = 'deleted';
+
+        if(!$object->save()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Problem tokom brisanja objekta.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Objekat izbrisan uspješno.'
+        ]);
+    }
+
+    public function refuseObject(Request $request) {
+        $object = $this->objectRepository
+            ->getById($request->id);
+
+        if(!$object) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Objekat ne postoji.'
+            ]);
+        }
+
+        $object->status = 'refused';
+
+        if(!$object->save()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Problem tokom odbijanja objekta.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Objekat odbijen uspješno.'
+        ]);
     }
 }

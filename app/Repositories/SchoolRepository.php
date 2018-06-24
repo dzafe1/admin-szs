@@ -146,7 +146,7 @@ class SchoolRepository {
         if($request->file('logo')){
             $logo = $request->file('logo');
             $newLogoName = time() . '-' . Auth::user()->id . '.' . $logo->getClientOriginalExtension();
-            $destinationPath = public_path('/images/school_logo');
+            $destinationPath = config('general.image_paths.school_images');
             $logo->move($destinationPath, $newLogoName);
         }
 
@@ -212,7 +212,7 @@ class SchoolRepository {
                     if(!array_key_exists('id', $licnost)) {
                         if ($logo) {
                             $newavatarlicnostiName = time() . '-' . $school->id . '.' . $logo->getClientOriginalExtension();
-                            $destPath = public_path('/images/avatar_licnost');
+                            $destPath = config('general.image_paths.licnost_images');
                             $logo->move($destPath, $newavatarlicnostiName);
                         } else {
                             $newavatarlicnostiName = 'default_avatar.png';
@@ -334,7 +334,7 @@ class SchoolRepository {
             $galerije = $request->file('galerija');
             foreach($galerije as $key => $slika){
                 $newgalName = $key . '-' .time() . '-' .  $school->id . '.' . $slika->getClientOriginalExtension();
-                $destPath = public_path('/images/galerija_skola');
+                $destPath = config('general.image_paths.school_gallery');
                 $slika->move($destPath, $newgalName);
 
                 Gallery::create([
