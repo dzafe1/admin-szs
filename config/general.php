@@ -13,7 +13,11 @@ return [
         'object_gallery' => $domain . '/images/galerija_objekti/',
         'club_images' => $domain . '/images/club_logo/',
         'club_gallery' => $domain . '/images/galerija_klub/',
-        'licnost_images' => $domain . '/images/avatar_licnost/'
+        'licnost_images' => $domain . '/images/avatar_licnost/',
+        'school_images' => $domain . '/images/school_logo/',
+        'school_gallery' => $domain . '/images/galerija_skola/',
+        'staff_images' => $domain . '/images/staff_avatars/',
+        'staff_gallery' => $domain . '/images/galerija_kadrovi/'
     ],
     'image_paths' => [
         'vijesti' => $images . '\vijesti\galerija\\',
@@ -23,6 +27,10 @@ return [
         'object_gallery' => $images . '\galerija_objekti\\',
         'club_images' => $images . '\club_logo\\',
         'club_gallery' => $images . '\galerija_klub\\',
-        'licnost_images' => $images . '\avatar_licnost\\'
+        'licnost_images' => $images . '\avatar_licnost\\',
+        'school_images' => $images . '\school_logo\\',
+        'school_gallery' => $images . '\galerija_skola\\',
+        'staff_images' => $images . '\staff_avatars\\',
+        'staff_gallery' => $images . '\galerija_kadrovi\\',
     ]
 ];

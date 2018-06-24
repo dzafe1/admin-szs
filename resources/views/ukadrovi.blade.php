@@ -88,7 +88,8 @@
     </div>
 
     <!-- Modals -->
-    @include('modals.display-player')
+    @include('modals.display-staff')
+    @include('modals.edit-staff')
     <!-- Modals End -->
 
 @endsection

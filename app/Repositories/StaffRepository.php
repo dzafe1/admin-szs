@@ -144,7 +144,7 @@ class StaffRepository {
     public function getById($id) {
         return $this->model
             ->where('id', $id)
-            ->with(['languages', 'profession', 'work_history', 'region', 'current_club', 'user', 'trophies', 'images'])
+            ->with(['languages', 'profession', 'work_history', 'region', 'current_club', 'club', 'user', 'trophies', 'images'])
             ->first();
     }
 
@@ -154,7 +154,7 @@ class StaffRepository {
         if($request->file('avatar')){
             $logo = $request->file('avatar');
             $newLogoName = time() . '-' . Auth::user()->id . '.' . $logo->getClientOriginalExtension();
-            $destinationPath = public_path('/images/staff_avatars');
+            $destinationPath = config('general.image_paths.staff_images');
             $logo->move($destinationPath, $newLogoName);
         }
 
@@ -336,7 +336,7 @@ class StaffRepository {
             $galerije = $request->file('galerija');
             foreach($galerije as $key => $slika){
                 $newgalName = $key . '-' .time() . '-' .  $staff->id . '.' . $slika->getClientOriginalExtension();
-                $destPath = public_path('/images/galerija_kadrovi');
+                $destPath = config('general.image_paths.staff_gallery');
                 $slika->move($destPath, $newgalName);
 
                 Gallery::create([

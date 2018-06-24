@@ -75,12 +75,19 @@
 }
 
 #displayPlayer .player-image,
-#displayObject .object-image{
+#displayObject .object-image,
+#displayClub .club-image,
+#displaySchool .school-image,
+#displayStaff .staff-image{
     height: 200px;
+    position: relative;
 }
 
 #editPlayer .player-image,
-#editObject .object-image{
+#editObject .object-image,
+#editClub .club-image,
+#editSchool .school-image,
+#editStaff .staff-image{
     width: 200px;
     height: 200px;
     margin: 15px;
@@ -257,4 +264,14 @@ input:not([type]), input[type=text], input[type=password], input[type=email], in
 [type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after,
 [type="radio"]:not(:checked)+label, [type="radio"]:checked+label{
     display: none!important;
+}
+
+.table-responsive {
+    overflow-x: hidden!important;
+}
+
+.action-buttons {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
 }

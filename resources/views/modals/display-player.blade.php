@@ -8,20 +8,14 @@
                 </button>
             </div>
             <div class="player-image">
+                <div class="action-buttons">
+                    <button id="deletePlayer" type="button" class="btn btn-danger" data-id=""><i class="fa fa-thumbs-down"></i> Odbij</button>
+                    <button id="approvePlayer" type="button" class="btn btn-success" data-id=""><i class="fa fa-thumbs-up"></i> Prihvati</button>
+                </div>
                 <img class="repsponsive-centered-image" src="">
             </div>
             <div class="modal-body">
                 <div class="player-content"></div>
-            </div>
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-md-6">
-                        <button id="deletePlayer" type="button" class="btn btn-danger btn-block" data-id="">Odbij</button>
-                    </div>
-                    <div class="col-md-6">
-                        <button id="approvePlayer" type="button" class="btn btn-success btn-block" data-id="">Prihvati</button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

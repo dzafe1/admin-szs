@@ -107,6 +107,30 @@ Route::group(['middleware' => 'auth'], function () {
         Route::patch('clubs/approve', 'ClubController@approveClub');
         Route::patch('clubs/delete', 'ClubController@deleteClub');
         Route::patch('clubs/refuse', 'ClubController@refuseClub');
+
+        // Schools API routes
+        Route::get('schools/{id}', 'SchoolController@getSchoolById');
+        Route::get('schools/editForm/{id}', 'SchoolController@getSchoolEditForm');
+        Route::patch('schools/{id}/edit/general', 'SchoolController@editSchoolGeneral');
+        Route::patch('schools/{id}/edit/trophies', 'SchoolController@editSchoolTrophies');
+        Route::patch('schools/{id}/edit/history', 'SchoolController@editSchoolHistory');
+        Route::patch('schools/{id}/edit/members', 'SchoolController@editSchoolMembers');
+        Route::patch('schools/{id}/edit/gallery', 'SchoolController@editSchoolGallery');
+        Route::patch('schools/approve', 'SchoolController@approveSchool');
+        Route::patch('schools/delete', 'SchoolController@deleteSchool');
+        Route::patch('schools/refuse', 'SchoolController@refuseSchool');
+
+        // Staff API routes
+        Route::get('staff/{id}', 'StaffController@getStaffById');
+        Route::get('staff/editForm/{id}', 'StaffController@getStaffEditForm');
+        Route::patch('staff/{id}/edit/general', 'StaffController@editStaffGeneral');
+        Route::patch('staff/{id}/edit/status', 'StaffController@editStaffStatus');
+        Route::patch('staff/{id}/edit/biography', 'StaffController@editStaffBiography');
+        Route::patch('staff/{id}/edit/trophies', 'StaffController@editStaffTrophies');
+        Route::patch('staff/{id}/edit/gallery', 'StaffController@editStaffGallery');
+        Route::patch('staff/approve', 'StaffController@approveStaff');
+        Route::patch('staff/delete', 'StaffController@deleteStaff');
+        Route::patch('staff/refuse', 'StaffController@refuseStaff');
     });
 
 

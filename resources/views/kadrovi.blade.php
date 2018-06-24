@@ -81,8 +81,9 @@
             <!-- ./page-content -->
         </div>
 
-    <!-- Modals -->
-    @include('modals.display-player')
-    <!-- Modals End -->
+<!-- Modals -->
+@include('modals.display-staff')
+@include('modals.edit-staff')
+<!-- Modals End -->
 
 @endsection
