@@ -254,6 +254,7 @@ input:not([type]), input[type=text], input[type=password], input[type=email], in
     display: block;
 }
 
-[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after {
-    display: none;
+[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after,
+[type="radio"]:not(:checked)+label, [type="radio"]:checked+label{
+    display: none!important;
 }

@@ -81,7 +81,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::patch('players/{id}/edit/trophies', 'PlayerController@editPlayerTrophies');
         Route::patch('players/{id}/edit/gallery', 'PlayerController@editPlayerGallery');
 
-        // Players API routes
+        // Objects API routes
         Route::get('objects/{id}', 'ObjectController@getObjectById');
         Route::get('objects/editForm/{id}', 'ObjectController@getObjectEditForm');
         Route::patch('objects/{id}/edit/general', 'ObjectController@editObjectGeneral');
@@ -95,6 +95,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::patch('objects/approve', 'ObjectController@approveObject');
         Route::patch('objects/delete', 'ObjectController@deleteObject');
         Route::patch('objects/refuse', 'ObjectController@refuseObject');
+
+        // Clubs API routes
+        Route::get('clubs/{id}', 'ClubController@getClubById');
+        Route::get('clubs/editForm/{id}', 'ClubController@getClubEditForm');
+        Route::patch('clubs/{id}/edit/general', 'ClubController@editClubGeneral');
+        Route::patch('clubs/{id}/edit/trophies', 'ClubController@editClubTrophies');
+        Route::patch('clubs/{id}/edit/history', 'ClubController@editClubHistory');
+        Route::patch('clubs/{id}/edit/staff', 'ClubController@editClubStaff');
+        Route::patch('clubs/{id}/edit/gallery', 'ClubController@editClubGallery');
+        Route::patch('clubs/approve', 'ClubController@approveClub');
+        Route::patch('clubs/delete', 'ClubController@deleteClub');
+        Route::patch('clubs/refuse', 'ClubController@refuseClub');
     });
 
 
