@@ -13,7 +13,8 @@ var config = {
             school_gallery: app_domain + '/images/galerija_skola/',
             school_members: app_domain + '/images/avatar_licnost/',
             staff_images: app_domain + '/images/staff_avatars/',
-            staff_gallery: app_domain + '/images/galerija_kadrovi/'
+            staff_gallery: app_domain + '/images/galerija_kadrovi/',
+            association_logo: app_domain + '/images/association_logo/'
         },
         defaults: {
             news_default_image: app_domain + '/images/vijesti/vijesti-dodaj-sliku.png'
@@ -43,8 +44,8 @@ function previewFile(name, place, maxHeight, maxWidth, minHeight, minWidth) {
     var file = $(name).get(0).files;
     var error = file_input.closest('.sadrzaj-slike').find('.info-upload-slike');
     var reader = new FileReader();
-
     reader.onloadend = function (e) {
+
         preview.attr('src', e.target.result);
 
         var image = new Image();
@@ -131,6 +132,9 @@ var associationBox = null;
 var associationRadio = null;
 
 $(document).ready(function () {
+    addRegionSelects();
+    addAssociationValidation();
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1664,6 +1668,46 @@ $(document).ready(function () {
         }
 
     });
+
+    // Associations
+    $('body').on('click', '#addAssociationButton', function (e) {
+        e.preventDefault();
+        var form = $('#addAssociationForm');
+
+        if(!form.valid()) {
+            $(".modal").animate({ scrollTop: 0 }, "fast");
+            return false;
+        }
+
+        var association = new FormData(form[0]);
+
+        addAssociation(association);
+    });
+
+    $('body').on('click', '.edit-association',function () {
+        var id;
+
+        id = $(this).data('id');
+
+        getAssociationEditFormById(id);
+    });
+
+    $('body').on('click', '#editAssociationButton', function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+
+        if(!form.valid()) {
+            $(".modal").animate({ scrollTop: 0 }, "fast");
+            return false;
+        }
+
+        var id;
+        id = $(this).data('id');
+        var association = new FormData(form[0]);
+        association.append('_method', 'PATCH');
+
+        editAssociation(id, association);
+    });
 });
 
 jQuery.extend(jQuery.validator.messages, {
@@ -2654,7 +2698,7 @@ function editPlayer(id, player, type) {
         contentType: false,
         enctype: 'multipart/form-data'
     }).done(function (response) {
-        var errors = null;
+        var errors = '';
 
         $(".modal").animate({ scrollTop: 0 }, "fast");
         $('#editPlayerServerErrors').html('');
@@ -3342,7 +3386,7 @@ function editObject(id, object, type) {
         contentType: false,
         enctype: 'multipart/form-data'
     }).done(function (response) {
-        var errors = null;
+        var errors = '';
 
         $(".modal").animate({ scrollTop: 0 }, "fast");
         $('#editObjectServerErrors').html('');
@@ -3743,7 +3787,7 @@ function editClub(id, club, type) {
         contentType: false,
         enctype: 'multipart/form-data'
     }).done(function (response) {
-        var errors = null;
+        var errors = '';
 
         $(".modal").animate({ scrollTop: 0 }, "fast");
         $('#editClubServerErrors').html('');
@@ -4176,7 +4220,7 @@ function editSchool(id, school, type) {
         contentType: false,
         enctype: 'multipart/form-data'
     }).done(function (response) {
-        var errors = null;
+        var errors = '';
 
         $(".modal").animate({ scrollTop: 0 }, "fast");
         $('#editSchoolServerErrors').html('');
@@ -4588,7 +4632,7 @@ function editStaff(id, staff, type) {
         contentType: false,
         enctype: 'multipart/form-data'
     }).done(function (response) {
-        var errors = null;
+        var errors = '';
 
         $(".modal").animate({ scrollTop: 0 }, "fast");
         $('#editStaffServerErrors').html('');
@@ -4676,5 +4720,208 @@ function deleteStaff(id) {
         $('#displayStaff').modal('hide');
 
         notifyUser(type, response.message)
+    });
+}
+
+function addAssociationValidation() {
+    $('#addAssociationForm').validate({
+        ignore: ':hidden,:disabled',
+        rules: {
+            image: {
+                extension: 'png|jpg|jpeg'
+            },
+            name: {
+                required: true,
+                string: true,
+                maxlength: 255
+            },
+            established_in: {
+                required: true,
+                date: true
+            },
+            president: {
+                required: true,
+                string: true,
+                maxlength: 255
+            },
+            vice_president: {
+                required: true,
+                string: true,
+                maxlength: 255
+            },
+            description: {
+                string: true,
+                maxlength: 2000
+            },
+            region_id: {
+                required: true,
+                digits: true
+            },
+            type: {
+                required: true,
+                digits: true
+            },
+            sport_id: {
+                required: true,
+                digits: true
+            }
+        }
+    });
+}
+
+function addEditAssociationValidation() {
+    $('#editAssociationForm').validate({
+        ignore: ':hidden,:disabled',
+        rules: {
+            image: {
+                extension: 'png|jpg|jpeg'
+            },
+            name: {
+                required: true,
+                string: true,
+                maxlength: 255
+            },
+            established_in: {
+                required: true,
+                date: true
+            },
+            president: {
+                required: true,
+                string: true,
+                maxlength: 255
+            },
+            vice_president: {
+                required: true,
+                string: true,
+                maxlength: 255
+            },
+            description: {
+                string: true,
+                maxlength: 2000
+            },
+            region_id: {
+                required: true,
+                digits: true
+            },
+            type: {
+                required: true,
+                digits: true
+            },
+            sport_id: {
+                required: true,
+                digits: true
+            }
+        }
+    });
+}
+
+function addAssociation(association) {
+
+    $.ajax({
+        method: 'POST',
+        data: association,
+        url: '/api/associations/create',
+        cache: false,
+        processData: false,
+        contentType: false,
+        enctype: 'multipart/form-data'
+    }).done(function (response) {
+        var errors = '';
+
+        $(".modal").animate({ scrollTop: 0 }, "fast");
+        $('#addAssociationServerErrors').html('');
+
+        if (!response.success) {
+            if(response.errors) {
+                errors += '<div class="alert alert-danger"><ul>';
+                response.errors.forEach(function (error) {
+                    errors += '<li>' + error + '</li>';
+                });
+                errors += '</ul></div>';
+
+                $('#addAssociationServerErrors').html(errors);
+            } else {
+                $('#addAssociationServerErrors').html('<div class="alert alert-danger">' + response.message + '</div>');
+            }
+        } else {
+            $('#addAssociation').modal('hide');
+            $('#addAssociationForm')[0].reset();
+            $('#slika-upload').attr('src', app_domain + '/images/default_avatar.png');
+            $('.info-upload-slike').attr('style', '');
+            var htmlToAppend = '<tr>'
+                + '<td>' + response.association.name + '</td>'
+                + '<td>' + response.association.region.name + '</td>'
+                + '<td>' + response.association.established_in + '</td>'
+                + '<td>' + response.association.president + '</td>'
+                + '<td>' + response.association.vice_president + '</td>'
+                + '<td>' + response.association.sport.name + '</td>'
+                + '<td>' + response.association.created_at + '</td>'
+                + '<td>'
+                + '<a data-id="' + response.association.id + '" class="edit-association">'
+                + '<i class="fa fa-edit"></i>'
+                + '</a>'
+                + '</td>'
+                + '</tr>';
+            $('#associationsDataTable').append(htmlToAppend);
+            notifyUser('success', response.message);
+        }
+
+        $('#addAssociationServerErrors').show().delay(3000).fadeOut();
+    });
+}
+
+function getAssociationEditFormById(id) {
+    $.ajax({
+        method: 'GET',
+        url: '/api/associations/editForm/' + id
+    }).done(function (response) {
+        if(response) {
+            addAssociationToEditModal(response);
+        }
+    });
+}
+
+function addAssociationToEditModal(htmlForm) {
+    var editAssociationModal = $('#editAssociation');
+
+    editAssociationModal.find('.association-content').html(htmlForm);
+    addEditAssociationValidation();
+
+    editAssociationModal.modal('show');
+}
+
+function editAssociation(id, association) {
+
+    $.ajax({
+        method: 'POST',
+        data: association,
+        url: '/api/associations/' + id + '/edit',
+        cache: false,
+        processData: false,
+        contentType: false,
+        enctype: 'multipart/form-data'
+    }).done(function (response) {
+        var errors = '';
+
+        $(".modal").animate({ scrollTop: 0 }, "fast");
+        $('#editAssociationServerErrors').html('');
+
+        if (!response.success) {
+            if(response.errors) {
+                errors += '<div class="alert alert-danger"><ul>';
+                response.errors.forEach(function (error) {
+                    errors += '<li>' + error + '</li>';
+                });
+                errors += '</ul></div>';
+
+                $('#editAssociationServerErrors').html(errors);
+            } else {
+                $('#editAssociationServerErrors').html('<div class="alert alert-danger">' + response.message + '</div>');
+            }
+        } else {
+            $('#editAssociationServerErrors').html('<div class="alert alert-success">' + response.message + '</div>');
+        }
+
+        $('#editAssociationServerErrors').show().delay(3000).fadeOut();
     });
 }

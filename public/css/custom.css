@@ -70,7 +70,8 @@
 }
 
 #editNewsServerErrors,
-#editPlayerServerErrors{
+#editPlayerServerErrors,
+#addAssociationServerErrors{
     display: none;
 }
 
@@ -274,4 +275,8 @@ input:not([type]), input[type=text], input[type=password], input[type=email], in
     position: absolute;
     right: 15px;
     bottom: 15px;
+}
+
+#editAssociationServerErrors {
+    display: none;
 }

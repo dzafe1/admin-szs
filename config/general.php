@@ -17,7 +17,8 @@ return [
         'school_images' => $domain . '/images/school_logo/',
         'school_gallery' => $domain . '/images/galerija_skola/',
         'staff_images' => $domain . '/images/staff_avatars/',
-        'staff_gallery' => $domain . '/images/galerija_kadrovi/'
+        'staff_gallery' => $domain . '/images/galerija_kadrovi/',
+        'association_images' => $domain . '/images/association_logo/'
     ],
     'image_paths' => [
         'vijesti' => $images . '\vijesti\galerija\\',
@@ -32,5 +33,6 @@ return [
         'school_gallery' => $images . '\galerija_skola\\',
         'staff_images' => $images . '\staff_avatars\\',
         'staff_gallery' => $images . '\galerija_kadrovi\\',
+        'association_images' => $images . '\association_logo\\'
     ]
 ];

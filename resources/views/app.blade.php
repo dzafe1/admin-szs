@@ -48,10 +48,6 @@
 <div id="wrapper">
     <!--navbar top-->
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <!-- Logo -->
-        <a class="navbar-brand pull-left" href="kontrolna-ploča.html">
-            <img src="{{asset('assets/dist/img/logo3.png')}}" alt="logo" width="205" height="60">
-        </a>
         <a id="menu-toggle">
             <i class="material-icons">apps</i>
         </a>
@@ -66,7 +62,7 @@
                     </a>
                     <ul id='dropdown-user' class='dropdown-content'>
                         <li>
-                            <a href="#!"><i class="material-icons">lock</i> Odjava</a>
+                            <a href="{{ url('logout') }}"><i class="material-icons">lock</i> Odjava</a>
                         </li>
                     </ul>
                 </li>
@@ -79,10 +75,12 @@
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
-                    <li class="list-header"></li>
+                    <li class="list-header text-center">
+                        <img src="{{ asset('images/logo.png') }}" alt="logo">
+                    </li>
+                    <li class="list-divider"></li>
                     <li class="active-link"><a href="{{url('/dashboard')}}"><i class="material-icons">dashboard</i>Kontrolna Ploča</a></li>
                     <li class="list-divider"></li>
-                    <li class="list-header">Menu ---</li>
                     <li>
                         <a><i class="fa fa-users"></i>Korisnici<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -129,6 +127,12 @@
                         <ul class="nav nav-second-level">
                             <li><a href="{{url('/news')}}">Pregled svih vijesti</a></li>
                             <li><a href="{{url('/unauth/news')}}">Pregled neodobrenih vijesti</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-building"></i>Savezi<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="{{url('/savezi')}}">Pregled svih saveza</a></li>
                         </ul>
                     </li>
                     <li>
