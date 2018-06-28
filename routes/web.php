@@ -14,12 +14,12 @@ Route::post('/login', 'Auth\LoginController@login');
 Route::get('/login', 'Auth\LoginController@showLoginForm');
 
 Auth::routes();
+Route::get('/','DashboardController@index');
 
 // Dodaje protekciju na rute samo za logovane korisnike
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard','DashboardController@index');
-    Route::get('/','DashboardController@index');
-    Route::get('/home','DashboardController@index');
+    Route::get('/logout', 'Auth\LoginController@logout');
 
     Route::get('/prijave', function(){
         return view('prijave');
@@ -55,6 +55,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Staff
     Route::get('/kadrovi', 'StaffController@approvedStaffList');
     Route::get('/unauth/kadrovi', 'StaffController@notApprovedStaffList');
+
+    // Associations
+    Route::get('/savezi', 'AssociationController@getAllAssociations');
 
     // Ajax API rute
     Route::prefix('api')->group(function () {
@@ -131,6 +134,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::patch('staff/approve', 'StaffController@approveStaff');
         Route::patch('staff/delete', 'StaffController@deleteStaff');
         Route::patch('staff/refuse', 'StaffController@refuseStaff');
+
+        // Associations API routes
+        Route::post('associations/create', 'AssociationController@createAssociation');
+        Route::get('associations/editForm/{id}', 'AssociationController@getAssociationEditForm');
+        Route::patch('associations/{id}/edit', 'AssociationController@editAssociation');
     });
 
 
