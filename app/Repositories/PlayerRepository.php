@@ -363,12 +363,19 @@ class PlayerRepository {
         ];
 
         if($request->filled('requested_club')) {
-            ClubRequest::create([
-                'club_id' => $request->get('requested_club'),
-                'player_id' => $player->id
-            ]);
+            if($player->requested_club != $request->get('requested_club')) {
+                // Delete previous requests and club
+                ClubRequest::where('player_id', $player->id)
+                    ->where('club_id', $request->get('requested_club'))
+                    ->delete();
 
-            $fieldsToUpdate['club_id'] = null;
+                ClubRequest::create([
+                    'club_id' => $request->get('requested_club'),
+                    'player_id' => $player->id
+                ]);
+
+                $fieldsToUpdate['club_id'] = null;
+            }
         }
 
         $updatePlayerCommonStatus = Player::find($player->id)->update($fieldsToUpdate);

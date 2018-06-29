@@ -206,13 +206,20 @@ class StaffRepository {
         ];
 
         if($request->has('requested_club')) {
-            ClubRequest::create([
-                'club_id' => $request->get('requested_club'),
-                'staff_id' => $staff->id
-            ]);
+            if($staff->requested_club != $request->get('requested_club')) {
+                // Delete previous requests and club
+                ClubRequest::where('staff_id', $staff->id)
+                    ->where('club_id', $request->get('requested_club'))
+                    ->delete();
 
-            $attributesToUpdate['requested_club'] = $request->get('requested_club');
-            $attributesToUpdate['club_id'] = null;
+                ClubRequest::create([
+                    'club_id' => $request->get('requested_club'),
+                    'staff_id' => $staff->id
+                ]);
+
+                $attributesToUpdate['requested_club'] = $request->get('requested_club');
+                $attributesToUpdate['club_id'] = null;
+            }
         } else {
             $attributesToUpdate['club_name'] = $request->get('club_name');
             $attributesToUpdate['club_id'] = null;
