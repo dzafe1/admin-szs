@@ -346,16 +346,10 @@ $(document).ready(function () {
         municipalitySelect.prop("selectedIndex", 0).prop('disabled', 'disabled');
 
         // Izlistaj sve saveze države ako postoje
-        var associationsToShow = associationBox.find("input[data-region^=" + countrySelect.val() + "]");
-        associationRadio.prop('checked', false);
+        var sportValue = sportSelect.val();
+        var countryValue = countrySelect.val();
 
-        if(associationsToShow.length > 0) {
-            associationRadio.closest('label').hide();
-            associationsToShow.closest('label').css('display', 'inline-block');
-            associationBox.show();
-        } else {
-            associationBox.hide();
-        }
+        updateAssociationsList(sportValue, countryValue, associationBox, associationRadio);
 
     });
 
@@ -420,6 +414,13 @@ $(document).ready(function () {
         }
     });
 
+    $('body').on('change', sportSelectName, function () {
+        // Izlistaj sve saveze države ako postoje
+        var sportValue = sportSelect.val();
+        var countryValue = countrySelect.val();
+
+        updateAssociationsList(sportValue, countryValue, associationBox, associationRadio);
+    });
     // Dodavanje kluba - Dodaj ličnost
     $('body').on('click', '#dodajHistory', function () {
         var history_form_input = '<div class="row historyHover">' +
@@ -2497,6 +2498,8 @@ function addPlayerToEditModal(htmlForm) {
     addPlayerAllValidations();
     addRegionSelects();
     findHighestValue();
+    setSelectedSports(sportTypeSelect, sportSelect);
+
     editPlayerModal.modal('show');
 }
 
@@ -2957,6 +2960,8 @@ function addObjectToEditModal(htmlForm) {
     addObjectAllValidations();
     addRegionSelects();
     findHighestValue();
+    setSelectedSports(sportTypeSelect, sportSelect);
+
     editObjectModal.modal('show');
 }
 
@@ -3625,6 +3630,7 @@ function addClubToEditModal(htmlForm) {
     addClubAllValidations();
     addRegionSelects();
     findHighestValue();
+    setSelectedSports(sportTypeSelect, sportSelect);
 
     CKEDITOR.replace('history');
 
@@ -4048,6 +4054,7 @@ function addSchoolToEditModal(htmlForm) {
     addSchoolAllValidations();
     addRegionSelects();
     findHighestValue();
+    setSelectedSports(sportTypeSelect, sportSelect);
 
     editSchoolModal.modal('show');
 }
@@ -4491,6 +4498,7 @@ function addStaffToEditModal(htmlForm) {
     addStaffAllValidations();
     addRegionSelects();
     findHighestValue();
+    setSelectedSports(sportTypeSelect, sportSelect);
 
     editStaffModal.modal('show');
 }
@@ -4886,7 +4894,7 @@ function addAssociationToEditModal(htmlForm) {
 
     editAssociationModal.find('.association-content').html(htmlForm);
     addEditAssociationValidation();
-
+    setSelectedSports(sportTypeSelect, sportSelect);
     editAssociationModal.modal('show');
 }
 
@@ -4924,4 +4932,41 @@ function editAssociation(id, association) {
 
         $('#editAssociationServerErrors').show().delay(3000).fadeOut();
     });
+}
+
+function updateAssociationsList(sport, country, associationBox, associationRadio) {
+    if(!sport || !country) {
+        associationBox.hide();
+        return;
+    }
+
+    var associationsToShow = associationBox.find("input[data-region=" + country + "][data-sport=" + sport + "]");
+    associationRadio.prop('checked', false);
+
+    if(associationsToShow.length > 0) {
+        associationRadio.closest('label').hide();
+        associationsToShow.closest('label').css('display', 'inline-block');
+        associationBox.show();
+    } else {
+        associationBox.hide();
+    }
+}
+
+function setSelectedSports(sportTypeSelect, sportSelect) {
+    var selectedOption = sportSelect.val();
+    var itemsToShow;
+    if(sportTypeSelect.val() == 1 || sportTypeSelect.val() == 2) {
+        if(sportTypeSelect.val() == 1) {
+            itemsToShow = sportSelect.children("option[data-disabled^='0']");
+        } else if (sportTypeSelect.val() == 2) {
+            itemsToShow = sportSelect.children("option[data-disabled^='1']");
+        }
+        sportSelect.prop('disabled', false);
+        sportSelect.children('option').hide();
+        sportSelect.children('option:first').show();
+        sportSelect.find('option[value=' + selectedOption + ']').attr('selected', 'selected');
+        itemsToShow.show();
+    } else {
+        sportSelect.prop('disabled', 'disabled');
+    }
 }
