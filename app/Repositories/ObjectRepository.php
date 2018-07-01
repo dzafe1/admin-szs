@@ -386,7 +386,7 @@ class ObjectRepository {
 
     public function getById($id) {
         return $this->model
-            ->with(['type','images','user'])
+            ->with(['type','images','user','proof_images'])
             ->where('id', $id)
             ->first();
     }

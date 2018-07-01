@@ -847,7 +847,7 @@ class ClubController extends Controller
     }
 
     public function getClubById($id){
-        $club = Club::with(['histories','trophies','images','association','region', 'sport'])
+        $club = Club::with(['histories','trophies','images','proof_images','association','region', 'sport'])
             ->where('id', $id)
             ->first();
 

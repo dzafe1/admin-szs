@@ -14,7 +14,9 @@ var config = {
             school_members: app_domain + '/images/avatar_licnost/',
             staff_images: app_domain + '/images/staff_avatars/',
             staff_gallery: app_domain + '/images/galerija_kadrovi/',
-            association_logo: app_domain + '/images/association_logo/'
+            association_logo: app_domain + '/images/association_logo/',
+            club_proof: app_domain + '/images/club_proof/',
+            object_proof: app_domain + '/images/object_proof/'
         },
         defaults: {
             news_default_image: app_domain + '/images/vijesti/vijesti-dodaj-sliku.png'
@@ -2863,6 +2865,15 @@ function addObjectToModal(object) {
             '</div>';
     });
 
+    var proof_images = '';
+    Object.keys(object.proof_images).forEach(function (key) {
+        proof_images += '<div class="col-md-12">' +
+            '<div class="custom-box-row">' +
+            '<img class="responsive-img" src="' + config.site.paths.object_proof + object.proof_images[key].image + '">' +
+            '</div>' +
+            '</div>';
+    });
+
     var objectInfo = '<div class="row custom-box-row">' +
         '<div class="col-md-6">' +
         '<h3>Osnovne informacije</h3>' +
@@ -2930,6 +2941,12 @@ function addObjectToModal(object) {
         '<h3>Galerija</h3>' +
         '</div>' +
         (images || '<div class="col-md-12">Nema slika.</div>') +
+        '</div>' +
+        '<div class="row custom-box-row">' +
+        '<div class="col-md-12">' +
+        '<h3>Galerija</h3>' +
+        '</div>' +
+        (proof_images) +
         '</div>';
 
     displayObjectModal.find('.modal-title').html('<b>' + object.name + '(<i>' + object.type.type + '</i>)</b>');
@@ -3531,6 +3548,15 @@ function addClubToModal(club) {
             '</div>';
     });
 
+    var proof_images = '';
+    Object.keys(club.proof_images).forEach(function (key) {
+        proof_images += '<div class="col-md-12">' +
+            '<div class="custom-box-row">' +
+            '<img class="responsive-img" src="' + config.site.paths.club_proof + club.proof_images[key].image + '">' +
+            '</div>' +
+            '</div>';
+    });
+
     var clubInfo = '<div class="row custom-box-row">' +
         '<div class="col-md-6">' +
         '<h3>Osnovne informacije</h3>' +
@@ -3600,6 +3626,12 @@ function addClubToModal(club) {
         '<h3>Galerija</h3>' +
         '</div>' +
         (images || '<div class="col-md-12">Nema slika.</div>') +
+        '</div>' +
+        '<div class="row custom-box-row">' +
+        '<div class="col-md-12">' +
+        '<h3>Dokaz vlasništva</h3>' +
+        '</div>' +
+        (proof_images) +
         '</div>';
 
     displayClubModal.find('.modal-title').html('<b>' + club.name + ' (<i>' + club.sport.name + '</i>)</b>');
