@@ -1,4 +1,4 @@
-var app_domain = 'http://localhost:8080';
+var app_domain = 'http://svezasport.ba';
 var config = {
     site: {
         paths: {

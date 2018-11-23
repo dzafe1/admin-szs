@@ -79,7 +79,8 @@
 #displayObject .object-image,
 #displayClub .club-image,
 #displaySchool .school-image,
-#displayStaff .staff-image{
+#displayStaff .staff-image,
+#displayNews .news-image{
     height: 200px;
     position: relative;
 }
@@ -88,7 +89,8 @@
 #editObject .object-image,
 #editClub .club-image,
 #editSchool .school-image,
-#editStaff .staff-image{
+#editStaff .staff-image,
+#displayNews .news-image{
     width: 200px;
     height: 200px;
     margin: 15px;

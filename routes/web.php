@@ -14,10 +14,11 @@ Route::post('/login', 'Auth\LoginController@login');
 Route::get('/login', 'Auth\LoginController@showLoginForm');
 
 Auth::routes();
-Route::get('/','DashboardController@index');
+
 
 // Dodaje protekciju na rute samo za logovane korisnike
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/','DashboardController@index');
     Route::get('/dashboard','DashboardController@index');
     Route::get('/logout', 'Auth\LoginController@logout');
 
